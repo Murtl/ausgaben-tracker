@@ -7,3 +7,12 @@ Technologien:
 - Datenbank & Auth: Firebase
 - Backend: Express
 - Frontend: Vue 3.2 mit Pinia und vue-chart.js
+
+Namenskonventionen:
+
+- prefix AT (=Ausgaben Tracker) vor jeder Komponente/Klasse/Interface/Seite
+- commits beginnen mit AT*:... (für backend: ATB:.. und für frontend: ATF:..)
+- CSS/SCSS Klassen: kebab-case
+- methoden/variablen: camelCase
+- Komponente/Klasse/Interface/Seite/Dateien (.vue): ATUpperCase
+- andere Dateien (.css / .scss / .ts): lowerCase
