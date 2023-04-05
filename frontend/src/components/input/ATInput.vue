@@ -21,7 +21,7 @@ interface Emits {
 
 const emit = defineEmits<Emits>()
 
-const inputValue = ref(props.value);
+const inputValue = ref(props.value)
 const computedType = ref(props.password ? 'password' : 'text')
 const computedWitdth = computed(() => (props.password ? '435px' : '485px'))
 
@@ -34,8 +34,7 @@ const hidePassword = () => {
 
 watch(inputValue, (newValue) => {
   emit('update:value', newValue)
-});
-
+})
 </script>
 
 <template>
@@ -44,13 +43,25 @@ watch(inputValue, (newValue) => {
       {{ title }}
     </div>
     <div class="input-field">
-      <input class="native-input-element" :type="computedType" v-model="inputValue"/>
-      <ATButton width="50px" v-if="password && computedType === 'password'" tertiary class="button" @click="showPassword">
+      <input class="native-input-element" :type="computedType" v-model="inputValue" />
+      <ATButton
+        width="50px"
+        v-if="password && computedType === 'password'"
+        tertiary
+        class="button"
+        @click="showPassword"
+      >
         <template #icon>
           <ATOpenEyeIcon />
         </template>
       </ATButton>
-      <ATButton width="50px" v-if="password && computedType === 'text'" tertiary class="button" @click="hidePassword">
+      <ATButton
+        width="50px"
+        v-if="password && computedType === 'text'"
+        tertiary
+        class="button"
+        @click="hidePassword"
+      >
         <template #icon>
           <ATClosedEyeIcon />
         </template>
@@ -96,7 +107,7 @@ watch(inputValue, (newValue) => {
     }
 
     .button {
-        background-color: #e9ecf0;
+      background-color: #e9ecf0;
       align-items: center;
       height: 60px;
       justify-content: center;

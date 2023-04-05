@@ -32,7 +32,7 @@ const emit = defineEmits<Emits>()
     class="at-button-host"
     @click="emit('press')"
   >
-<slot name="icon"></slot>
+    <slot name="icon"></slot>
     {{ title }}
   </button>
 </template>

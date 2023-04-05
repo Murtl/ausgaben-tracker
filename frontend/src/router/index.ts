@@ -8,13 +8,13 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: ATHome,
+      component: ATHome
     },
     {
       path: '/dashboard',
       name: 'dashboard',
-      component: ATDashboard,
-    },
+      component: ATDashboard
+    }
   ]
 })
 
