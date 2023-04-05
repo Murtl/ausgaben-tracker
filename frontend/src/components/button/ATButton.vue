@@ -49,12 +49,12 @@ const emit = defineEmits<Emits>()
   display: flex;
   justify-content: center;
   user-select: none;
-  font-size: 25px;
+  font-size: 20px;
   font-weight: 600;
   padding: 8px 14px;
   gap: 4px;
   width: v-bind(width);
-  height: 60px;
+  height: 50px;
   margin-bottom: 10px;
 
   &.primary {

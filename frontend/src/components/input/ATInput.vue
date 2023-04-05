@@ -81,7 +81,7 @@ watch(inputValue, (newValue) => {
 
   .title {
     color: #616d7c;
-    font-size: 25px;
+    font-size: 20px;
   }
 
   .input-field {
@@ -93,9 +93,9 @@ watch(inputValue, (newValue) => {
     .native-input-element {
       border: none;
       cursor: pointer;
-      height: 60px;
+      height: 50px;
       border-radius: 5px;
-      font-size: 25px;
+      font-size: 20px;
       background-color: #e9ecf0;
       width: v-bind(computedWitdth);
       padding: 8px 14px;
@@ -109,7 +109,7 @@ watch(inputValue, (newValue) => {
     .button {
       background-color: #e9ecf0;
       align-items: center;
-      height: 60px;
+      height: 50px;
       justify-content: center;
       width: 50px;
       margin-bottom: 0px;

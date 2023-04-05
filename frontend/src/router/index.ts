@@ -1,19 +1,25 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import ATHome from '../views/ATHome.vue'
-import ATDashboard from '../views/ATDashboard.vue'
+import ATDashboard from '../views/nav/ATDashboard.vue'
+import ATTracker from '../views/nav/ATTracker.vue'
+import ATBalance from '../views/nav/ATBalance.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
-      path: '/',
-      name: 'home',
-      component: ATHome
-    },
-    {
       path: '/dashboard',
       name: 'dashboard',
       component: ATDashboard
+    },
+    {
+      path: '/tracker',
+      name: 'tracker',
+      component: ATTracker
+    },
+    {
+      path: '/balance',
+      name: 'balance',
+      component: ATBalance
     }
   ]
 })

@@ -8,7 +8,7 @@ export interface Props {
 
 const props = withDefaults(defineProps<Props>(), {})
 
-const computedMainHeight = computed(() => (props.height === '750px' ? '550px' : '650px'))
+const computedMainHeight = computed(() => (props.height === '650px' ? '450px' : '550px'))
 </script>
 
 <template>
@@ -45,17 +45,18 @@ const computedMainHeight = computed(() => (props.height === '750px' ? '550px' : 
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 10px;
   margin: auto;
+  margin-top: 150px;
 
   header {
     width: 600px;
-    height: 200px;
+    height: 175px;
     background: $main-blue;
     border-radius: 10px 10px 0px 0px;
 
     .caption {
       font-style: normal;
       font-weight: 600;
-      font-size: 60px;
+      font-size: 50px;
       text-align: center;
       color: $text-white;
       margin-bottom: 10px;
@@ -65,10 +66,10 @@ const computedMainHeight = computed(() => (props.height === '750px' ? '550px' : 
     .lower-caption {
       font-style: normal;
       font-weight: 400;
-      font-size: 30px;
+      font-size: 20px;
       color: $text-white;
       opacity: 0.7;
-      margin-left: 50px;
+      margin-left: 105px;
     }
   }
 
@@ -79,11 +80,11 @@ const computedMainHeight = computed(() => (props.height === '750px' ? '550px' : 
     .title {
       font-style: normal;
       font-weight: 600;
-      font-size: 40px;
+      font-size: 35px;
       line-height: 125.3%;
       color: $heading-text-light;
       margin-left: 50px;
-      margin-top: 50px;
+      margin-top: 40px;
       margin-bottom: 30px;
     }
 
@@ -93,7 +94,7 @@ const computedMainHeight = computed(() => (props.height === '750px' ? '550px' : 
 
     .button {
       margin-left: 50px;
-      margin-top: 60px !important;
+      margin-top: 50px !important;
     }
   }
 }
