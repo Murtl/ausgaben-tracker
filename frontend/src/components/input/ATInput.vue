@@ -23,7 +23,7 @@ const emit = defineEmits<Emits>()
 
 const inputValue = ref(props.value);
 const computedType = ref(props.password ? 'password' : 'text')
-const computedWitdth = computed(() => (props.password ? '266px' : '316px'))
+const computedWitdth = computed(() => (props.password ? '435px' : '485px'))
 
 const showPassword = () => {
   computedType.value = 'text'
@@ -70,7 +70,7 @@ watch(inputValue, (newValue) => {
 
   .title {
     color: #616d7c;
-    font-size: 14px;
+    font-size: 25px;
   }
 
   .input-field {
@@ -78,12 +78,13 @@ watch(inputValue, (newValue) => {
     flex-flow: row;
     background-color: #e9ecf0;
     border-radius: 5px;
-    width: 316px;
+    width: 485px;
     .native-input-element {
       border: none;
       cursor: pointer;
-      height: 36px;
+      height: 60px;
       border-radius: 5px;
+      font-size: 25px;
       background-color: #e9ecf0;
       width: v-bind(computedWitdth);
       padding: 8px 14px;
@@ -97,7 +98,7 @@ watch(inputValue, (newValue) => {
     .button {
         background-color: #e9ecf0;
       align-items: center;
-      height: 36px;
+      height: 60px;
       justify-content: center;
       width: 50px;
       margin-bottom: 0px;

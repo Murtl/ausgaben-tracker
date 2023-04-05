@@ -49,16 +49,16 @@ const emit = defineEmits<Emits>()
   display: flex;
   justify-content: center;
   user-select: none;
-  font-size: 16px;
+  font-size: 25px;
   font-weight: 600;
   padding: 8px 14px;
   gap: 4px;
   width: v-bind(width);
-  height: 36px;
+  height: 60px;
   margin-bottom: 10px;
 
   &.primary {
-    background-color: $button-blue;
+    background-color: $main-blue;
     color: $text-white;
   }
 
