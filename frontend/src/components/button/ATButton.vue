@@ -1,6 +1,6 @@
 <script setup lang="ts">
 export interface Props {
-  title: string
+  title?: string
   width?: string
   primary?: boolean
   secondary?: boolean
@@ -8,6 +8,7 @@ export interface Props {
 }
 
 withDefaults(defineProps<Props>(), {
+  title: '',
   width: '187px',
   primary: false,
   secondary: false,
