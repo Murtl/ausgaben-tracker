@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import ATButton from '@/components/button/ATButton.vue';
 import ATInput from '@/components/input/ATInput.vue';
+import ATWelcomeForm from '@/components/welcome-form/ATWelcomeForm.vue';
 import {ref} from 'vue'
 
 const inputValue = ref('');
@@ -15,18 +16,15 @@ const handlePress = () => {
 
 <template>
     <div class="at-login-host">
-        <h1>Login</h1>
-        <ATInput title="E-Mail" value="nix" v-model:value="inputValue"/>
-        <ATInput title="Passwort" value="nix" v-model:value="inputPwValue" password/>
-        <ATButton title="Login" width="316px" primary @press="handlePress"/>
-        <ATButton title="Neu hier?" width="316px" secondary @press="handlePress"/>
+        <ATWelcomeForm title="Login" height="800px">
+            <template #inputs>
+                <ATInput title="E-Mail" value="nix" v-model:value="inputValue"/>
+                <ATInput title="Passwort" value="nix" v-model:value="inputPwValue" password/>
+            </template>
+            <template #buttons>
+                <ATButton title="Login" width="485px" primary @press="handlePress"/>
+                <ATButton title="Neu hier?" width="485px" secondary @press="handlePress"/>
+            </template>
+        </ATWelcomeForm>
     </div>
 </template>
-
-<style scoped lang="scss">
-.at-login-host {
-    h1{
-        color:red;
-    }
-}
-</style>
