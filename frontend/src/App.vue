@@ -1,20 +1,14 @@
 <script setup lang="ts">
-import { RouterLink, RouterView } from 'vue-router'
+import { useLoggedInStore } from './stores/loggedInStore'
+import { storeToRefs } from 'pinia'
+import ATHome from './views/ATHome.vue';
+import ATLogin from './views/ATLogin.vue';
+
+const loggedInStore = useLoggedInStore();
+const { loggedIn } = storeToRefs(loggedInStore)
 </script>
 
 <template>
-  <header>
-    <div class="wrapper">
-
-      <nav>
-        <RouterLink to="/">Login</RouterLink>
-        <RouterLink to="/register">Register</RouterLink>
-      </nav>
-    </div>
-  </header>
-
-  <RouterView />
+  <ATLogin v-if="!loggedIn" />
+  <ATHome v-else/>
 </template>
-
-<style scoped>
-</style>
