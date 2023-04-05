@@ -8,7 +8,7 @@ export interface Props {
 
 const props = withDefaults(defineProps<Props>(), {})
 
-const computedMainHeight = computed(() => (props.height === '800px' ? '600px' : '800px'))
+const computedMainHeight = computed(() => (props.height === '750px' ? '550px' : '650px'))
 </script>
 
 <template>
