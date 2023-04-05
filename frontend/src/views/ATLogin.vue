@@ -3,9 +3,14 @@
 
 <template>
     <div class="at-login-host">
-        Login
+        <h1>Login</h1>
     </div>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
+.at-login-host {
+    h1{
+        color:red;
+    }
+}
 </style>
