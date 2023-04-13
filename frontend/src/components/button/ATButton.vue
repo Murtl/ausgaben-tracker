@@ -9,7 +9,7 @@ export interface Props {
 
 withDefaults(defineProps<Props>(), {
   title: '',
-  width: '187px',
+  width: '150px',
   primary: false,
   secondary: false,
   tertiary: false
@@ -38,7 +38,7 @@ const emit = defineEmits<Emits>()
 </template>
 
 <style scoped lang="scss">
-@import 'src/assets/base.scss';
+@import 'src/assets/main.scss';
 
 .at-button-host {
   align-items: center;
@@ -48,14 +48,15 @@ const emit = defineEmits<Emits>()
   cursor: pointer;
   display: flex;
   justify-content: center;
-  user-select: none;
-  font-size: 20px;
-  font-weight: 600;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-size: $second-font-size;
+  font-weight: 5500;
   padding: 8px 14px;
   gap: 4px;
   width: v-bind(width);
-  height: 50px;
+  height: 40px;
   margin-bottom: 10px;
+  background-color: $button-white;
 
   &.primary {
     background-color: $main-blue;
@@ -63,13 +64,28 @@ const emit = defineEmits<Emits>()
   }
 
   &.secondary {
-    background-color: $button-grey;
+    background-color: $button-gray;
     color: $text-blue;
   }
 
   &.tertiary {
-    background-color: $button-white;
-    color: $text-red;
+    background-color: $button-modal-gray;
+    color: $heading-text-light;
+  }
+}
+
+.at-button-host:hover {
+  background-color: $button-white-hover;
+  &.primary {
+    background-color: $main-blue-hover;
+  }
+
+  &.secondary {
+    background-color: $button-gray-hover;
+  }
+
+  &.tertiary {
+    background-color: $button-modal-gray-hover;
   }
 }
 </style>

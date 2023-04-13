@@ -1,0 +1,48 @@
+{
+  "1": [
+    {
+      "id": 1,
+      "height": 1500,
+      "month": 3,
+      "year": 2023
+    },
+    {
+      "id": 2,
+      "height": 1500,
+      "month": 12,
+      "year": 2022
+    },
+    {
+      "id": 3,
+      "height": 1500,
+      "month": 1,
+      "year": 2023
+    },
+    {
+      "id": 4,
+      "height": 1500,
+      "month": 2,
+      "year": 2023
+    },
+    {
+      "id": 5,
+      "height": 600,
+      "month": 11,
+      "year": 2022
+    }
+  ],
+  "2": [
+    {
+      "id": 1,
+      "height": 1500,
+      "month": 3,
+      "year": 2023
+    },
+    {
+      "id": 2,
+      "height": 2500,
+      "month": 1,
+      "year": 2022
+    }
+  ]
+}

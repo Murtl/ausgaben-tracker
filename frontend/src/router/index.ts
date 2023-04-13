@@ -2,12 +2,13 @@ import { createRouter, createWebHistory } from 'vue-router'
 import ATDashboard from '../views/nav/ATDashboard.vue'
 import ATTracker from '../views/nav/ATTracker.vue'
 import ATBalance from '../views/nav/ATBalance.vue'
+import ATAccount from '../views/auth/ATAccount.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
-      path: '/dashboard',
+      path: '/',
       name: 'dashboard',
       component: ATDashboard
     },
@@ -20,6 +21,11 @@ const router = createRouter({
       path: '/balance',
       name: 'balance',
       component: ATBalance
+    },
+    {
+      path: '/account',
+      name: 'account',
+      component: ATAccount
     }
   ]
 })

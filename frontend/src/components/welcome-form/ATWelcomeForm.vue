@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue'
+import dynamicText from '../../assets/dynamicText.json'
 
 export interface Props {
   title: string
@@ -8,14 +9,14 @@ export interface Props {
 
 const props = withDefaults(defineProps<Props>(), {})
 
-const computedMainHeight = computed(() => (props.height === '650px' ? '450px' : '550px'))
+const computedMainHeight = computed(() => (props.height === '520px' ? '365px' : '455px'))
 </script>
 
 <template>
   <div class="at-welcome-form-host">
     <header>
-      <p class="caption">Ausgaben Tracker</p>
-      <p class="lower-caption">erstellt von Mertl</p>
+      <p class="caption">{{ dynamicText.expenditures_tracker }}</p>
+      <p class="lower-caption">{{ dynamicText.created_by_Mertl }}</p>
     </header>
 
     <main>
@@ -35,66 +36,61 @@ const computedMainHeight = computed(() => (props.height === '650px' ? '450px' : 
 </template>
 
 <style scoped lang="scss">
-@import 'src/assets/base.scss';
+@import 'src/assets/main.scss';
+
 .at-welcome-form-host {
   display: flex;
   flex-direction: column;
-  width: 600px;
+  width: 440px;
   height: v-bind(height);
-  background: #ffffff;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  background: $background-white;
+  box-shadow: $main-box-shadow;
   border-radius: 10px;
   margin: auto;
-  margin-top: 150px;
+  margin-top: 5%;
 
   header {
-    width: 600px;
-    height: 175px;
+    height: 155px;
     background: $main-blue;
     border-radius: 10px 10px 0px 0px;
 
     .caption {
-      font-style: normal;
-      font-weight: 600;
-      font-size: 50px;
-      text-align: center;
+      font-weight: 500;
+      font-size: 40px;
+      text-align: left;
       color: $text-white;
       margin-bottom: 10px;
+      margin-left: 30px;
       margin-top: 30px;
     }
 
     .lower-caption {
-      font-style: normal;
-      font-weight: 400;
-      font-size: 20px;
+      font-size: $main-font-size;
       color: $text-white;
       opacity: 0.7;
-      margin-left: 105px;
+      margin-left: 30px;
     }
   }
 
   main {
-    width: 600px;
     height: v-bind(computedMainHeight);
 
     .title {
-      font-style: normal;
-      font-weight: 600;
-      font-size: 35px;
+      font-size: 30px;
       line-height: 125.3%;
       color: $heading-text-light;
-      margin-left: 50px;
-      margin-top: 40px;
-      margin-bottom: 30px;
+      margin-left: 20px;
+      margin-top: 20px;
+      margin-bottom: 20px;
     }
 
     .input {
-      margin-left: 50px;
+      margin-left: 20px;
     }
 
     .button {
-      margin-left: 50px;
-      margin-top: 50px !important;
+      margin-left: 20px;
+      margin-top: 30px;
     }
   }
 }

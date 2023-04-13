@@ -1,18 +1,43 @@
 <script setup lang="ts">
-import ATButton from '@/components/button/ATButton.vue'
-import { useLoggedInStore } from '../../stores/loggedInStore'
-import { storeToRefs } from 'pinia'
-
-const loggedInStore = useLoggedInStore()
-const { loggedIn } = storeToRefs(loggedInStore)
-
-const handlePress = () => {
-  loggedIn.value = false
-}
+import ATBarChart from '@/components/diagrams/ATBarChart.vue'
+import ATPieChart from '@/components/diagrams/ATPieChart.vue'
 </script>
 
 <template>
   <div class="at-dashboard-host">
-    <ATButton title="Logout Dash" primary @press="handlePress" />
+    <section class="bar-chart">
+      <ATBarChart />
+    </section>
+
+    <section class="pie-chart">
+      <ATPieChart class="pie-chart-a" />
+      <ATPieChart class="pie-chart-b" />
+    </section>
   </div>
 </template>
+
+<style scoped lang="scss">
+.at-dashboard-host {
+  display: flex;
+  justify-content: center;
+  flex-flow: column;
+  align-items: center;
+
+  .bar-chart {
+    margin-top: 30px;
+    width: 80%;
+  }
+  .pie-chart {
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    width: 80%;
+
+    .pie-chart-a,
+    .pie-chart-b {
+      width: 40%;
+    }
+  }
+}
+</style>

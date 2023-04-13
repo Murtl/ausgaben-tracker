@@ -3,37 +3,74 @@ import ATButton from '@/components/button/ATButton.vue'
 import ATInput from '@/components/input/ATInput.vue'
 import ATWelcomeForm from '@/components/welcome-form/ATWelcomeForm.vue'
 import { ref } from 'vue'
-import { useLoggedInStore } from '../../stores/loggedInStore'
-import { storeToRefs } from 'pinia'
 import ATRegister from './ATRegister.vue'
+import dynamicText from '../../assets/dynamicText.json'
+import ATModal from '@/components/modal/ATModal.vue'
+import { storeToRefs } from 'pinia'
+import { useUserDataStore } from '@/stores/userDataStore'
+import { useLoggedInStore } from '@/stores/loggedInStore'
+import { ATAuthService } from '@/services/ATAuthService'
 
 const loggedInStore = useLoggedInStore()
 const { loggedIn } = storeToRefs(loggedInStore)
 
-const inputValue = ref('')
-const inputPwValue = ref('')
-const handlePress = () => {
-  loggedIn.value = true
+const userDataStore = useUserDataStore()
+const { userUID, userMail, userPassword } = storeToRefs(userDataStore)
+
+const mail = ref('')
+const password = ref('')
+const handleLogin = () => {
+  if (mail.value !== '' && password.value !== '') {
+    const { state, currentUserUid } = ATAuthService.login(mail.value, password.value)
+    if (state && currentUserUid) {
+      userUID.value = currentUserUid
+      userMail.value = mail.value
+      userPassword.value = password.value
+      loggedIn.value = true
+    } else {
+      handleShowModalLoginDataWrong()
+    }
+  }
 }
 
 const showRegister = ref(false)
-const handlePressRegister = () => {
+const handleShowRegister = () => {
   showRegister.value = true
+}
+
+const showModalLoginDataWrong = ref(false)
+const handleShowModalLoginDataWrong = () => {
+  showModalLoginDataWrong.value = !showModalLoginDataWrong.value
 }
 </script>
 
 <template>
   <div class="at-login-host" v-if="!showRegister">
-    <ATWelcomeForm title="Login" height="650px">
+    <ATWelcomeForm :title="dynamicText.login" height="520px">
       <template #inputs>
-        <ATInput title="E-Mail" v-model:value="inputValue" />
-        <ATInput title="Passwort" v-model:value="inputPwValue" password />
+        <ATInput :title="dynamicText.email" v-model:value="mail" />
+        <ATInput :title="dynamicText.password" v-model:value="password" password />
       </template>
       <template #buttons>
-        <ATButton title="Login" width="485px" primary @press="handlePress" />
-        <ATButton title="Neu hier?" width="485px" secondary @press="handlePressRegister" />
+        <ATButton :title="dynamicText.login" width="400px" primary @press="handleLogin" />
+        <ATButton
+          :title="dynamicText.new_here"
+          width="400px"
+          secondary
+          @press="handleShowRegister"
+        />
       </template>
     </ATWelcomeForm>
   </div>
   <ATRegister v-else />
+  <ATModal v-if="showModalLoginDataWrong" :title="dynamicText.wrong_login_data">
+    <template #buttons>
+      <ATButton
+        :title="dynamicText.try_again"
+        width="200px"
+        primary
+        @press="handleShowModalLoginDataWrong"
+      />
+    </template>
+  </ATModal>
 </template>
