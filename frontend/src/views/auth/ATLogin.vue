@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import ATButton from '@/components/button/ATButton.vue'
-import ATInput from '@/components/input/ATInput.vue'
-import ATWelcomeForm from '@/components/welcome-form/ATWelcomeForm.vue'
+import ATButton from '@/base-components/button/ATButton.vue'
+import ATInput from '@/base-components/input/ATInput.vue'
+import ATWelcomeForm from '@/base-components/welcome-form/ATWelcomeForm.vue'
 import { ref } from 'vue'
 import ATRegister from './ATRegister.vue'
 import dynamicText from '../../assets/dynamicText.json'
-import ATModal from '@/components/modal/ATModal.vue'
+import ATModal from '@/base-components/modal/ATModal.vue'
 import { storeToRefs } from 'pinia'
 import { useUserDataStore } from '@/stores/userDataStore'
 import { useLoggedInStore } from '@/stores/loggedInStore'
@@ -19,6 +19,16 @@ const { userUID, userMail, userPassword } = storeToRefs(userDataStore)
 
 const mail = ref('')
 const password = ref('')
+const showRegister = ref(false)
+const showModalLoginDataWrong = ref(false)
+
+const handleShowRegister = () => {
+  showRegister.value = true
+}
+const handleShowModalLoginDataWrong = () => {
+  showModalLoginDataWrong.value = !showModalLoginDataWrong.value
+}
+
 const handleLogin = () => {
   if (mail.value !== '' && password.value !== '') {
     const { state, currentUserUid } = ATAuthService.login(mail.value, password.value)
@@ -31,16 +41,6 @@ const handleLogin = () => {
       handleShowModalLoginDataWrong()
     }
   }
-}
-
-const showRegister = ref(false)
-const handleShowRegister = () => {
-  showRegister.value = true
-}
-
-const showModalLoginDataWrong = ref(false)
-const handleShowModalLoginDataWrong = () => {
-  showModalLoginDataWrong.value = !showModalLoginDataWrong.value
 }
 </script>
 

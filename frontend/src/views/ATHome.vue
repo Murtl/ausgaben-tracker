@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import ATButton from '@/components/button/ATButton.vue'
-import ATGridBigIcon from '@/components/icons/ATGridBigIcon.vue'
-import ATEditIcon from '@/components/icons/ATEditIcon.vue'
-import ATHandshakeIcon from '@/components/icons/ATHandshakeIcon.vue'
+import ATButton from '@/base-components/button/ATButton.vue'
+import ATGridBigIcon from '@/base-components/icons/ATGridBigIcon.vue'
+import ATEditIcon from '@/base-components/icons/ATEditIcon.vue'
+import ATHandshakeIcon from '@/base-components/icons/ATHandshakeIcon.vue'
 import { RouterLink, RouterView } from 'vue-router'
 import { onBeforeMount, ref } from 'vue'
 import ATAccountFlyout from '@/components/account-flyout/ATAccountFlyout.vue'
@@ -23,12 +23,13 @@ const { allLiquidFunds } = storeToRefs(liquidFundsStore)
 const userDataStore = useUserDataStore()
 const { userUID } = storeToRefs(userDataStore)
 
+const showFlyout = ref(false)
+
 onBeforeMount(() => {
   allExpenditures.value = ATExpendituresDataService.getExpenditures(userUID.value)
   allLiquidFunds.value = ATLiquidFundsDataService.getLiquidFunds(userUID.value)
 })
 
-const showFlyout = ref(false)
 const handleShowFlyout = () => {
   showFlyout.value = !showFlyout.value
 }

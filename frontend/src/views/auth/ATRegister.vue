@@ -1,25 +1,41 @@
 <script setup lang="ts">
-import ATButton from '@/components/button/ATButton.vue'
-import ATInput from '@/components/input/ATInput.vue'
-import ATWelcomeForm from '@/components/welcome-form/ATWelcomeForm.vue'
+import ATButton from '@/base-components/button/ATButton.vue'
+import ATInput from '@/base-components/input/ATInput.vue'
+import ATWelcomeForm from '@/base-components/welcome-form/ATWelcomeForm.vue'
 import { ref } from 'vue'
 import ATLogin from './ATLogin.vue'
 import dynamicText from '../../assets/dynamicText.json'
-import ATModal from '@/components/modal/ATModal.vue'
+import ATModal from '@/base-components/modal/ATModal.vue'
 import { useUserDataStore } from '@/stores/userDataStore'
 import { storeToRefs } from 'pinia'
 import { useLoggedInStore } from '@/stores/loggedInStore'
 import { ATAuthService } from '@/services/ATAuthService'
 
-const userDataStore = useUserDataStore()
-const { userUID, userMail, userPassword } = storeToRefs(userDataStore)
-
 const loggedInStore = useLoggedInStore()
 const { loggedIn } = storeToRefs(loggedInStore)
+
+const userDataStore = useUserDataStore()
+const { userUID, userMail, userPassword } = storeToRefs(userDataStore)
 
 const mail = ref('')
 const password = ref('')
 const passwordConfirm = ref('')
+const showLogin = ref(false)
+const showModalPWNotMatch = ref(false)
+const showModalMailInUse = ref(false)
+
+const handleShowLogin = () => {
+  showLogin.value = true
+}
+
+const handleShowModalPWNotMatch = () => {
+  showModalPWNotMatch.value = !showModalPWNotMatch.value
+}
+
+const handleShowModalMailInUse = () => {
+  showModalMailInUse.value = !showModalMailInUse.value
+}
+
 const handleRegister = () => {
   if (password.value !== '' && mail.value !== '') {
     if (password.value !== passwordConfirm.value) {
@@ -36,21 +52,6 @@ const handleRegister = () => {
       }
     }
   }
-}
-
-const showLogin = ref(false)
-const handleShowLogin = () => {
-  showLogin.value = true
-}
-
-const showModalPWNotMatch = ref(false)
-const handleShowModalPWNotMatch = () => {
-  showModalPWNotMatch.value = !showModalPWNotMatch.value
-}
-
-const showModalMailInUse = ref(false)
-const handleShowModalMailInUse = () => {
-  showModalMailInUse.value = !showModalMailInUse.value
 }
 </script>
 

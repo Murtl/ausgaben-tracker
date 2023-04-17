@@ -2,25 +2,28 @@
 import router from '@/router'
 import { useLoggedInStore } from '../../stores/loggedInStore'
 import { storeToRefs } from 'pinia'
-import ATArrowRightIcon from '@/components/icons/ATArrowRightIcon.vue'
-import ATHandsUpIcon from '@/components/icons/ATHandsUpIcon.vue'
-import ATButton from '../button/ATButton.vue'
-import ATCornerUpperLeftIcon from '@/components/icons/ATCornerUpperLeftIcon.vue'
+import ATArrowRightIcon from '@/base-components/icons/ATArrowRightIcon.vue'
+import ATHandsUpIcon from '@/base-components/icons/ATHandsUpIcon.vue'
+import ATButton from '@/base-components/button/ATButton.vue'
+import ATCornerUpperLeftIcon from '@/base-components/icons/ATCornerUpperLeftIcon.vue'
 import dynamicText from '../../assets/dynamicText.json'
 
 interface Emits {
+  /**
+   * Emitted when the user wants to close the flyout
+   */
   (e: 'close'): void
 }
 
 const emit = defineEmits<Emits>()
 
+const loggedInStore = useLoggedInStore()
+const { loggedIn } = storeToRefs(loggedInStore)
+
 const showAccount = () => {
   emit('close')
   router.push('/account')
 }
-
-const loggedInStore = useLoggedInStore()
-const { loggedIn } = storeToRefs(loggedInStore)
 
 const handleLogout = () => {
   emit('close')

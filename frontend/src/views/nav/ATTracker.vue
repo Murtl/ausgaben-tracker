@@ -1,34 +1,44 @@
 <script setup lang="ts">
-import ATButton from '@/components/button/ATButton.vue'
-import ATInput from '@/components/input/ATInput.vue'
-import ATModal from '@/components/modal/ATModal.vue'
+import ATButton from '@/base-components/button/ATButton.vue'
+import ATInput from '@/base-components/input/ATInput.vue'
+import ATModal from '@/base-components/modal/ATModal.vue'
 import { ref } from 'vue'
 import dynamicText from '../../assets/dynamicText.json'
-import ATSearchbar from '@/components/searchbar/ATSearchbar.vue'
-import ATPlusIcon from '@/components/icons/ATPlusIcon.vue'
+import ATSearchbar from '@/base-components/searchbar/ATSearchbar.vue'
+import ATPlusIcon from '@/base-components/icons/ATPlusIcon.vue'
 import ATExpendituresList from '@/components/expenditures-list/ATExpendituresList.vue'
 import { storeToRefs } from 'pinia'
 import { useExpendituresStore } from '@/stores/expendituresStore'
 import { ATExpendituresDataService } from '@/services/ATExpendituresDataService'
-import type { ATExpenditure } from '@/services/ATExpendituresDataService'
+import type { ATExpenditure } from '@/utils/types/atExpenditure'
 import { useUserDataStore } from '@/stores/userDataStore'
-
-const expendituresStore = useExpendituresStore()
-const { allExpenditures } = storeToRefs(expendituresStore)
+import { checkIfExpenditureIsComplete } from '@/utils/functions/checkIfExpenditureIsComplete'
 
 const userDataStore = useUserDataStore()
 const { userUID } = storeToRefs(userDataStore)
 
+const expendituresStore = useExpendituresStore()
+const { allExpenditures } = storeToRefs(expendituresStore)
+
+const searchbarValue = ref('')
+const newExpenditure = ref({
+  id: 0,
+  sourceOfExpenditure: '',
+  additionalInfo: '',
+  amount: 0,
+  date: ''
+})
 const showModalNewExpenditure = ref(false)
+const showModalWrongInfo = ref(false)
+
 const handleShowModalNewExpenditure = () => {
   showModalNewExpenditure.value = true
 }
 
-const handleCloseModalOnCancel = () => {
+const handleCloseModalNewExpenditureOnCancel = () => {
   showModalNewExpenditure.value = false
 }
 
-const showModalWrongInfo = ref(false)
 const handleShowModalWrongInfo = () => {
   showModalWrongInfo.value = true
 }
@@ -37,29 +47,8 @@ const handleCloseModalWrongInfo = () => {
   showModalWrongInfo.value = false
 }
 
-const newExpenditure = ref({
-  id: 0,
-  sourceOfExpenditure: '',
-  additionalInfo: '',
-  amount: 0,
-  date: ''
-})
-
-const checkIfExpenditureIsComplete = () => {
-  if (
-    !newExpenditure.value.sourceOfExpenditure ||
-    !newExpenditure.value.amount ||
-    newExpenditure.value.amount === 0 ||
-    !newExpenditure.value.date ||
-    newExpenditure.value.amount < 0
-  ) {
-    return false
-  }
-  return true
-}
-
-const handleCloseModalOnCreation = () => {
-  if (!checkIfExpenditureIsComplete()) {
+const handleCloseModalNewExpenditureOnCreation = () => {
+  if (!checkIfExpenditureIsComplete(newExpenditure.value)) {
     handleShowModalWrongInfo()
     return
   }
@@ -95,7 +84,6 @@ const handleUpdateExpenditure = (expenditure: ATExpenditure) => {
   ATExpendituresDataService.updateExpenditure(expenditure, userUID.value)
 }
 
-const searchbarValue = ref('')
 const searchChanged = (newFilter: string) => {
   searchbarValue.value = newFilter
 }
@@ -145,8 +133,16 @@ const searchChanged = (newFilter: string) => {
       <ATInput :title="dynamicText.date" v-model:value="newExpenditure.date" type-date />
     </template>
     <template #buttons>
-      <ATButton :title="dynamicText.cancel" secondary @press="handleCloseModalOnCancel" />
-      <ATButton :title="dynamicText.save" primary @press="handleCloseModalOnCreation" />
+      <ATButton
+        :title="dynamicText.cancel"
+        secondary
+        @press="handleCloseModalNewExpenditureOnCancel"
+      />
+      <ATButton
+        :title="dynamicText.save"
+        primary
+        @press="handleCloseModalNewExpenditureOnCreation"
+      />
     </template>
   </ATModal>
 

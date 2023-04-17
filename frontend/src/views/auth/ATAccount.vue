@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import ATButton from '@/components/button/ATButton.vue'
-import ATInput from '@/components/input/ATInput.vue'
+import ATButton from '@/base-components/button/ATButton.vue'
+import ATInput from '@/base-components/input/ATInput.vue'
 import { ref } from 'vue'
-import ATCheckIcon from '@/components/icons/ATCheckIcon.vue'
+import ATCheckIcon from '@/base-components/icons/ATCheckIcon.vue'
 import dynamicText from '../../assets/dynamicText.json'
-import ATModal from '@/components/modal/ATModal.vue'
+import ATModal from '@/base-components/modal/ATModal.vue'
 import { useUserDataStore } from '@/stores/userDataStore'
 import { storeToRefs } from 'pinia'
 import { ATAuthService } from '@/services/ATAuthService'
@@ -12,26 +12,26 @@ import { ATAuthService } from '@/services/ATAuthService'
 const userDataStore = useUserDataStore()
 const { userUID, userMail, userPassword } = storeToRefs(userDataStore)
 
+const newMail = ref('')
+const newPassword = ref('')
+const newPasswordConfirm = ref('')
 const showModalMailChangeSuccess = ref(false)
+const showModalPWChangeSuccess = ref(false)
+const showModalPWNotMatch = ref(false)
+const showModalMailInUse = ref(false)
+
 const handleShowModalMailChangeSuccess = () => {
   showModalMailChangeSuccess.value = !showModalMailChangeSuccess.value
 }
-
-const showModalPWChangeSuccess = ref(false)
 const handleShowModalPWChangeSuccess = () => {
   showModalPWChangeSuccess.value = !showModalPWChangeSuccess.value
 }
-const showModalPWNotMatch = ref(false)
 const handleShowModalPWNotMatch = () => {
   showModalPWNotMatch.value = !showModalPWNotMatch.value
 }
-
-const showModalMailInUse = ref(false)
 const handleShowModalMailInUse = () => {
   showModalMailInUse.value = !showModalMailInUse.value
 }
-
-const newMail = ref('')
 const handleSaveMail = () => {
   if (newMail.value !== '') {
     if (ATAuthService.changeMail(userUID.value, newMail.value) === false) {
@@ -44,8 +44,6 @@ const handleSaveMail = () => {
   }
 }
 
-const newPassword = ref('')
-const newPasswordConfirm = ref('')
 const handleSavePassword = () => {
   if (newPassword.value === newPasswordConfirm.value && newPassword.value !== '') {
     userPassword.value = newPassword.value
@@ -109,7 +107,7 @@ const handleSavePassword = () => {
     <template #buttons>
       <ATButton
         :title="dynamicText.ok"
-        width="200px"
+        width="50px"
         primary
         @press="handleShowModalPWChangeSuccess"
       />

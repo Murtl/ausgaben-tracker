@@ -1,32 +1,47 @@
 <script setup lang="ts">
-import ATTrashBinIcon from '@/components/icons/ATTrashBinIcon.vue'
-import ATButton from '@/components/button/ATButton.vue'
-import ATInput from '@/components/input/ATInput.vue'
-import ATModal from '@/components/modal/ATModal.vue'
+import ATTrashBinIcon from '@/base-components/icons/ATTrashBinIcon.vue'
+import ATButton from '@/base-components/button/ATButton.vue'
+import ATInput from '@/base-components/input/ATInput.vue'
+import ATModal from '@/base-components/modal/ATModal.vue'
 import dynamicText from '../../assets/dynamicText.json'
 import { ref, watch } from 'vue'
 import type { Ref } from 'vue'
-import ATEditItemIcon from '@/components/icons/ATEditItemIcon.vue'
-import type { ATExpenditure } from '@/services/ATExpendituresDataService'
+import ATEditItemIcon from '@/base-components/icons/ATEditItemIcon.vue'
+import type { ATExpenditure } from '@/utils/types/atExpenditure'
+import { checkIfExpenditureIsComplete } from '@/utils/functions/checkIfExpenditureIsComplete'
+import { filterExpenditures } from '@/utils/functions/filterExpenditures'
 
 export interface Props {
+  /**
+   * The expenditures to display
+   */
   data: ATExpenditure[]
+
+  /**
+   * The filter to apply to the expenditures
+   */
   filter?: string
 }
-
-interface Emits {
-  (e: 'delete-expenditure', expenditure: ATExpenditure): void
-  (e: 'update-expenditure', expenditure: ATExpenditure): void
-}
-
-const emit = defineEmits<Emits>()
 
 const props = withDefaults(defineProps<Props>(), {
   filter: ''
 })
 
-const expendituresList: Ref<ATExpenditure[]> = ref(props.data)
+interface Emits {
+  /**
+   * Emitted when the user wants to delete an expenditure
+   */
+  (e: 'delete-expenditure', expenditure: ATExpenditure): void
 
+  /**
+   * Emitted when the user wants to update an expenditure
+   */
+  (e: 'update-expenditure', expenditure: ATExpenditure): void
+}
+
+const emit = defineEmits<Emits>()
+
+const expendituresList: Ref<ATExpenditure[]> = ref(props.data)
 const currentExpenditure: Ref<ATExpenditure> = ref({
   id: 0,
   sourceOfExpenditure: '',
@@ -36,6 +51,26 @@ const currentExpenditure: Ref<ATExpenditure> = ref({
 })
 
 const showModalWrongInfo = ref(false)
+const showModalDelete = ref(false)
+const showModalEditExpenditure = ref(false)
+
+watch(
+  () => props.filter,
+  (newFilter) => {
+    expendituresList.value = props.data
+    expendituresList.value = filterExpenditures(expendituresList.value, newFilter)
+  }
+)
+
+watch(
+  () => props.data,
+  (newData) => {
+    expendituresList.value = newData
+    expendituresList.value = filterExpenditures(expendituresList.value, props.filter)
+  },
+  { deep: true }
+)
+
 const handleShowModalWrongInfo = () => {
   showModalWrongInfo.value = true
 }
@@ -44,20 +79,6 @@ const handleCloseModalWrongInfo = () => {
   showModalWrongInfo.value = false
 }
 
-const checkIfExpenditureIsComplete = () => {
-  if (
-    !currentExpenditure.value.sourceOfExpenditure ||
-    !currentExpenditure.value.amount ||
-    currentExpenditure.value.amount === 0 ||
-    !currentExpenditure.value.date ||
-    currentExpenditure.value.amount < 0
-  ) {
-    return false
-  }
-  return true
-}
-
-const showModalDelete = ref(false)
 const handleShowModalDelete = () => {
   showModalDelete.value = true
 }
@@ -72,7 +93,6 @@ const handleCloseModalDeleteOnConfirm = () => {
   showModalDelete.value = false
 }
 
-const showModalEditExpenditure = ref(false)
 const handleShowModalEditExpenditure = (
   id: number,
   sourceOfExpenditure: string,
@@ -95,7 +115,7 @@ const handleCloseModalEditExpenditureOnDelete = () => {
 }
 
 const handleCloseModalEditExpenditureOnSave = () => {
-  if (!checkIfExpenditureIsComplete()) {
+  if (!checkIfExpenditureIsComplete(currentExpenditure.value)) {
     handleShowModalWrongInfo()
     return
   }
@@ -106,35 +126,6 @@ const handleCloseModalEditExpenditureOnSave = () => {
 const handleCloseModalEditExpenditureOnCancel = () => {
   showModalEditExpenditure.value = false
 }
-
-watch(
-  () => props.filter,
-  (newFilter) => {
-    expendituresList.value = props.data
-    expendituresList.value = expendituresList.value.filter((expenditure) => {
-      return (
-        expenditure.sourceOfExpenditure.toLowerCase().includes(newFilter.toLowerCase()) ||
-        expenditure.additionalInfo.toLowerCase().includes(newFilter.toLowerCase()) ||
-        expenditure.date.toLowerCase().includes(newFilter.toLowerCase())
-      )
-    })
-  }
-)
-
-watch(
-  () => props.data,
-  (newData) => {
-    expendituresList.value = newData
-    expendituresList.value = expendituresList.value.filter((expenditure) => {
-      return (
-        expenditure.sourceOfExpenditure.toLowerCase().includes(props.filter.toLowerCase()) ||
-        expenditure.additionalInfo.toLowerCase().includes(props.filter.toLowerCase()) ||
-        expenditure.date.toLowerCase().includes(props.filter.toLowerCase())
-      )
-    })
-  },
-  { deep: true }
-)
 </script>
 
 <template>
