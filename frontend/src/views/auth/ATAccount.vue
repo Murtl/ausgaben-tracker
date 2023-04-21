@@ -3,7 +3,7 @@ import ATButton from '@/base-components/button/ATButton.vue'
 import ATInput from '@/base-components/input/ATInput.vue'
 import { ref } from 'vue'
 import ATCheckIcon from '@/base-components/icons/ATCheckIcon.vue'
-import dynamicText from '../../assets/dynamicText.json'
+import dynamicText from '@/text/dynamicText.json'
 import ATModal from '@/base-components/modal/ATModal.vue'
 import { useUserDataStore } from '@/stores/userDataStore'
 import { storeToRefs } from 'pinia'
@@ -136,31 +136,5 @@ const handleSavePassword = () => {
 </template>
 
 <style scoped lang="scss">
-@import 'src/assets/main.scss';
-
-.at-account-host {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-flow: column;
-  margin-left: auto;
-  margin-right: auto;
-  width: 400px;
-
-  margin-top: 20px;
-  box-shadow: $main-box-shadow;
-  border-radius: 10px;
-  background-color: $background-white;
-  padding: 20px;
-
-  .mail-wrapper {
-    margin-bottom: 40px;
-  }
-
-  .button-wrapper {
-    margin-top: 30px;
-    display: flex;
-    justify-content: flex-end;
-  }
-}
+@import '@/styles/views/auth/atAccount.scss';
 </style>

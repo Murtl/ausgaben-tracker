@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import router from '@/router'
-import { useLoggedInStore } from '../../stores/loggedInStore'
+import { useLoggedInStore } from '@/stores/loggedInStore'
 import { storeToRefs } from 'pinia'
 import ATArrowRightIcon from '@/base-components/icons/ATArrowRightIcon.vue'
 import ATHandsUpIcon from '@/base-components/icons/ATHandsUpIcon.vue'
 import ATButton from '@/base-components/button/ATButton.vue'
 import ATCornerUpperLeftIcon from '@/base-components/icons/ATCornerUpperLeftIcon.vue'
-import dynamicText from '../../assets/dynamicText.json'
+import dynamicText from '@/text/dynamicText.json'
 
 interface Emits {
   /**
@@ -54,29 +54,5 @@ const handleLogout = () => {
 </template>
 
 <style scoped lang="scss">
-@import 'src/assets/main.scss';
-
-.at-flyout-host {
-  position: absolute;
-  margin-top: 58px;
-  margin-right: 5px;
-  background-color: $background-white;
-  border-radius: 10px;
-
-  .arrow {
-    position: absolute;
-    margin-top: -7px;
-    margin-left: 88px;
-    rotate: 45deg;
-  }
-
-  .first-button {
-    border-bottom: 1px solid #dddddd;
-  }
-
-  .first-button:hover,
-  .second-button:hover {
-    background-color: $button-white-hover;
-  }
-}
+@import '@/styles/components/account-flyout/atAccountFlyout.scss';
 </style>

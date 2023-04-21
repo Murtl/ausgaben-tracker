@@ -3,7 +3,7 @@ import ATButton from '@/base-components/button/ATButton.vue'
 import ATInput from '@/base-components/input/ATInput.vue'
 import ATModal from '@/base-components/modal/ATModal.vue'
 import { ref } from 'vue'
-import dynamicText from '../../assets/dynamicText.json'
+import dynamicText from '@/text/dynamicText.json'
 import ATSearchbar from '@/base-components/searchbar/ATSearchbar.vue'
 import ATPlusIcon from '@/base-components/icons/ATPlusIcon.vue'
 import ATExpendituresList from '@/components/expenditures-list/ATExpendituresList.vue'
@@ -164,28 +164,5 @@ const searchChanged = (newFilter: string) => {
 </template>
 
 <style scoped lang="scss">
-@import 'src/assets/main.scss';
-.at-tracker-host {
-  header {
-    height: 70px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: $background-searchbar-color;
-    gap: 10px;
-
-    :deep(.at-button-host) {
-      margin-bottom: 0;
-    }
-  }
-
-  main {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-flow: column;
-    margin-left: auto;
-    margin-right: auto;
-  }
-}
+@import '@/styles/views/nav/atTracker.scss';
 </style>

@@ -1,0 +1,16 @@
+@import '@/styles/config.scss';
+
+.at-sort-banner-host {
+  background-color: $background-sort-banner;
+  display: flex;
+  align-items: center;
+  height: 20px;
+  font-size: $second-font-size;
+  padding: 10px;
+  width: 160px;
+  border-radius: $border-radius-inner-element;
+
+  .title-section {
+    margin-left: 10px;
+  }
+}

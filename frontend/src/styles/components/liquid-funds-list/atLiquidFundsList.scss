@@ -1,0 +1,20 @@
+@import '@/styles/config.scss';
+
+.at-liquid-funds-list-host {
+  .liquid-funds-list {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-flow: column;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+.delete-button {
+  background-color: $background-red !important;
+}
+
+.delete-button:hover {
+  background-color: $background-red-hover !important;
+}

@@ -1,0 +1,25 @@
+@import '@/styles/config.scss';
+
+.at-flyout-host {
+  position: absolute;
+  margin-top: 58px;
+  margin-right: 5px;
+  background-color: $background-white;
+  border-radius: $border-radius-outer-element;
+
+  .arrow {
+    position: absolute;
+    margin-top: -7px;
+    margin-left: 88px;
+    rotate: 45deg;
+  }
+
+  .first-button {
+    border-bottom: 1px solid #dddddd;
+  }
+
+  .first-button:hover,
+  .second-button:hover {
+    background-color: $button-white-hover;
+  }
+}

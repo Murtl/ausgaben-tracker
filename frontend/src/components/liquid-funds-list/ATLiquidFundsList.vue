@@ -2,7 +2,7 @@
 import { ref, watch, onBeforeMount } from 'vue'
 import type { ATLiquidFund } from '@/utils/types/atLiquidFund'
 import type { Ref } from 'vue'
-import dynamicText from '../../assets/dynamicText.json'
+import dynamicText from '@/text/dynamicText.json'
 import { storeToRefs } from 'pinia'
 import { useExpendituresStore } from '@/stores/expendituresStore'
 import ATSegmentItem from '@/base-components/segment-item/ATSegmentItem.vue'
@@ -244,24 +244,5 @@ const handleCloseModalEditLiquidFundOnDelete = () => {
 </template>
 
 <style scoped lang="scss">
-@import 'src/assets/main.scss';
-
-.at-liquid-funds-list-host {
-  .liquid-funds-list {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-flow: column;
-    margin-left: auto;
-    margin-right: auto;
-  }
-}
-
-.delete-button {
-  background-color: $background-red !important;
-}
-
-.delete-button:hover {
-  background-color: $background-red-hover !important;
-}
+@import '@/styles/components/liquid-funds-list/atLiquidFundsList.scss';
 </style>

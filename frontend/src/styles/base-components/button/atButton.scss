@@ -1,0 +1,48 @@
+@import '@/styles/config.scss';
+
+.at-button-host {
+  align-items: center;
+  border: none;
+  border-radius: $border-radius-inner-element;
+  box-sizing: border-box;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  font-family: $main-font-family;
+  font-size: $second-font-size;
+  padding: 8px 14px;
+  gap: 4px;
+  height: 40px;
+  margin-bottom: 10px;
+  background-color: $button-white;
+
+  &.primary {
+    background-color: $main-blue;
+    color: $text-white;
+  }
+
+  &.secondary {
+    background-color: $button-gray;
+    color: $text-blue;
+  }
+
+  &.tertiary {
+    background-color: $button-modal-gray;
+    color: $heading-text-light;
+  }
+}
+
+.at-button-host:hover {
+  background-color: $button-white-hover;
+  &.primary {
+    background-color: $main-blue-hover;
+  }
+
+  &.secondary {
+    background-color: $button-gray-hover;
+  }
+
+  &.tertiary {
+    background-color: $button-modal-gray-hover;
+  }
+}

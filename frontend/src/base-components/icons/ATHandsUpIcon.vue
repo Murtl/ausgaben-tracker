@@ -4,7 +4,7 @@
     height="20"
     viewBox="0 0 20 16"
     xmlns="http://www.w3.org/2000/svg"
-    class="at-hands-up-icon-host"
+    class="at-icon-host"
   >
     <path d="M10 2c0 1.105-0.895 2-2 2s-2-0.895-2-2c0-1.105 0.895-2 2-2s2 0.895 2 2z"></path>
     <path
@@ -14,9 +14,5 @@
 </template>
 
 <style scoped lang="scss">
-@import 'src/assets/main.scss';
-
-.at-hands-up-icon-host {
-  fill: $main-blue;
-}
+@import '@/styles/base-components/icons/atIconColor.scss';
 </style>

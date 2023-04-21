@@ -1,0 +1,27 @@
+@import '@/styles/config.scss';
+
+.bar-chart-host {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: $main-box-shadow;
+  background-color: $background-white;
+  padding: 20px;
+  margin: 10px;
+  border-radius: $border-radius-outer-element;
+
+  .bar-chart-options {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin-bottom: 10px;
+    gap: 10px;
+    width: 100%;
+  }
+
+  .bar-chart {
+    width: 100%;
+    height: 400px;
+  }
+}

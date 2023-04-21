@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { Bar } from 'vue-chartjs'
-import dynamicText from '../../assets/dynamicText.json'
-import staticText from '../../assets/staticText.json'
+import dynamicText from '@/text/dynamicText.json'
+import staticText from '@/text/staticText.json'
 import ATSortBanner from '@/base-components/sort-banner/ATSortBanner.vue'
 import ATDropDown from '@/base-components/drop-down/ATDropDown.vue'
 import { onBeforeMount, ref, computed } from 'vue'
@@ -131,30 +131,5 @@ const updateSelectedYear = (value: string) => {
 </template>
 
 <style scoped lang="scss">
-@import 'src/assets/main.scss';
-.bar-chart-host {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  box-shadow: $main-box-shadow;
-  background-color: $background-white;
-  padding: 20px;
-  margin: 10px;
-  border-radius: 10px;
-
-  .bar-chart-options {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    margin-bottom: 10px;
-    gap: 10px;
-    width: 100%;
-  }
-
-  .bar-chart {
-    width: 100%;
-    height: 400px;
-  }
-}
+@import '@/styles/components/diagrams/atBarChart.scss';
 </style>

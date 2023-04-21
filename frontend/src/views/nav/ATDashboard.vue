@@ -17,27 +17,5 @@ import ATPieChart from '@/components/diagrams/ATPieChart.vue'
 </template>
 
 <style scoped lang="scss">
-.at-dashboard-host {
-  display: flex;
-  justify-content: center;
-  flex-flow: column;
-  align-items: center;
-
-  .bar-chart {
-    margin-top: 30px;
-    width: 80%;
-  }
-  .pie-chart {
-    margin-top: 30px;
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    width: 80%;
-
-    .pie-chart-a,
-    .pie-chart-b {
-      width: 40%;
-    }
-  }
-}
+@import '@/styles/views/nav/atDashboard.scss';
 </style>

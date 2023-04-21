@@ -1,4 +1,4 @@
-import accounts from '../database/accounts.json'
+import accounts from '@/database/accounts.json'
 
 /**
  * @description The interface for the accounts.json file

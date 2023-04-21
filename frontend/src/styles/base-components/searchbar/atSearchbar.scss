@@ -1,0 +1,24 @@
+@import '@/styles/config.scss';
+
+.at-searchbar-host {
+  display: flex;
+  align-items: center;
+  background-color: $background-white;
+  border-radius: $border-radius-inner-element;
+
+  .searchbar-icon {
+    margin-left: 10px;
+    margin-right: 5px;
+  }
+  .native-input-element {
+    border: none;
+    height: 38px;
+    width: 400px;
+    border-radius: $border-radius-inner-element;
+    font-size: $second-font-size;
+  }
+
+  .native-input-element:focus {
+    outline: none;
+  }
+}

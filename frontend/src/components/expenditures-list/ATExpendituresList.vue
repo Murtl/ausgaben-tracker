@@ -3,7 +3,7 @@ import ATTrashBinIcon from '@/base-components/icons/ATTrashBinIcon.vue'
 import ATButton from '@/base-components/button/ATButton.vue'
 import ATInput from '@/base-components/input/ATInput.vue'
 import ATModal from '@/base-components/modal/ATModal.vue'
-import dynamicText from '../../assets/dynamicText.json'
+import dynamicText from '@/text/dynamicText.json'
 import { ref, watch } from 'vue'
 import type { Ref } from 'vue'
 import ATEditItemIcon from '@/base-components/icons/ATEditItemIcon.vue'
@@ -230,64 +230,5 @@ const handleCloseModalEditExpenditureOnCancel = () => {
 </template>
 
 <style scoped lang="scss">
-@import 'src/assets/main.scss';
-.at-expenditure-list-host {
-  background-color: $background-white;
-  width: 1000px;
-  min-height: calc(100vh - 120px);
-
-  :deep(.at-button-host) {
-    margin: 0;
-    height: 30px;
-  }
-
-  .table-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-flow: row;
-    padding: 10px;
-    border-bottom: 1px solid $border-table-color;
-    font-weight: bold;
-    height: 30px;
-  }
-
-  .table-content {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-flow: row;
-    padding: 10px;
-    height: 30px;
-    border-bottom: 1px solid $border-table-color;
-  }
-
-  .first-column {
-    width: 25%;
-  }
-
-  .second-column {
-    width: 45%;
-  }
-
-  .third-column {
-    width: 15%;
-  }
-
-  .fourth-column {
-    width: 15%;
-  }
-
-  .fifth-column {
-    width: 5%;
-  }
-}
-
-.delete-button {
-  background-color: $background-red !important;
-}
-
-.delete-button:hover {
-  background-color: $background-red-hover !important;
-}
+@import '@/styles/components/expenditures-list/atExpendituresList.scss';
 </style>

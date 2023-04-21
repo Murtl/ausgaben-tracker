@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import dynamicText from '../../assets/dynamicText.json'
+import dynamicText from '@/text/dynamicText.json'
 
 export interface Props {
   /**
@@ -43,62 +43,11 @@ const computedMainHeight = computed(() => (props.height === '520px' ? '365px' : 
 </template>
 
 <style scoped lang="scss">
-@import 'src/assets/main.scss';
-
+@import '@/styles/base-components/welcome-form/atWelcomeForm.scss';
 .at-welcome-form-host {
-  display: flex;
-  flex-direction: column;
-  width: 440px;
   height: v-bind(height);
-  background: $background-white;
-  box-shadow: $main-box-shadow;
-  border-radius: 10px;
-  margin: auto;
-  margin-top: 5%;
-
-  header {
-    height: 155px;
-    background: $main-blue;
-    border-radius: 10px 10px 0px 0px;
-
-    .caption {
-      font-weight: 500;
-      font-size: 40px;
-      text-align: left;
-      color: $text-white;
-      margin-bottom: 10px;
-      margin-left: 30px;
-      margin-top: 30px;
-    }
-
-    .lower-caption {
-      font-size: $main-font-size;
-      color: $text-white;
-      opacity: 0.7;
-      margin-left: 30px;
-    }
-  }
-
   main {
     height: v-bind(computedMainHeight);
-
-    .title {
-      font-size: 30px;
-      line-height: 125.3%;
-      color: $heading-text-light;
-      margin-left: 20px;
-      margin-top: 20px;
-      margin-bottom: 20px;
-    }
-
-    .input {
-      margin-left: 20px;
-    }
-
-    .button {
-      margin-left: 20px;
-      margin-top: 30px;
-    }
   }
 }
 </style>

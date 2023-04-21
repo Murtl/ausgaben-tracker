@@ -16,13 +16,5 @@
 </template>
 
 <style scoped lang="scss">
-@import 'src/assets/main.scss';
-
-.at-trash-bin-icon-host {
-  fill: red;
-}
-
-.at-trash-bin-icon-host:hover {
-  fill: white;
-}
+@import '@/styles/base-components/icons/atTrashBinIcon.scss';
 </style>

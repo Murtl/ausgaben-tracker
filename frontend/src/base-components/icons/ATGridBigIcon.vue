@@ -4,7 +4,7 @@
     height="20"
     viewBox="0 0 20 16"
     xmlns="http://www.w3.org/2000/svg"
-    class="at-edit-icon-host"
+    class="at-icon-host"
   >
     <path d="M0 0h7v7h-7v-7z"></path>
     <path d="M9 0h7v7h-7v-7z"></path>
@@ -14,9 +14,5 @@
 </template>
 
 <style scoped lang="scss">
-@import 'src/assets/main.scss';
-
-.at-edit-icon-host {
-  fill: $main-blue;
-}
+@import '@/styles/base-components/icons/atIconColor.scss';
 </style>

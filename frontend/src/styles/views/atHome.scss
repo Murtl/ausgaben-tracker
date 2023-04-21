@@ -1,0 +1,48 @@
+@import 'src/styles/config.scss';
+
+header {
+  display: flex;
+  flex-flow: row;
+  justify-content: space-between;
+  background-color: $background-white;
+
+  .title {
+    font-size: $main-font-size;
+    margin-top: 15px;
+    margin-left: 10px;
+    color: $heading-text-light;
+  }
+
+  .nav {
+    display: flex;
+    align-items: center;
+    font-size: 17px;
+
+    a {
+      padding: 5px 20px 5px 5px;
+      text-decoration: none;
+      color: $heading-text-light;
+
+      &.router-link-exact-active {
+        color: $main-blue;
+        background-color: $nav-hover;
+      }
+    }
+
+    a:hover {
+      background-color: $nav-hover;
+    }
+  }
+
+  .avatar {
+    width: 215px;
+    display: flex;
+    justify-content: flex-end;
+
+    :deep(.at-button-host) {
+      border-radius: 50px;
+      margin: 5px 10px 5px 5px;
+      font-size: $second-font-size;
+    }
+  }
+}

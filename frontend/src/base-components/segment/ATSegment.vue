@@ -24,16 +24,5 @@ defineProps<Props>()
 </template>
 
 <style scoped lang="scss">
-@import 'src/assets/main.scss';
-
-.at-segment-host {
-  display: flex;
-  flex-flow: column;
-  margin-bottom: 10px;
-
-  .title-section {
-    padding: 10px 5px;
-    font-weight: bold;
-  }
-}
+@import '@/styles/base-components/segment/atSegment.scss';
 </style>

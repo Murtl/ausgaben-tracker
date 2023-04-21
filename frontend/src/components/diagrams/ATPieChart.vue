@@ -2,8 +2,8 @@
 import { Pie } from 'vue-chartjs'
 import type { Ref } from 'vue'
 import { Chart as ChartJS, Tooltip, ArcElement, Legend } from 'chart.js'
-import dynamicText from '../../assets/dynamicText.json'
-import staticText from '../../assets/staticText.json'
+import dynamicText from '@/text/dynamicText.json'
+import staticText from '@/text/staticText.json'
 import ATSortBanner from '@/base-components/sort-banner/ATSortBanner.vue'
 import ATDropDown from '@/base-components/drop-down/ATDropDown.vue'
 import { storeToRefs } from 'pinia'
@@ -67,8 +67,18 @@ const sortExpendituresInData = () => {
     })
     sortedExpenditures.value.forEach((expenditure) => {
       if (expenditure.year === selectedYear.value) {
-        data.value.push(expenditure.height)
-        labelOptions.value.push(expenditure.sourceOfExpenditure)
+        let wasThere = false
+        labelOptions.value.forEach((sourceOfExpenditure) => {
+          if (sourceOfExpenditure === expenditure.sourceOfExpenditure) {
+            data.value[labelOptions.value.indexOf(sourceOfExpenditure)] += expenditure.height
+            wasThere = true
+            return
+          }
+        })
+        if (!wasThere) {
+          data.value.push(expenditure.height)
+          labelOptions.value.push(expenditure.sourceOfExpenditure)
+        }
       }
     })
     if (data.value.length > 12) {
@@ -137,28 +147,5 @@ const updateSelectedYear = (value: string) => {
 </template>
 
 <style scoped lang="scss">
-@import 'src/assets/main.scss';
-.pie-chart-host {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  box-shadow: $main-box-shadow;
-  background-color: $background-white;
-  padding: 20px;
-  margin: 10px;
-  border-radius: 10px;
-
-  .pie-chart-options {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 30px;
-    gap: 10px;
-  }
-
-  .pie-chart {
-    height: 400px;
-  }
-}
+@import '@/styles/components/diagrams/atPieChart.scss';
 </style>

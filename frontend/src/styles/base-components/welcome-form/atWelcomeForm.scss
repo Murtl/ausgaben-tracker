@@ -1,0 +1,54 @@
+@import '@/styles/config.scss';
+
+.at-welcome-form-host {
+  display: flex;
+  flex-direction: column;
+  width: 440px;
+  background: $background-white;
+  box-shadow: $main-box-shadow;
+  border-radius: $border-radius-outer-element;
+  margin: auto;
+  margin-top: 5%;
+
+  header {
+    height: 155px;
+    background: $main-blue;
+    border-radius: 10px 10px 0 0;
+
+    .caption {
+      font-size: 40px;
+      text-align: left;
+      color: $text-white;
+      margin-bottom: 10px;
+      margin-left: 30px;
+      margin-top: 30px;
+    }
+
+    .lower-caption {
+      font-size: $main-font-size;
+      color: $text-white;
+      opacity: 0.7;
+      margin-left: 30px;
+    }
+  }
+
+  main {
+    .title {
+      font-size: 30px;
+      line-height: 125.3%;
+      color: $heading-text-light;
+      margin-left: 20px;
+      margin-top: 20px;
+      margin-bottom: 20px;
+    }
+
+    .input {
+      margin-left: 20px;
+    }
+
+    .button {
+      margin-left: 20px;
+      margin-top: 30px;
+    }
+  }
+}

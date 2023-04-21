@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { useLoggedInStore } from './stores/loggedInStore'
+import { useLoggedInStore } from '@/stores/loggedInStore'
 import { storeToRefs } from 'pinia'
-import ATHome from './views/ATHome.vue'
-import ATLogin from './views/auth/ATLogin.vue'
+import ATHome from '@/views/ATHome.vue'
+import ATLogin from '@/views/auth/ATLogin.vue'
 
 const loggedInStore = useLoggedInStore()
 const { loggedIn } = storeToRefs(loggedInStore)
@@ -12,3 +12,7 @@ const { loggedIn } = storeToRefs(loggedInStore)
   <ATLogin v-if="!loggedIn" />
   <ATHome v-else />
 </template>
+
+<style lang="scss">
+@import '@/styles/app.scss';
+</style>

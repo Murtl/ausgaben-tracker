@@ -1,4 +1,4 @@
-import dynamicText from '../assets/dynamicText.json'
+import dynamicText from '@/text/dynamicText.json'
 
 /**
  * @description All months in a year

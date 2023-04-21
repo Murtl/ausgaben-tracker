@@ -1,0 +1,27 @@
+@import '@/styles/config.scss';
+
+.at-account-host {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-flow: column;
+  margin-left: auto;
+  margin-right: auto;
+  width: 400px;
+
+  margin-top: 20px;
+  box-shadow: $main-box-shadow;
+  border-radius: $border-radius-outer-element;
+  background-color: $background-white;
+  padding: 20px;
+
+  .mail-wrapper {
+    margin-bottom: 40px;
+  }
+
+  .button-wrapper {
+    margin-top: 30px;
+    display: flex;
+    justify-content: flex-end;
+  }
+}

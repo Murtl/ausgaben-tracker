@@ -49,29 +49,5 @@ const handleOptionChange = (event: Event) => {
 </template>
 
 <style scoped lang="scss">
-@import 'src/assets/main.scss';
-
-.at-drop-down-host {
-  background-color: $main-blue;
-  display: flex;
-  align-items: center;
-  height: 20px;
-  font-size: $second-font-size;
-  width: fit-content;
-  border-radius: 5px;
-  padding: 10px;
-
-  .drop-down {
-    cursor: pointer;
-    border: none;
-    font-size: $second-font-size;
-    color: $text-white;
-    background-color: $main-blue;
-    height: 40px;
-  }
-
-  .drop-down:focus {
-    outline: none;
-  }
-}
+@import '@/styles/base-components/drop-down/atDropDown.scss';
 </style>

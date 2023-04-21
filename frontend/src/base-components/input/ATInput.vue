@@ -76,7 +76,7 @@ const computedType = ref(
     ? 'number'
     : 'text'
 )
-const computedWitdth = computed(() => (props.password ? '350px' : '400px'))
+const computedWidth = computed(() => (props.password ? '350px' : '400px'))
 const computedMin = computed(() => {
   if (props.typeMonth) {
     return '1'
@@ -180,57 +180,11 @@ const hidePassword = () => {
 </template>
 
 <style scoped lang="scss">
-@import 'src/assets/main.scss';
-
+@import '@/styles/base-components/input/atInput.scss';
 .at-input-host {
-  display: flex;
-  flex-flow: column;
-  margin-bottom: 10px;
-
-  .title {
-    color: #616d7c;
-    font-size: $second-font-size;
-  }
-
   .input-field {
-    display: flex;
-    flex-flow: row;
-    background-color: $background-white-input;
-    border-radius: 5px;
-    width: 400px;
-
     .native-input-element {
-      border: none;
-      cursor: pointer;
-      height: 50px;
-      border-radius: 5px;
-      font-size: $second-font-size;
-      background-color: $background-white-input;
-      width: v-bind(computedWitdth);
-      padding: 8px 14px;
-      box-sizing: border-box;
-
-      &.readonly {
-        cursor: unset;
-        background-color: $background-white;
-      }
-    }
-
-    .native-input-element:focus {
-      outline: none;
-    }
-
-    .button {
-      background-color: $background-white-input;
-      align-items: center;
-      height: 50px;
-      justify-content: center;
-      width: 50px;
-      margin-bottom: 0px;
-
-      &.readonly {
-        background-color: $background-white;
-      }
+      width: v-bind(computedWidth);
     }
   }
 }

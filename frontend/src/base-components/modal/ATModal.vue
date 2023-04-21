@@ -28,46 +28,5 @@ defineProps<Props>()
 </template>
 
 <style scoped lang="scss">
-@import 'src/assets/main.scss';
-
-.shadowbox {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: $background-shadowbox;
-  opacity: 0.5;
-}
-
-.at-modal-host {
-  position: absolute;
-  top: 40%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background: $background-white;
-  box-shadow: $main-box-shadow;
-  border-radius: 10px;
-
-  header {
-    font-weight: bold;
-    font-size: $main-font-size;
-    color: $heading-text-light;
-    padding: 20px 20px 10px 20px;
-  }
-
-  main {
-    display: grid;
-    padding: 20px;
-  }
-
-  footer {
-    display: flex;
-    justify-content: flex-end;
-    background-color: $background-modal-footer;
-    gap: 20px;
-    padding: 15px 20px 10px 20px;
-    border-radius: 0 0 10px 10px;
-  }
-}
+@import '@/styles/base-components/modal/atModal.scss';
 </style>

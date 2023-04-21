@@ -19,20 +19,5 @@ defineProps<Props>()
 </template>
 
 <style scoped lang="scss">
-@import 'src/assets/main.scss';
-
-.at-sort-banner-host {
-  background-color: $background-sort-banner;
-  display: flex;
-  align-items: center;
-  height: 20px;
-  font-size: $second-font-size;
-  padding: 10px;
-  width: 160px;
-  border-radius: 5px;
-
-  .title-section {
-    margin-left: 10px;
-  }
-}
+@import '@/styles/base-components/sort-banner/atSortBanner.scss';
 </style>

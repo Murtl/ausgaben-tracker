@@ -6,7 +6,7 @@ import ATHandshakeIcon from '@/base-components/icons/ATHandshakeIcon.vue'
 import { RouterLink, RouterView } from 'vue-router'
 import { onBeforeMount, ref } from 'vue'
 import ATAccountFlyout from '@/components/account-flyout/ATAccountFlyout.vue'
-import dynamicText from '../assets/dynamicText.json'
+import dynamicText from '@/text/dynamicText.json'
 import { storeToRefs } from 'pinia'
 import { ATExpendituresDataService } from '@/services/ATExpendituresDataService'
 import { useExpendituresStore } from '@/stores/expendituresStore'
@@ -21,7 +21,7 @@ const liquidFundsStore = useLiquidFundsStore()
 const { allLiquidFunds } = storeToRefs(liquidFundsStore)
 
 const userDataStore = useUserDataStore()
-const { userUID } = storeToRefs(userDataStore)
+const { userUID, userMail } = storeToRefs(userDataStore)
 
 const showFlyout = ref(false)
 
@@ -55,7 +55,12 @@ const handleShowFlyout = () => {
       </nav>
     </section>
     <section class="avatar">
-      <ATButton primary title="MM" width="40px" @press="handleShowFlyout" />
+      <ATButton
+        primary
+        :title="userMail.substring(0, 2).toUpperCase()"
+        width="40px"
+        @press="handleShowFlyout"
+      />
       <ATAccountFlyout v-if="showFlyout" @close="handleShowFlyout" />
     </section>
   </header>
@@ -66,52 +71,5 @@ const handleShowFlyout = () => {
 </template>
 
 <style scoped lang="scss">
-@import 'src/assets/main.scss';
-
-header {
-  display: flex;
-  flex-flow: row;
-  justify-content: space-between;
-  background-color: $background-white;
-
-  .title {
-    font-size: $main-font-size;
-    margin-top: 15px;
-    margin-left: 10px;
-    color: $heading-text-light;
-  }
-
-  .nav {
-    display: flex;
-    align-items: center;
-    font-size: 17px;
-
-    a {
-      padding: 5px 20px 5px 5px;
-      text-decoration: none;
-      color: $heading-text-light;
-
-      &.router-link-exact-active {
-        color: $main-blue;
-        background-color: $nav-hover;
-      }
-    }
-
-    a:hover {
-      background-color: $nav-hover;
-    }
-  }
-
-  .avatar {
-    width: 215px;
-    display: flex;
-    justify-content: flex-end;
-
-    :deep(.at-button-host) {
-      border-radius: 50px;
-      margin: 5px 10px 5px 5px;
-      font-size: $second-font-size;
-    }
-  }
-}
+@import '@/styles/views/atHome.scss';
 </style>

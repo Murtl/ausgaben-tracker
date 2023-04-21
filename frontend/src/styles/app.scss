@@ -1,0 +1,8 @@
+@import '@/styles/config.scss';
+
+body {
+  background-color: $background-body-color;
+  margin: 0;
+  font-family: $main-font-family;
+  user-select: none;
+}

@@ -36,37 +36,5 @@ withDefaults(defineProps<Props>(), {
 </template>
 
 <style scoped lang="scss">
-@import 'src/assets/main.scss';
-
-.at-segment-item-host {
-  display: flex;
-  flex-flow: row;
-  justify-content: space-between;
-  align-items: center;
-  box-shadow: $main-box-shadow;
-  background-color: $background-white;
-  border-radius: 5px;
-  padding: 10px;
-  font-size: $second-font-size;
-  width: 700px;
-  margin: 5px;
-  height: 30px;
-
-  .first-section {
-    width: 70%;
-  }
-
-  .second-section {
-    width: 20%;
-  }
-
-  .third-section {
-    width: 10%;
-
-    :deep(.at-button-host) {
-      margin: 0;
-      height: 30px;
-    }
-  }
-}
+@import '@/styles/base-components/segment-item/atSegmentItem.scss';
 </style>

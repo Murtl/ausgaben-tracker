@@ -1,0 +1,25 @@
+@import '@/styles/config.scss';
+
+.at-drop-down-host {
+  background-color: $main-blue;
+  display: flex;
+  align-items: center;
+  height: 20px;
+  font-size: $second-font-size;
+  width: fit-content;
+  border-radius: $border-radius-inner-element;
+  padding: 10px;
+
+  .drop-down {
+    cursor: pointer;
+    border: none;
+    font-size: $second-font-size;
+    color: $text-white;
+    background-color: $main-blue;
+    height: 40px;
+  }
+
+  .drop-down:focus {
+    outline: none;
+  }
+}

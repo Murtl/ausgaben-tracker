@@ -1,0 +1,16 @@
+@import '@/styles/config.scss';
+
+.at-balance-host {
+  header {
+    height: 70px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: $background-searchbar-color;
+    gap: 10px;
+
+    :deep(.at-button-host) {
+      margin-bottom: 0;
+    }
+  }
+}

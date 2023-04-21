@@ -4,7 +4,7 @@ import ATInput from '@/base-components/input/ATInput.vue'
 import ATModal from '@/base-components/modal/ATModal.vue'
 import { ref } from 'vue'
 import type { Ref } from 'vue'
-import dynamicText from '../../assets/dynamicText.json'
+import dynamicText from '@/text/dynamicText.json'
 import ATSearchbar from '@/base-components/searchbar/ATSearchbar.vue'
 import ATPlusIcon from '@/base-components/icons/ATPlusIcon.vue'
 import { useLiquidFundsStore } from '@/stores/liquidFundsStore'
@@ -181,20 +181,5 @@ const searchChanged = (newFilter: string) => {
 </template>
 
 <style scoped lang="scss">
-@import 'src/assets/main.scss';
-
-.at-balance-host {
-  header {
-    height: 70px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: $background-searchbar-color;
-    gap: 10px;
-
-    :deep(.at-button-host) {
-      margin-bottom: 0;
-    }
-  }
-}
+@import '@/styles/views/nav/atBalance.scss';
 </style>

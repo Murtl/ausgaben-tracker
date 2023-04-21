@@ -35,27 +35,5 @@ watch(inputValue, (newValue) => {
 </template>
 
 <style scoped lang="scss">
-@import 'src/assets/main.scss';
-.at-searchbar-host {
-  display: flex;
-  align-items: center;
-  background-color: $background-white;
-  border-radius: 5px;
-
-  .searchbar-icon {
-    margin-left: 10px;
-    margin-right: 5px;
-  }
-  .native-input-element {
-    border: none;
-    height: 38px;
-    width: 400px;
-    border-radius: 5px;
-    font-size: $second-font-size;
-  }
-
-  .native-input-element:focus {
-    outline: none;
-  }
-}
+@import '@/styles/base-components/searchbar/atSearchbar.scss';
 </style>
