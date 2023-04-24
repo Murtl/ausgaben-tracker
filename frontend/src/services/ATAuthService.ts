@@ -6,7 +6,7 @@ import accounts from '@/database/accounts.json'
 interface ATJsonAccounts {
   [key: string]: {
     userUID: string
-    mail: string
+    name: string
     password: string
   }[]
 }
@@ -19,17 +19,17 @@ export class ATAuthService {
 
   /**
    * @description Logs in a user
-   * @param mail mail of the user
+   * @param name name of the user
    * @param password password of the user
    * @returns if the login was successful and the userUID of the user
    */
   static login(
-    mail: string,
+    name: string,
     password: string
   ): { state: boolean; currentUserUid: string | undefined } {
     for (let i = 0; i < ATAuthService.myAccounts.users.length; i++) {
       if (
-        ATAuthService.myAccounts.users[i].mail === mail &&
+        ATAuthService.myAccounts.users[i].name === name &&
         ATAuthService.myAccounts.users[i].password === password
       ) {
         return { state: true, currentUserUid: ATAuthService.myAccounts.users[i].userUID }
@@ -40,40 +40,40 @@ export class ATAuthService {
 
   /**
    * @description Registers a new user in the accounts.json file
-   * @param mail mail of the new user
+   * @param name name of the new user
    * @param password password of the new user
    * @returns if the registration was successful and the userUID of the new user
    */
   static register(
-    mail: string,
+    name: string,
     password: string
   ): { state: boolean; newUserUid: string | undefined } {
     for (let i = 0; i < ATAuthService.myAccounts.users.length; i++) {
-      if (ATAuthService.myAccounts.users[i].mail === mail) {
+      if (ATAuthService.myAccounts.users[i].name === name) {
         return { state: false, newUserUid: undefined }
       }
     }
     const newUserUid =
       ATAuthService.myAccounts.users[ATAuthService.myAccounts.users.length - 1].userUID + 1
-    ATAuthService.myAccounts.users.push({ userUID: newUserUid, mail, password })
+    ATAuthService.myAccounts.users.push({ userUID: newUserUid, name, password })
     return { state: true, newUserUid }
   }
 
   /**
-   * @description Changes the mail in the accounts.json file
+   * @description Changes the name in the accounts.json file
    * @param userUID userUID of the user
-   * @param newMail new mail of the user
+   * @param newName new name of the user
    * @returns if the change was successful
    */
-  static changeMail(userUID: string, newMail: string): boolean {
+  static changeName(userUID: string, newName: string): boolean {
     for (let i = 0; i < ATAuthService.myAccounts.users.length; i++) {
-      if (ATAuthService.myAccounts.users[i].mail === newMail) {
+      if (ATAuthService.myAccounts.users[i].name === newName) {
         return false
       }
     }
     for (let i = 0; i < ATAuthService.myAccounts.users.length; i++) {
       if (ATAuthService.myAccounts.users[i].userUID === userUID) {
-        ATAuthService.myAccounts.users[i].mail = newMail
+        ATAuthService.myAccounts.users[i].name = newName
         return true
       }
     }

@@ -10,18 +10,18 @@ import { storeToRefs } from 'pinia'
 import { ATAuthService } from '@/services/ATAuthService'
 
 const userDataStore = useUserDataStore()
-const { userUID, userMail, userPassword } = storeToRefs(userDataStore)
+const { userUID, userName, userPassword } = storeToRefs(userDataStore)
 
-const newMail = ref('')
+const newName = ref('')
 const newPassword = ref('')
 const newPasswordConfirm = ref('')
-const showModalMailChangeSuccess = ref(false)
+const showModalNameChangeSuccess = ref(false)
 const showModalPWChangeSuccess = ref(false)
 const showModalPWNotMatch = ref(false)
-const showModalMailInUse = ref(false)
+const showModalNameInUse = ref(false)
 
-const handleShowModalMailChangeSuccess = () => {
-  showModalMailChangeSuccess.value = !showModalMailChangeSuccess.value
+const handleShowModalNameChangeSuccess = () => {
+  showModalNameChangeSuccess.value = !showModalNameChangeSuccess.value
 }
 const handleShowModalPWChangeSuccess = () => {
   showModalPWChangeSuccess.value = !showModalPWChangeSuccess.value
@@ -29,17 +29,17 @@ const handleShowModalPWChangeSuccess = () => {
 const handleShowModalPWNotMatch = () => {
   showModalPWNotMatch.value = !showModalPWNotMatch.value
 }
-const handleShowModalMailInUse = () => {
-  showModalMailInUse.value = !showModalMailInUse.value
+const handleShowModalNameInUse = () => {
+  showModalNameInUse.value = !showModalNameInUse.value
 }
-const handleSaveMail = () => {
-  if (newMail.value !== '') {
-    if (ATAuthService.changeMail(userUID.value, newMail.value) === false) {
-      handleShowModalMailInUse()
+const handleSaveName = () => {
+  if (newName.value !== '') {
+    if (ATAuthService.changeName(userUID.value, newName.value) === false) {
+      handleShowModalNameInUse()
     } else {
-      userMail.value = newMail.value
-      newMail.value = ''
-      handleShowModalMailChangeSuccess()
+      userName.value = newName.value
+      newName.value = ''
+      handleShowModalNameChangeSuccess()
     }
   }
 }
@@ -59,11 +59,11 @@ const handleSavePassword = () => {
 
 <template>
   <div class="at-account-host">
-    <section class="mail-wrapper">
-      <ATInput :title="dynamicText.email" v-model:value="userMail" readonly />
-      <ATInput :title="dynamicText.change_email" v-model:value="newMail" />
+    <section class="name-wrapper">
+      <ATInput :title="dynamicText.name" v-model:value="userName" readonly />
+      <ATInput :title="dynamicText.change_name" v-model:value="newName" />
       <section class="button-wrapper">
-        <ATButton :title="dynamicText.save_email" width="210px" primary @press="handleSaveMail">
+        <ATButton :title="dynamicText.save_name" width="260px" primary @press="handleSaveName">
           <template #icon>
             <ATCheckIcon />
           </template>
@@ -93,13 +93,13 @@ const handleSavePassword = () => {
       </section>
     </section>
   </div>
-  <ATModal v-if="showModalMailChangeSuccess" :title="dynamicText.email_successfully_updated">
+  <ATModal v-if="showModalNameChangeSuccess" :title="dynamicText.name_successfully_updated">
     <template #buttons>
       <ATButton
         :title="dynamicText.ok"
         width="50px"
         primary
-        @press="handleShowModalMailChangeSuccess"
+        @press="handleShowModalNameChangeSuccess"
       />
     </template>
   </ATModal>
@@ -123,13 +123,13 @@ const handleSavePassword = () => {
       />
     </template>
   </ATModal>
-  <ATModal v-if="showModalMailInUse" :title="dynamicText.email_already_in_use">
+  <ATModal v-if="showModalNameInUse" :title="dynamicText.name_already_in_use">
     <template #buttons>
       <ATButton
         :title="dynamicText.try_again"
         width="200px"
         primary
-        @press="handleShowModalMailInUse"
+        @press="handleShowModalNameInUse"
       />
     </template>
   </ATModal>

@@ -15,9 +15,9 @@ const loggedInStore = useLoggedInStore()
 const { loggedIn } = storeToRefs(loggedInStore)
 
 const userDataStore = useUserDataStore()
-const { userUID, userMail, userPassword } = storeToRefs(userDataStore)
+const { userUID, userName, userPassword } = storeToRefs(userDataStore)
 
-const mail = ref('')
+const name = ref('')
 const password = ref('')
 const showRegister = ref(false)
 const showModalLoginDataWrong = ref(false)
@@ -30,11 +30,11 @@ const handleShowModalLoginDataWrong = () => {
 }
 
 const handleLogin = () => {
-  if (mail.value !== '' && password.value !== '') {
-    const { state, currentUserUid } = ATAuthService.login(mail.value, password.value)
+  if (name.value !== '' && password.value !== '') {
+    const { state, currentUserUid } = ATAuthService.login(name.value, password.value)
     if (state && currentUserUid) {
       userUID.value = currentUserUid
-      userMail.value = mail.value
+      userName.value = name.value
       userPassword.value = password.value
       loggedIn.value = true
     } else {
@@ -48,7 +48,7 @@ const handleLogin = () => {
   <div class="at-login-host" v-if="!showRegister">
     <ATWelcomeForm :title="dynamicText.login" height="520px">
       <template #inputs>
-        <ATInput :title="dynamicText.email" v-model:value="mail" />
+        <ATInput :title="dynamicText.name" v-model:value="name" />
         <ATInput :title="dynamicText.password" v-model:value="password" password />
       </template>
       <template #buttons>

@@ -108,12 +108,10 @@ onBeforeMount(() => {
 watch(
   () => props.value,
   (newValue) => {
-    if (newValue) {
-      if (props.typeDate && newValue && typeof newValue === 'string') {
-        inputValue.value = newValue.split('.').reverse().join('-')
-      } else {
-        inputValue.value = newValue
-      }
+    if (props.typeDate && newValue && typeof newValue === 'string') {
+      inputValue.value = newValue.split('.').reverse().join('-')
+    } else {
+      inputValue.value = newValue
     }
   }
 )

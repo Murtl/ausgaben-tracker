@@ -15,14 +15,14 @@ const loggedInStore = useLoggedInStore()
 const { loggedIn } = storeToRefs(loggedInStore)
 
 const userDataStore = useUserDataStore()
-const { userUID, userMail, userPassword } = storeToRefs(userDataStore)
+const { userUID, userName, userPassword } = storeToRefs(userDataStore)
 
-const mail = ref('')
+const name = ref('')
 const password = ref('')
 const passwordConfirm = ref('')
 const showLogin = ref(false)
 const showModalPWNotMatch = ref(false)
-const showModalMailInUse = ref(false)
+const showModalNameInUse = ref(false)
 
 const handleShowLogin = () => {
   showLogin.value = true
@@ -32,23 +32,23 @@ const handleShowModalPWNotMatch = () => {
   showModalPWNotMatch.value = !showModalPWNotMatch.value
 }
 
-const handleShowModalMailInUse = () => {
-  showModalMailInUse.value = !showModalMailInUse.value
+const handleShowModalNameInUse = () => {
+  showModalNameInUse.value = !showModalNameInUse.value
 }
 
 const handleRegister = () => {
-  if (password.value !== '' && mail.value !== '') {
+  if (password.value !== '' && name.value !== '') {
     if (password.value !== passwordConfirm.value) {
       handleShowModalPWNotMatch()
     } else {
-      const { state, newUserUid } = ATAuthService.register(mail.value, password.value)
+      const { state, newUserUid } = ATAuthService.register(name.value, password.value)
       if (state && newUserUid) {
         userUID.value = newUserUid
-        userMail.value = mail.value
+        userName.value = name.value
         userPassword.value = password.value
         loggedIn.value = true
       } else {
-        handleShowModalMailInUse()
+        handleShowModalNameInUse()
       }
     }
   }
@@ -59,7 +59,7 @@ const handleRegister = () => {
   <div class="at-login-host" v-if="!showLogin">
     <ATWelcomeForm :title="dynamicText.register" height="600px">
       <template #inputs>
-        <ATInput :title="dynamicText.email" v-model:value="mail" />
+        <ATInput :title="dynamicText.name" v-model:value="name" />
         <ATInput :title="dynamicText.password" v-model:value="password" password />
         <ATInput :title="dynamicText.confirm_password" v-model:value="passwordConfirm" password />
       </template>
@@ -85,13 +85,13 @@ const handleRegister = () => {
       />
     </template>
   </ATModal>
-  <ATModal v-if="showModalMailInUse" :title="dynamicText.email_already_in_use">
+  <ATModal v-if="showModalNameInUse" :title="dynamicText.name_already_in_use">
     <template #buttons>
       <ATButton
         :title="dynamicText.try_again"
         width="200px"
         primary
-        @press="handleShowModalMailInUse"
+        @press="handleShowModalNameInUse"
       />
     </template>
   </ATModal>

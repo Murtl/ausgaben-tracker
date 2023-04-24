@@ -2,10 +2,10 @@
   "expenditures_tracker": "Ausgaben Tracker",
   "created_by_Mertl": "erstellt von Mertl",
 
-  "email": "E-Mail",
-  "change_email": "E-Mail ändern",
-  "save_email": "E-Mail speichern",
-  "email_already_in_use": "E-Mail bereits in Nutzung!",
+  "name": "Benutzername",
+  "change_name": "Benutzername ändern",
+  "save_name": "Benutzername speichern",
+  "name_already_in_use": "Benutzername bereits in Nutzung!",
   "password": "Passwort",
   "confirm_password": "Passwort bestätigen",
   "new_password": "Neues Passwort",
@@ -21,7 +21,7 @@
   "try_again": "Erneut versuchen",
   "passwords_do_not_match": "Passwörter stimmen nicht überein!",
   "password_successfully_updated": "Passwort erfolgreich aktualisiert!",
-  "email_successfully_updated": "E-Mail erfolgreich aktualisiert!",
+  "name_successfully_updated": "Benutzername erfolgreich aktualisiert!",
 
   "Dashboard": "Dashboard",
   "Tracker": "Tracker",

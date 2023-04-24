@@ -21,7 +21,7 @@ const liquidFundsStore = useLiquidFundsStore()
 const { allLiquidFunds } = storeToRefs(liquidFundsStore)
 
 const userDataStore = useUserDataStore()
-const { userUID, userMail } = storeToRefs(userDataStore)
+const { userUID, userName } = storeToRefs(userDataStore)
 
 const showFlyout = ref(false)
 
@@ -57,7 +57,7 @@ const handleShowFlyout = () => {
     <section class="avatar">
       <ATButton
         primary
-        :title="userMail.substring(0, 2).toUpperCase()"
+        :title="userName.substring(0, 2).toUpperCase()"
         width="40px"
         @press="handleShowFlyout"
       />
