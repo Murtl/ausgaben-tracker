@@ -168,6 +168,7 @@ const handleCloseModalEditExpenditureOnCancel = () => {
       </span>
     </section>
   </div>
+
   <ATModal v-if="showModalEditExpenditure" :title="dynamicText.edit_expenditure">
     <template #inputs>
       <ATInput
@@ -195,6 +196,7 @@ const handleCloseModalEditExpenditureOnCancel = () => {
       <ATButton :title="dynamicText.save" primary @press="handleCloseModalEditExpenditureOnSave" />
     </template>
   </ATModal>
+
   <ATModal v-if="showModalWrongInfo" :title="dynamicText.incorrect_input">
     <template #inputs>
       <p>{{ dynamicText.incorrect_input_at_expenditure_source }}</p>
@@ -210,6 +212,7 @@ const handleCloseModalEditExpenditureOnCancel = () => {
       />
     </template>
   </ATModal>
+
   <ATModal v-if="showModalDelete" :title="dynamicText.really_delete_Expenditure">
     <template #buttons>
       <ATButton

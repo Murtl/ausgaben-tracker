@@ -7,7 +7,6 @@ import { ref } from 'vue'
 export const useUserDataStore = defineStore('userDataStore', () => {
   const userUID = ref('')
   const userName = ref('')
-  const userPassword = ref('')
 
-  return { userUID, userName, userPassword }
+  return { userUID, userName }
 })

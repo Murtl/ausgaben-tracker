@@ -92,4 +92,19 @@ export class ATAuthService {
       }
     }
   }
+
+  /**
+   * @description Checks if the password is correct
+   * @param userUID userUID of the user
+   * @param password password of the user
+   * @returns if the password is correct
+   */
+  static checkPassword(userUID: string, password: string): boolean {
+    for (let i = 0; i < ATAuthService.myAccounts.users.length; i++) {
+      if (ATAuthService.myAccounts.users[i].userUID === userUID) {
+        return ATAuthService.myAccounts.users[i].password === password
+      }
+    }
+    return false
+  }
 }

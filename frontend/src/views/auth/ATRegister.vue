@@ -15,41 +15,41 @@ const loggedInStore = useLoggedInStore()
 const { loggedIn } = storeToRefs(loggedInStore)
 
 const userDataStore = useUserDataStore()
-const { userUID, userName, userPassword } = storeToRefs(userDataStore)
+const { userUID, userName } = storeToRefs(userDataStore)
 
 const name = ref('')
 const password = ref('')
 const passwordConfirm = ref('')
 const showLogin = ref(false)
-const showModalPWNotMatch = ref(false)
-const showModalNameInUse = ref(false)
+const modalTitleErrorAtRegister = ref('')
+const showModalErrorAtRegister = ref(false)
 
 const handleShowLogin = () => {
   showLogin.value = true
 }
 
-const handleShowModalPWNotMatch = () => {
-  showModalPWNotMatch.value = !showModalPWNotMatch.value
-}
-
-const handleShowModalNameInUse = () => {
-  showModalNameInUse.value = !showModalNameInUse.value
+const handleShowModalErrorAtRegister = () => {
+  showModalErrorAtRegister.value = !showModalErrorAtRegister.value
 }
 
 const handleRegister = () => {
-  if (password.value !== '' && name.value !== '') {
-    if (password.value !== passwordConfirm.value) {
-      handleShowModalPWNotMatch()
+  if (name.value === '' || password.value === '') {
+    modalTitleErrorAtRegister.value = dynamicText.fill_in_all_fields
+    handleShowModalErrorAtRegister()
+    return
+  }
+  if (password.value !== passwordConfirm.value) {
+    modalTitleErrorAtRegister.value = dynamicText.passwords_do_not_match
+    handleShowModalErrorAtRegister()
+  } else {
+    const { state, newUserUid } = ATAuthService.register(name.value, password.value)
+    if (state && newUserUid) {
+      userUID.value = newUserUid
+      userName.value = name.value
+      loggedIn.value = true
     } else {
-      const { state, newUserUid } = ATAuthService.register(name.value, password.value)
-      if (state && newUserUid) {
-        userUID.value = newUserUid
-        userName.value = name.value
-        userPassword.value = password.value
-        loggedIn.value = true
-      } else {
-        handleShowModalNameInUse()
-      }
+      modalTitleErrorAtRegister.value = dynamicText.name_already_in_use
+      handleShowModalErrorAtRegister()
     }
   }
 }
@@ -75,23 +75,13 @@ const handleRegister = () => {
     </ATWelcomeForm>
   </div>
   <ATLogin v-else />
-  <ATModal v-if="showModalPWNotMatch" :title="dynamicText.passwords_do_not_match">
+  <ATModal v-if="showModalErrorAtRegister" :title="modalTitleErrorAtRegister">
     <template #buttons>
       <ATButton
         :title="dynamicText.try_again"
         width="200px"
         primary
-        @press="handleShowModalPWNotMatch"
-      />
-    </template>
-  </ATModal>
-  <ATModal v-if="showModalNameInUse" :title="dynamicText.name_already_in_use">
-    <template #buttons>
-      <ATButton
-        :title="dynamicText.try_again"
-        width="200px"
-        primary
-        @press="handleShowModalNameInUse"
+        @press="handleShowModalErrorAtRegister"
       />
     </template>
   </ATModal>

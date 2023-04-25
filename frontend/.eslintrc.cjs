@@ -11,5 +11,8 @@ module.exports = {
   ],
   parserOptions: {
     ecmaVersion: 'latest'
+  },
+  rules: {
+  'no-unexpected-multiline': 0 
   }
 }

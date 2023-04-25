@@ -15,31 +15,35 @@ const loggedInStore = useLoggedInStore()
 const { loggedIn } = storeToRefs(loggedInStore)
 
 const userDataStore = useUserDataStore()
-const { userUID, userName, userPassword } = storeToRefs(userDataStore)
+const { userUID, userName } = storeToRefs(userDataStore)
 
 const name = ref('')
 const password = ref('')
 const showRegister = ref(false)
-const showModalLoginDataWrong = ref(false)
+const modalTitleErrorAtLogin = ref('')
+const showModalErrorAtLogin = ref(false)
 
 const handleShowRegister = () => {
   showRegister.value = true
 }
-const handleShowModalLoginDataWrong = () => {
-  showModalLoginDataWrong.value = !showModalLoginDataWrong.value
+const handleShowModalErrorAtLogin = () => {
+  showModalErrorAtLogin.value = !showModalErrorAtLogin.value
 }
 
 const handleLogin = () => {
-  if (name.value !== '' && password.value !== '') {
-    const { state, currentUserUid } = ATAuthService.login(name.value, password.value)
-    if (state && currentUserUid) {
-      userUID.value = currentUserUid
-      userName.value = name.value
-      userPassword.value = password.value
-      loggedIn.value = true
-    } else {
-      handleShowModalLoginDataWrong()
-    }
+  if (name.value === '' && password.value === '') {
+    modalTitleErrorAtLogin.value = dynamicText.fill_in_all_fields
+    handleShowModalErrorAtLogin()
+    return
+  }
+  const { state, currentUserUid } = ATAuthService.login(name.value, password.value)
+  if (state && currentUserUid) {
+    userUID.value = currentUserUid
+    userName.value = name.value
+    loggedIn.value = true
+  } else {
+    modalTitleErrorAtLogin.value = dynamicText.wrong_login_data
+    handleShowModalErrorAtLogin()
   }
 }
 </script>
@@ -63,13 +67,13 @@ const handleLogin = () => {
     </ATWelcomeForm>
   </div>
   <ATRegister v-else />
-  <ATModal v-if="showModalLoginDataWrong" :title="dynamicText.wrong_login_data">
+  <ATModal v-if="showModalErrorAtLogin" :title="modalTitleErrorAtLogin">
     <template #buttons>
       <ATButton
         :title="dynamicText.try_again"
         width="200px"
         primary
-        @press="handleShowModalLoginDataWrong"
+        @press="handleShowModalErrorAtLogin"
       />
     </template>
   </ATModal>

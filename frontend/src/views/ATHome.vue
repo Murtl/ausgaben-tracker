@@ -4,31 +4,16 @@ import ATGridBigIcon from '@/base-components/icons/ATGridBigIcon.vue'
 import ATEditIcon from '@/base-components/icons/ATEditIcon.vue'
 import ATHandshakeIcon from '@/base-components/icons/ATHandshakeIcon.vue'
 import { RouterLink, RouterView } from 'vue-router'
-import { onBeforeMount, ref } from 'vue'
+import { ref } from 'vue'
 import ATAccountFlyout from '@/components/account-flyout/ATAccountFlyout.vue'
 import dynamicText from '@/text/dynamicText.json'
-import { storeToRefs } from 'pinia'
-import { ATExpendituresDataService } from '@/services/ATExpendituresDataService'
-import { useExpendituresStore } from '@/stores/expendituresStore'
 import { useUserDataStore } from '@/stores/userDataStore'
-import { useLiquidFundsStore } from '@/stores/liquidFundsStore'
-import { ATLiquidFundsDataService } from '@/services/ATLiquidFundsDataService'
-
-const expendituresStore = useExpendituresStore()
-const { allExpenditures } = storeToRefs(expendituresStore)
-
-const liquidFundsStore = useLiquidFundsStore()
-const { allLiquidFunds } = storeToRefs(liquidFundsStore)
+import { storeToRefs } from 'pinia'
 
 const userDataStore = useUserDataStore()
-const { userUID, userName } = storeToRefs(userDataStore)
+const { userName } = storeToRefs(userDataStore)
 
 const showFlyout = ref(false)
-
-onBeforeMount(() => {
-  allExpenditures.value = ATExpendituresDataService.getExpenditures(userUID.value)
-  allLiquidFunds.value = ATLiquidFundsDataService.getLiquidFunds(userUID.value)
-})
 
 const handleShowFlyout = () => {
   showFlyout.value = !showFlyout.value

@@ -7,15 +7,10 @@ import dynamicText from '@/text/dynamicText.json'
 import ATSearchbar from '@/base-components/searchbar/ATSearchbar.vue'
 import ATPlusIcon from '@/base-components/icons/ATPlusIcon.vue'
 import ATExpendituresList from '@/components/expenditures-list/ATExpendituresList.vue'
-import { storeToRefs } from 'pinia'
 import { useExpendituresStore } from '@/stores/expendituresStore'
-import { ATExpendituresDataService } from '@/services/ATExpendituresDataService'
 import type { ATExpenditure } from '@/utils/types/atExpenditure'
-import { useUserDataStore } from '@/stores/userDataStore'
 import { checkIfExpenditureIsComplete } from '@/utils/functions/checkIfExpenditureIsComplete'
-
-const userDataStore = useUserDataStore()
-const { userUID } = storeToRefs(userDataStore)
+import { storeToRefs } from 'pinia'
 
 const expendituresStore = useExpendituresStore()
 const { allExpenditures } = storeToRefs(expendituresStore)
@@ -57,8 +52,7 @@ const handleCloseModalNewExpenditureOnCreation = () => {
   } catch {
     newExpenditure.value.id = 1
   }
-  allExpenditures.value.push(newExpenditure.value)
-  ATExpendituresDataService.addExpenditure(newExpenditure.value, userUID.value)
+  expendituresStore.addExpenditure(newExpenditure.value)
   newExpenditure.value = {
     id: 0,
     sourceOfExpenditure: '',
@@ -70,18 +64,11 @@ const handleCloseModalNewExpenditureOnCreation = () => {
 }
 
 const handleDeleteExpenditure = (expenditure: ATExpenditure) => {
-  allExpenditures.value = allExpenditures.value.filter((a) => a.id !== expenditure.id)
-  ATExpendituresDataService.deleteExpenditure(expenditure.id, userUID.value)
+  expendituresStore.deleteExpenditure(expenditure.id)
 }
 
 const handleUpdateExpenditure = (expenditure: ATExpenditure) => {
-  allExpenditures.value = allExpenditures.value.map((e) => {
-    if (e.id === expenditure.id) {
-      return expenditure
-    }
-    return e
-  })
-  ATExpendituresDataService.updateExpenditure(expenditure, userUID.value)
+  expendituresStore.updateExpenditure(expenditure)
 }
 
 const searchChanged = (newFilter: string) => {

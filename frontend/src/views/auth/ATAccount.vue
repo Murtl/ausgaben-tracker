@@ -10,49 +10,66 @@ import { storeToRefs } from 'pinia'
 import { ATAuthService } from '@/services/ATAuthService'
 
 const userDataStore = useUserDataStore()
-const { userUID, userName, userPassword } = storeToRefs(userDataStore)
+const { userUID, userName } = storeToRefs(userDataStore)
 
 const newName = ref('')
+const oldPassword = ref('')
 const newPassword = ref('')
 const newPasswordConfirm = ref('')
-const showModalNameChangeSuccess = ref(false)
-const showModalPWChangeSuccess = ref(false)
-const showModalPWNotMatch = ref(false)
-const showModalNameInUse = ref(false)
 
-const handleShowModalNameChangeSuccess = () => {
-  showModalNameChangeSuccess.value = !showModalNameChangeSuccess.value
+const modalTitleChangeSuccess = ref('')
+const showModalChangeSuccess = ref(false)
+const modalTitleChangeError = ref('')
+const showModalErrorAtChange = ref(false)
+
+const handleShowModalChangeSuccess = () => {
+  showModalChangeSuccess.value = !showModalChangeSuccess.value
 }
-const handleShowModalPWChangeSuccess = () => {
-  showModalPWChangeSuccess.value = !showModalPWChangeSuccess.value
-}
-const handleShowModalPWNotMatch = () => {
-  showModalPWNotMatch.value = !showModalPWNotMatch.value
-}
-const handleShowModalNameInUse = () => {
-  showModalNameInUse.value = !showModalNameInUse.value
+const handleShowModalErrorAtChange = () => {
+  showModalErrorAtChange.value = !showModalErrorAtChange.value
 }
 const handleSaveName = () => {
-  if (newName.value !== '') {
-    if (ATAuthService.changeName(userUID.value, newName.value) === false) {
-      handleShowModalNameInUse()
-    } else {
-      userName.value = newName.value
-      newName.value = ''
-      handleShowModalNameChangeSuccess()
-    }
+  if (newName.value === '') {
+    modalTitleChangeError.value = dynamicText.fill_in_all_fields
+    handleShowModalErrorAtChange()
+    return
+  }
+  if (ATAuthService.changeName(userUID.value, newName.value) === false) {
+    modalTitleChangeError.value = dynamicText.name_already_in_use
+    handleShowModalErrorAtChange()
+  } else {
+    userName.value = newName.value
+    newName.value = ''
+    modalTitleChangeSuccess.value = dynamicText.name_successfully_updated
+    handleShowModalChangeSuccess()
   }
 }
 
 const handleSavePassword = () => {
-  if (newPassword.value === newPasswordConfirm.value && newPassword.value !== '') {
-    userPassword.value = newPassword.value
+  if (newPassword.value === '' || oldPassword.value === '') {
+    modalTitleChangeError.value = dynamicText.fill_in_all_fields
+    handleShowModalErrorAtChange()
+    return
+  }
+  if (
+    newPassword.value === newPasswordConfirm.value &&
+    newPassword.value !== '' &&
+    oldPassword.value !== ''
+  ) {
+    if (ATAuthService.checkPassword(userUID.value, oldPassword.value) === false) {
+      modalTitleChangeError.value = dynamicText.wrong_old_password
+      handleShowModalErrorAtChange()
+      return
+    }
     newPassword.value = ''
     newPasswordConfirm.value = ''
-    ATAuthService.changePassword(userUID.value, userPassword.value)
-    handleShowModalPWChangeSuccess()
+    oldPassword.value = ''
+    ATAuthService.changePassword(userUID.value, newPassword.value)
+    modalTitleChangeSuccess.value = dynamicText.password_successfully_updated
+    handleShowModalChangeSuccess()
   } else {
-    handleShowModalPWNotMatch()
+    modalTitleChangeError.value = dynamicText.passwords_do_not_match
+    handleShowModalErrorAtChange()
   }
 }
 </script>
@@ -72,7 +89,7 @@ const handleSavePassword = () => {
     </section>
 
     <section class="pw-wrapper">
-      <ATInput :title="dynamicText.password" v-model:value="userPassword" password readonly />
+      <ATInput :title="dynamicText.old_password" v-model:value="oldPassword" password />
       <ATInput :title="dynamicText.new_password" v-model:value="newPassword" password />
       <ATInput
         :title="dynamicText.confirm_new_password"
@@ -93,43 +110,23 @@ const handleSavePassword = () => {
       </section>
     </section>
   </div>
-  <ATModal v-if="showModalNameChangeSuccess" :title="dynamicText.name_successfully_updated">
+  <ATModal v-if="showModalChangeSuccess" :title="modalTitleChangeSuccess">
     <template #buttons>
       <ATButton
         :title="dynamicText.ok"
         width="50px"
         primary
-        @press="handleShowModalNameChangeSuccess"
+        @press="handleShowModalChangeSuccess"
       />
     </template>
   </ATModal>
-  <ATModal v-if="showModalPWChangeSuccess" :title="dynamicText.password_successfully_updated">
-    <template #buttons>
-      <ATButton
-        :title="dynamicText.ok"
-        width="50px"
-        primary
-        @press="handleShowModalPWChangeSuccess"
-      />
-    </template>
-  </ATModal>
-  <ATModal v-if="showModalPWNotMatch" :title="dynamicText.passwords_do_not_match">
+  <ATModal v-if="showModalErrorAtChange" :title="modalTitleChangeError">
     <template #buttons>
       <ATButton
         :title="dynamicText.try_again"
         width="200px"
         primary
-        @press="handleShowModalPWNotMatch"
-      />
-    </template>
-  </ATModal>
-  <ATModal v-if="showModalNameInUse" :title="dynamicText.name_already_in_use">
-    <template #buttons>
-      <ATButton
-        :title="dynamicText.try_again"
-        width="200px"
-        primary
-        @press="handleShowModalNameInUse"
+        @press="handleShowModalErrorAtChange"
       />
     </template>
   </ATModal>

@@ -1,19 +1,49 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
+import { useUserDataStore } from '@/stores/userDataStore'
+import { ATExpendituresDataService } from '@/services/ATExpendituresDataService'
+import type { ATExpenditure } from '@/utils/types/atExpenditure'
 
 /**
  * @description Store for all expenditures
  */
 export const useExpendituresStore = defineStore('expendituresStore', () => {
-  const allExpenditures = ref([
-    {
-      id: 0,
-      sourceOfExpenditure: '',
-      additionalInfo: '',
-      amount: 0,
-      date: ''
-    }
-  ])
+  const userDataStore = useUserDataStore()
+  const allExpenditures = ref(ATExpendituresDataService.getExpenditures(userDataStore.userUID))
 
-  return { allExpenditures }
+  /**
+   * @description calls the ATExpendituresDataService to add an expenditure and updates allExpenditures
+   * @param expenditure The expenditure to add
+   */
+  const addExpenditure = (expenditure: ATExpenditure) => {
+    ATExpendituresDataService.addExpenditure(expenditure, userDataStore.userUID)
+    expendituresJsonFileChanged()
+  }
+
+  /**
+   * @description calls the ATExpendituresDataService to delete an expenditure and updates allExpenditures
+   * @param id id of the expenditure
+   */
+  const deleteExpenditure = (id: number) => {
+    ATExpendituresDataService.deleteExpenditure(id, userDataStore.userUID)
+    expendituresJsonFileChanged()
+  }
+
+  /**
+   * @description calls the ATExpendituresDataService to update an expenditure and updates allExpenditures
+   * @param expenditure expenditure to update
+   */
+  const updateExpenditure = (expenditure: ATExpenditure) => {
+    ATExpendituresDataService.updateExpenditure(expenditure, userDataStore.userUID)
+    expendituresJsonFileChanged()
+  }
+
+  /**
+   * @description Updates allExpenditures
+   */
+  const expendituresJsonFileChanged = () => {
+    allExpenditures.value = ATExpendituresDataService.getExpenditures(userDataStore.userUID)
+  }
+
+  return { allExpenditures, addExpenditure, deleteExpenditure, updateExpenditure }
 })
