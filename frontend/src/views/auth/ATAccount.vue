@@ -61,10 +61,10 @@ const handleSavePassword = () => {
       handleShowModalErrorAtChange()
       return
     }
+    ATAuthService.changePassword(userUID.value, newPassword.value)
     newPassword.value = ''
     newPasswordConfirm.value = ''
     oldPassword.value = ''
-    ATAuthService.changePassword(userUID.value, newPassword.value)
     modalTitleChangeSuccess.value = dynamicText.password_successfully_updated
     handleShowModalChangeSuccess()
   } else {
