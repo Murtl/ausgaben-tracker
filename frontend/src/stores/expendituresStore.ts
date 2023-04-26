@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
+import type { Ref } from 'vue'
 import { useUserDataStore } from '@/stores/userDataStore'
 import { ATExpendituresDataService } from '@/services/ATExpendituresDataService'
 import type { ATExpenditure } from '@/utils/types/atExpenditure'
@@ -9,7 +10,14 @@ import type { ATExpenditure } from '@/utils/types/atExpenditure'
  */
 export const useExpendituresStore = defineStore('expendituresStore', () => {
   const userDataStore = useUserDataStore()
-  const allExpenditures = ref(ATExpendituresDataService.getExpenditures(userDataStore.userUID))
+  const allExpenditures: Ref<ATExpenditure[]> = ref([])
+
+  /**
+   * @description Initializes allExpenditures
+   */
+  const initExpenditures = () => {
+    allExpenditures.value = ATExpendituresDataService.getExpenditures(userDataStore.userUID)
+  }
 
   /**
    * @description calls the ATExpendituresDataService to add an expenditure and updates allExpenditures
@@ -45,5 +53,5 @@ export const useExpendituresStore = defineStore('expendituresStore', () => {
     allExpenditures.value = ATExpendituresDataService.getExpenditures(userDataStore.userUID)
   }
 
-  return { allExpenditures, addExpenditure, deleteExpenditure, updateExpenditure }
+  return { allExpenditures, initExpenditures, addExpenditure, deleteExpenditure, updateExpenditure }
 })

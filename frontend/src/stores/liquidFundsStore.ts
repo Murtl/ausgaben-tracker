@@ -2,14 +2,21 @@ import { ATLiquidFundsDataService } from '@/services/ATLiquidFundsDataService'
 import type { ATLiquidFund } from '@/utils/types/atLiquidFund'
 import { useUserDataStore } from '@/stores/userDataStore'
 import { defineStore } from 'pinia'
-import { ref } from 'vue'
+import { ref, type Ref } from 'vue'
 
 /**
  * @description Store for all liquid funds
  */
 export const useLiquidFundsStore = defineStore('liquidFundsStore', () => {
   const userDataStore = useUserDataStore()
-  const allLiquidFunds = ref(ATLiquidFundsDataService.getLiquidFunds(userDataStore.userUID))
+  const allLiquidFunds: Ref<ATLiquidFund[]> = ref([])
+
+  /**
+   * @description Initializes allLiquidFunds
+   */
+  const initLiquidFunds = () => {
+    allLiquidFunds.value = ATLiquidFundsDataService.getLiquidFunds(userDataStore.userUID)
+  }
 
   /**
    * @description calls the ATLiquidFundsDataService to add a liquid fund and updates allLiquidFunds
@@ -45,5 +52,5 @@ export const useLiquidFundsStore = defineStore('liquidFundsStore', () => {
     allLiquidFunds.value = ATLiquidFundsDataService.getLiquidFunds(userDataStore.userUID)
   }
 
-  return { allLiquidFunds, addLiquidFund, deleteLiquidFund, updateLiquidFund }
+  return { allLiquidFunds, initLiquidFunds, addLiquidFund, deleteLiquidFund, updateLiquidFund }
 })

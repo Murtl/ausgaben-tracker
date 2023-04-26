@@ -93,20 +93,8 @@ const handleCloseModalDeleteOnConfirm = () => {
   showModalDelete.value = false
 }
 
-const handleShowModalEditExpenditure = (
-  id: number,
-  sourceOfExpenditure: string,
-  additionalInfo: string,
-  amount: number,
-  date: string
-) => {
-  currentExpenditure.value = {
-    id: id,
-    sourceOfExpenditure: sourceOfExpenditure,
-    additionalInfo: additionalInfo,
-    amount: amount,
-    date: date
-  }
+const handleShowModalEditExpenditure = (expenditure: ATExpenditure) => {
+  currentExpenditure.value = Object.create(expenditure)
   showModalEditExpenditure.value = true
 }
 
@@ -148,19 +136,7 @@ const handleCloseModalEditExpenditureOnCancel = () => {
       <span class="third-column">{{ `${expenditure.amount} €` }}</span>
       <span class="fourth-column">{{ expenditure.date }}</span>
       <span class="fifth-column">
-        <ATButton
-          secondary
-          width="40px"
-          @press="
-            handleShowModalEditExpenditure(
-              expenditure.id,
-              expenditure.sourceOfExpenditure,
-              expenditure.additionalInfo,
-              expenditure.amount,
-              expenditure.date
-            )
-          "
-        >
+        <ATButton secondary width="40px" @press="handleShowModalEditExpenditure(expenditure)">
           <template #icon>
             <ATEditItemIcon />
           </template>

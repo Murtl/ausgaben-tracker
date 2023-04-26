@@ -117,13 +117,8 @@ const handleCloseModalDeleteOnConfirm = () => {
   showModalEditLiquidFund.value = false
 }
 
-const handleShowModalEditLiquidFund = (id: number, height: number, month: number, year: number) => {
-  currentLiquidFund.value = {
-    id: id,
-    height: height,
-    month: month,
-    year: year
-  }
+const handleShowModalEditLiquidFund = (liquidFund: ATLiquidFund) => {
+  currentLiquidFund.value = Object.create(liquidFund)
   showModalEditLiquidFund.value = true
 }
 
@@ -155,18 +150,7 @@ const handleCloseModalEditLiquidFundOnDelete = () => {
       <ATSegment :title="monthsConstant[liquidFund.month - 1]" :year="liquidFund.year">
         <ATSegmentItem :title="dynamicText.liquid_funds" :value="`${liquidFund.height} €`" editable>
           <template #button>
-            <ATButton
-              @press="
-                handleShowModalEditLiquidFund(
-                  liquidFund.id,
-                  liquidFund.height,
-                  liquidFund.month,
-                  liquidFund.year
-                )
-              "
-              width="40px"
-              secondary
-            >
+            <ATButton @press="handleShowModalEditLiquidFund(liquidFund)" width="40px" secondary>
               <template #icon>
                 <ATEditItemIconVue />
               </template>

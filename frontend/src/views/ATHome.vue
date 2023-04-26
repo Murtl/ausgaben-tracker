@@ -4,14 +4,24 @@ import ATGridBigIcon from '@/base-components/icons/ATGridBigIcon.vue'
 import ATEditIcon from '@/base-components/icons/ATEditIcon.vue'
 import ATHandshakeIcon from '@/base-components/icons/ATHandshakeIcon.vue'
 import { RouterLink, RouterView } from 'vue-router'
-import { ref } from 'vue'
+import { onBeforeMount, ref } from 'vue'
 import ATAccountFlyout from '@/components/account-flyout/ATAccountFlyout.vue'
 import dynamicText from '@/text/dynamicText.json'
 import { useUserDataStore } from '@/stores/userDataStore'
 import { storeToRefs } from 'pinia'
+import { useExpendituresStore } from '@/stores/expendituresStore'
+import { useLiquidFundsStore } from '@/stores/liquidFundsStore'
 
 const userDataStore = useUserDataStore()
 const { userName } = storeToRefs(userDataStore)
+
+const expendituresStore = useExpendituresStore()
+const liquidFundsStore = useLiquidFundsStore()
+
+onBeforeMount(() => {
+  expendituresStore.initExpenditures()
+  liquidFundsStore.initLiquidFunds()
+})
 
 const showFlyout = ref(false)
 
