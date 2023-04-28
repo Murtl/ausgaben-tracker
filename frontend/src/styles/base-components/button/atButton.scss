@@ -30,6 +30,11 @@
     background-color: $button-modal-gray;
     color: $heading-text-light;
   }
+
+  &.disabled {
+    cursor: unset;
+    background-color: $button-disabled;
+  }
 }
 
 .at-button-host:hover {
@@ -44,5 +49,9 @@
 
   &.tertiary {
     background-color: $button-modal-gray-hover;
+  }
+
+  &.disabled {
+    background-color: $button-disabled;
   }
 }

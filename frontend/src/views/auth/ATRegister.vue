@@ -2,14 +2,14 @@
 import ATButton from '@/base-components/button/ATButton.vue'
 import ATInput from '@/base-components/input/ATInput.vue'
 import ATWelcomeForm from '@/base-components/welcome-form/ATWelcomeForm.vue'
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import ATLogin from './ATLogin.vue'
 import dynamicText from '@/text/dynamicText.json'
-import ATModal from '@/base-components/modal/ATModal.vue'
 import { useUserDataStore } from '@/stores/userDataStore'
 import { storeToRefs } from 'pinia'
 import { useLoggedInStore } from '@/stores/loggedInStore'
 import { ATAuthService } from '@/services/ATAuthService'
+import ATErrorModal from '@/components/modals/ATErrorModal.vue'
 
 const loggedInStore = useLoggedInStore()
 const { loggedIn } = storeToRefs(loggedInStore)
@@ -24,6 +24,10 @@ const showLogin = ref(false)
 const modalTitleErrorAtRegister = ref('')
 const showModalErrorAtRegister = ref(false)
 
+const computedDisabledButtonState = computed(() => {
+  return name.value === '' || password.value === '' || passwordConfirm.value === ''
+})
+
 const handleShowLogin = () => {
   showLogin.value = true
 }
@@ -33,11 +37,6 @@ const handleShowModalErrorAtRegister = () => {
 }
 
 const handleRegister = () => {
-  if (name.value === '' || password.value === '') {
-    modalTitleErrorAtRegister.value = dynamicText.fill_in_all_fields
-    handleShowModalErrorAtRegister()
-    return
-  }
   if (password.value !== passwordConfirm.value) {
     modalTitleErrorAtRegister.value = dynamicText.passwords_do_not_match
     handleShowModalErrorAtRegister()
@@ -64,7 +63,13 @@ const handleRegister = () => {
         <ATInput :title="dynamicText.confirm_password" v-model:value="passwordConfirm" password />
       </template>
       <template #buttons>
-        <ATButton :title="dynamicText.register" width="400px" primary @press="handleRegister" />
+        <ATButton
+          :title="dynamicText.register"
+          width="400px"
+          primary
+          @press="handleRegister"
+          :disabled="computedDisabledButtonState"
+        />
         <ATButton
           :title="dynamicText.already_have_an_account"
           width="400px"
@@ -75,14 +80,10 @@ const handleRegister = () => {
     </ATWelcomeForm>
   </div>
   <ATLogin v-else />
-  <ATModal v-if="showModalErrorAtRegister" :title="modalTitleErrorAtRegister">
-    <template #buttons>
-      <ATButton
-        :title="dynamicText.try_again"
-        width="200px"
-        primary
-        @press="handleShowModalErrorAtRegister"
-      />
-    </template>
-  </ATModal>
+
+  <ATErrorModal
+    v-if="showModalErrorAtRegister"
+    :title="modalTitleErrorAtRegister"
+    :handle-close-modal-on-try-again="handleShowModalErrorAtRegister"
+  />
 </template>

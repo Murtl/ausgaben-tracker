@@ -1,13 +1,14 @@
 <script setup lang="ts">
 import ATButton from '@/base-components/button/ATButton.vue'
 import ATInput from '@/base-components/input/ATInput.vue'
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import ATCheckIcon from '@/base-components/icons/ATCheckIcon.vue'
 import dynamicText from '@/text/dynamicText.json'
-import ATModal from '@/base-components/modal/ATModal.vue'
 import { useUserDataStore } from '@/stores/userDataStore'
 import { storeToRefs } from 'pinia'
 import { ATAuthService } from '@/services/ATAuthService'
+import ATErrorModal from '@/components/modals/ATErrorModal.vue'
+import ATSuccessModal from '@/components/modals/ATSuccessModal.vue'
 
 const userDataStore = useUserDataStore()
 const { userUID, userName } = storeToRefs(userDataStore)
@@ -22,6 +23,14 @@ const showModalChangeSuccess = ref(false)
 const modalTitleChangeError = ref('')
 const showModalErrorAtChange = ref(false)
 
+const computedDisabledSaveNameButtonState = computed(() => {
+  return newName.value === ''
+})
+
+const computedDisabledSavePasswordButtonState = computed(() => {
+  return oldPassword.value === '' || newPassword.value === '' || newPasswordConfirm.value === ''
+})
+
 const handleShowModalChangeSuccess = () => {
   showModalChangeSuccess.value = !showModalChangeSuccess.value
 }
@@ -29,11 +38,6 @@ const handleShowModalErrorAtChange = () => {
   showModalErrorAtChange.value = !showModalErrorAtChange.value
 }
 const handleSaveName = () => {
-  if (newName.value === '') {
-    modalTitleChangeError.value = dynamicText.fill_in_all_fields
-    handleShowModalErrorAtChange()
-    return
-  }
   if (ATAuthService.changeName(userUID.value, newName.value) === false) {
     modalTitleChangeError.value = dynamicText.name_already_in_use
     handleShowModalErrorAtChange()
@@ -46,16 +50,7 @@ const handleSaveName = () => {
 }
 
 const handleSavePassword = () => {
-  if (newPassword.value === '' || oldPassword.value === '') {
-    modalTitleChangeError.value = dynamicText.fill_in_all_fields
-    handleShowModalErrorAtChange()
-    return
-  }
-  if (
-    newPassword.value === newPasswordConfirm.value &&
-    newPassword.value !== '' &&
-    oldPassword.value !== ''
-  ) {
+  if (newPassword.value === newPasswordConfirm.value) {
     if (ATAuthService.checkPassword(userUID.value, oldPassword.value) === false) {
       modalTitleChangeError.value = dynamicText.wrong_old_password
       handleShowModalErrorAtChange()
@@ -80,7 +75,13 @@ const handleSavePassword = () => {
       <ATInput :title="dynamicText.name" v-model:value="userName" readonly />
       <ATInput :title="dynamicText.change_name" v-model:value="newName" />
       <section class="button-wrapper">
-        <ATButton :title="dynamicText.save_name" width="260px" primary @press="handleSaveName">
+        <ATButton
+          :title="dynamicText.save_name"
+          width="260px"
+          primary
+          @press="handleSaveName"
+          :disabled="computedDisabledSaveNameButtonState"
+        >
           <template #icon>
             <ATCheckIcon />
           </template>
@@ -102,6 +103,7 @@ const handleSavePassword = () => {
           width="240px"
           primary
           @press="handleSavePassword"
+          :disabled="computedDisabledSavePasswordButtonState"
         >
           <template #icon>
             <ATCheckIcon />
@@ -110,26 +112,18 @@ const handleSavePassword = () => {
       </section>
     </section>
   </div>
-  <ATModal v-if="showModalChangeSuccess" :title="modalTitleChangeSuccess">
-    <template #buttons>
-      <ATButton
-        :title="dynamicText.ok"
-        width="50px"
-        primary
-        @press="handleShowModalChangeSuccess"
-      />
-    </template>
-  </ATModal>
-  <ATModal v-if="showModalErrorAtChange" :title="modalTitleChangeError">
-    <template #buttons>
-      <ATButton
-        :title="dynamicText.try_again"
-        width="200px"
-        primary
-        @press="handleShowModalErrorAtChange"
-      />
-    </template>
-  </ATModal>
+
+  <ATSuccessModal
+    v-if="showModalChangeSuccess"
+    :title="modalTitleChangeSuccess"
+    :handle-close-modal-on-ok="handleShowModalChangeSuccess"
+  />
+
+  <ATErrorModal
+    v-if="showModalErrorAtChange"
+    :title="modalTitleChangeError"
+    :handle-close-modal-on-try-again="handleShowModalErrorAtChange"
+  />
 </template>
 
 <style scoped lang="scss">

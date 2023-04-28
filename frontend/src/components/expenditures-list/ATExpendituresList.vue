@@ -1,15 +1,13 @@
 <script setup lang="ts">
-import ATTrashBinIcon from '@/base-components/icons/ATTrashBinIcon.vue'
 import ATButton from '@/base-components/button/ATButton.vue'
-import ATInput from '@/base-components/input/ATInput.vue'
-import ATModal from '@/base-components/modal/ATModal.vue'
 import dynamicText from '@/text/dynamicText.json'
 import { ref, watch } from 'vue'
 import type { Ref } from 'vue'
 import ATEditItemIcon from '@/base-components/icons/ATEditItemIcon.vue'
 import type { ATExpenditure } from '@/utils/types/atExpenditure'
-import { checkIfExpenditureIsComplete } from '@/utils/functions/checkIfExpenditureIsComplete'
 import { filterExpenditures } from '@/utils/functions/filterExpenditures'
+import ATDeleteModal from '../modals/ATDeleteModal.vue'
+import ATExpenditureModal from '../modals/ATExpenditureModal.vue'
 
 export interface Props {
   /**
@@ -50,7 +48,6 @@ const currentExpenditure: Ref<ATExpenditure> = ref({
   date: ''
 })
 
-const showModalWrongInfo = ref(false)
 const showModalDelete = ref(false)
 const showModalEditExpenditure = ref(false)
 
@@ -70,14 +67,6 @@ watch(
   },
   { deep: true }
 )
-
-const handleShowModalWrongInfo = () => {
-  showModalWrongInfo.value = true
-}
-
-const handleCloseModalWrongInfo = () => {
-  showModalWrongInfo.value = false
-}
 
 const handleShowModalDelete = () => {
   showModalDelete.value = true
@@ -103,10 +92,6 @@ const handleCloseModalEditExpenditureOnDelete = () => {
 }
 
 const handleCloseModalEditExpenditureOnSave = () => {
-  if (!checkIfExpenditureIsComplete(currentExpenditure.value)) {
-    handleShowModalWrongInfo()
-    return
-  }
   emit('update-expenditure', currentExpenditure.value)
   showModalEditExpenditure.value = false
 }
@@ -145,67 +130,21 @@ const handleCloseModalEditExpenditureOnCancel = () => {
     </section>
   </div>
 
-  <ATModal v-if="showModalEditExpenditure" :title="dynamicText.edit_expenditure">
-    <template #inputs>
-      <ATInput
-        :title="dynamicText.source_of_expenditure"
-        v-model:value="currentExpenditure.sourceOfExpenditure"
-      />
-      <ATInput
-        :title="dynamicText.additional_information"
-        v-model:value="currentExpenditure.additionalInfo"
-      />
-      <ATInput :title="dynamicText.amount" v-model:value="currentExpenditure.amount" />
-      <ATInput :title="dynamicText.date" v-model:value="currentExpenditure.date" type-date />
-    </template>
-    <template #buttons>
-      <ATButton @press="handleCloseModalEditExpenditureOnDelete" tertiary width="50px">
-        <template #icon>
-          <ATTrashBinIcon />
-        </template>
-      </ATButton>
-      <ATButton
-        :title="dynamicText.cancel"
-        secondary
-        @press="handleCloseModalEditExpenditureOnCancel"
-      />
-      <ATButton :title="dynamicText.save" primary @press="handleCloseModalEditExpenditureOnSave" />
-    </template>
-  </ATModal>
+  <ATExpenditureModal
+    v-if="showModalEditExpenditure"
+    :title="dynamicText.edit_expenditure"
+    :handle-close-modal-on-cancel="handleCloseModalEditExpenditureOnCancel"
+    :handle-close-modal-on-save="handleCloseModalEditExpenditureOnSave"
+    :handle-close-modal-on-delete="handleCloseModalEditExpenditureOnDelete"
+    :expenditure="currentExpenditure"
+  />
 
-  <ATModal v-if="showModalWrongInfo" :title="dynamicText.incorrect_input">
-    <template #inputs>
-      <p>{{ dynamicText.incorrect_input_at_expenditure_source }}</p>
-      <p>{{ dynamicText.incorrect_input_at_amount }}</p>
-      <p>{{ dynamicText.incorrect_input_at_date }}</p>
-    </template>
-    <template #buttons>
-      <ATButton
-        :title="dynamicText.try_again"
-        primary
-        @press="handleCloseModalWrongInfo"
-        width="200px"
-      />
-    </template>
-  </ATModal>
-
-  <ATModal v-if="showModalDelete" :title="dynamicText.really_delete_Expenditure">
-    <template #buttons>
-      <ATButton
-        :title="dynamicText.cancel"
-        secondary
-        @press="handleCloseModalDeleteOnCancel"
-        width="200px"
-      />
-      <ATButton
-        :title="dynamicText.delete"
-        primary
-        @press="handleCloseModalDeleteOnConfirm"
-        width="200px"
-        class="delete-button"
-      />
-    </template>
-  </ATModal>
+  <ATDeleteModal
+    v-if="showModalDelete"
+    :title="dynamicText.really_delete_Expenditure"
+    :handle-close-modal-delete-on-cancel="handleCloseModalDeleteOnCancel"
+    :handle-close-modal-delete-on-confirm="handleCloseModalDeleteOnConfirm"
+  />
 </template>
 
 <style scoped lang="scss">

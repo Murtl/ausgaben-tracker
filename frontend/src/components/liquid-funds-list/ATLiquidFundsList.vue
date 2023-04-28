@@ -9,10 +9,6 @@ import ATSegmentItem from '@/base-components/segment-item/ATSegmentItem.vue'
 import ATSegment from '@/base-components/segment/ATSegment.vue'
 import ATEditItemIconVue from '@/base-components/icons/ATEditItemIcon.vue'
 import ATButton from '@/base-components/button/ATButton.vue'
-import ATModal from '@/base-components/modal/ATModal.vue'
-import ATInput from '@/base-components/input/ATInput.vue'
-import ATTrashBinIcon from '@/base-components/icons/ATTrashBinIcon.vue'
-import { checkIfLiquidFundIsComplete } from '@/utils/functions/checkIfLiquidFundIsComplete'
 import { monthsConstant } from '@/utils/constants'
 import { presortExpenditures } from '@/utils/functions/presortExpenditures'
 import type { ATExpenditureSorted } from '@/utils/types/atExpenditureSorted'
@@ -20,6 +16,8 @@ import { sortExpenditures } from '@/utils/functions/sortExpenditures'
 import { getExpenditureHeightOfMonthAndYear } from '@/utils/functions/getExpenditureHeightOfMonthAndYear'
 import { sortLiquidFundsByMonthAndYear } from '@/utils/functions/sortLiquidFundsByMonthAndYear'
 import { filterLiquidFunds } from '@/utils/functions/filterLiquidFunds'
+import ATDeleteModal from '../modals/ATDeleteModal.vue'
+import ATLiquidFundModal from '@/components/modals/ATLiquidFundModal.vue'
 
 export interface Props {
   /**
@@ -64,7 +62,6 @@ const currentLiquidFund: Ref<ATLiquidFund> = ref({
   year: 0
 })
 
-const showModalWrongInfo = ref(false)
 const showModalDelete = ref(false)
 const showModalEditLiquidFund = ref(false)
 
@@ -95,14 +92,6 @@ watch(
   { deep: true }
 )
 
-const handleShowModalWrongInfo = () => {
-  showModalWrongInfo.value = true
-}
-
-const handleCloseModalWrongInfo = () => {
-  showModalWrongInfo.value = false
-}
-
 const handleShowModalDelete = () => {
   showModalDelete.value = true
 }
@@ -123,10 +112,6 @@ const handleShowModalEditLiquidFund = (liquidFund: ATLiquidFund) => {
 }
 
 const handleCloseModalEditLiquidFundOnSave = () => {
-  if (!checkIfLiquidFundIsComplete(currentLiquidFund.value)) {
-    handleShowModalWrongInfo()
-    return
-  }
   emit('update-liquid-fund', currentLiquidFund.value)
   showModalEditLiquidFund.value = false
 }
@@ -171,60 +156,21 @@ const handleCloseModalEditLiquidFundOnDelete = () => {
     </section>
   </div>
 
-  <ATModal v-if="showModalEditLiquidFund" :title="dynamicText.edit_liquid_fund">
-    <template #inputs>
-      <ATInput :title="dynamicText.height" v-model:value="currentLiquidFund.height" />
-      <ATInput :title="dynamicText.month" v-model:value="currentLiquidFund.month" type-month />
-      <ATInput :title="dynamicText.year" v-model:value="currentLiquidFund.year" type-year />
-    </template>
-    <template #buttons>
-      <ATButton @press="handleCloseModalEditLiquidFundOnDelete" tertiary width="50px">
-        <template #icon>
-          <ATTrashBinIcon />
-        </template>
-      </ATButton>
-      <ATButton
-        :title="dynamicText.cancel"
-        secondary
-        @press="handleCloseModalEditLiquidFundOnCancel"
-      />
-      <ATButton :title="dynamicText.save" primary @press="handleCloseModalEditLiquidFundOnSave" />
-    </template>
-  </ATModal>
+  <ATLiquidFundModal
+    v-if="showModalEditLiquidFund"
+    :title="dynamicText.edit_liquid_fund"
+    :handle-close-modal-on-cancel="handleCloseModalEditLiquidFundOnCancel"
+    :handle-close-modal-on-save="handleCloseModalEditLiquidFundOnSave"
+    :liquid-fund="currentLiquidFund"
+    :handle-close-modal-on-delete="handleCloseModalEditLiquidFundOnDelete"
+  />
 
-  <ATModal v-if="showModalWrongInfo" :title="dynamicText.incorrect_input">
-    <template #inputs>
-      <p>{{ dynamicText.incorrect_input_at_height }}</p>
-      <p>{{ dynamicText.incorrect_input_at_month }}</p>
-      <p>{{ dynamicText.incorrect_input_at_date }}</p>
-    </template>
-    <template #buttons>
-      <ATButton
-        :title="dynamicText.try_again"
-        primary
-        @press="handleCloseModalWrongInfo"
-        width="200px"
-      />
-    </template>
-  </ATModal>
-
-  <ATModal v-if="showModalDelete" :title="dynamicText.really_delete_liquid_fund">
-    <template #buttons>
-      <ATButton
-        :title="dynamicText.cancel"
-        secondary
-        @press="handleCloseModalDeleteOnCancel"
-        width="200px"
-      />
-      <ATButton
-        :title="dynamicText.delete"
-        primary
-        @press="handleCloseModalDeleteOnConfirm"
-        width="200px"
-        class="delete-button"
-      />
-    </template>
-  </ATModal>
+  <ATDeleteModal
+    v-if="showModalDelete"
+    :title="dynamicText.really_delete_liquid_fund"
+    :handle-close-modal-delete-on-cancel="handleCloseModalDeleteOnCancel"
+    :handle-close-modal-delete-on-confirm="handleCloseModalDeleteOnConfirm"
+  />
 </template>
 
 <style scoped lang="scss">

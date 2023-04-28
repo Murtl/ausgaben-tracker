@@ -50,4 +50,10 @@
       }
     }
   }
+
+  .invalid-message {
+    color: $text-red;
+    font-size: $second-font-size;
+    margin-top: 5px;
+  }
 }

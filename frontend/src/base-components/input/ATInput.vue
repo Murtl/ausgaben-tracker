@@ -45,16 +45,28 @@ export interface Props {
    * Whether the input is type year
    */
   typeYear?: boolean
+
+  /**
+   * The invalid message to display
+   */
+  invalidMessage?: string
+
+  /**
+   * the validate function to use
+   */
+  validate?: (value: any) => boolean
 }
 
 const props = withDefaults(defineProps<Props>(), {
   password: false,
-  value: '',
+  value: undefined,
   readonly: false,
   placeholder: '',
   typeDate: false,
   typeMonth: false,
-  typeYear: false
+  typeYear: false,
+  invalidMessage: '',
+  validate: undefined
 })
 
 interface Emits {
@@ -67,6 +79,7 @@ interface Emits {
 const emit = defineEmits<Emits>()
 
 const inputValue: Ref<string | number | object | undefined> = ref(props.value)
+const showInvalidMessage = ref(false)
 const computedType = ref(
   props.typeDate
     ? 'date'
@@ -116,13 +129,22 @@ watch(
   }
 )
 
-watch(inputValue, (newValue: string | number | object) => {
-  if (props.typeDate) {
-    emit('update:value', newValue.toString().split('-').reverse().join('.'))
-  } else {
-    emit('update:value', newValue)
-  }
-})
+watch(
+  inputValue,
+  (newValue: string | number | object) => {
+    if (props.validate && !props.validate(newValue)) {
+      showInvalidMessage.value = true
+    } else {
+      showInvalidMessage.value = false
+    }
+    if (props.typeDate) {
+      emit('update:value', newValue.toString().split('-').reverse().join('.'))
+    } else {
+      emit('update:value', newValue)
+    }
+  },
+  { immediate: true }
+)
 
 const showPassword = () => {
   computedType.value = 'text'
@@ -134,10 +156,10 @@ const hidePassword = () => {
 
 <template>
   <div class="at-input-host">
-    <div class="title">
+    <section class="title">
       {{ title }}
-    </div>
-    <div class="input-field">
+    </section>
+    <section class="input-field">
       <input
         class="native-input-element"
         :type="computedType"
@@ -173,7 +195,10 @@ const hidePassword = () => {
           <ATClosedEyeIcon />
         </template>
       </ATButton>
-    </div>
+    </section>
+    <section class="invalid-message" v-if="showInvalidMessage">
+      {{ invalidMessage }}
+    </section>
   </div>
 </template>
 

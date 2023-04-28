@@ -24,6 +24,11 @@ export interface Props {
    * Whether the button is tertiary
    */
   tertiary?: boolean
+
+  /**
+   * Whether the button is disabled
+   */
+  disabled?: boolean
 }
 
 withDefaults(defineProps<Props>(), {
@@ -31,7 +36,8 @@ withDefaults(defineProps<Props>(), {
   width: '150px',
   primary: false,
   secondary: false,
-  tertiary: false
+  tertiary: false,
+  disabled: false
 })
 
 interface Emits {
@@ -46,10 +52,12 @@ const emit = defineEmits<Emits>()
 
 <template>
   <button
+    :disabled="disabled"
     :class="{
       primary,
       secondary,
-      tertiary
+      tertiary,
+      disabled
     }"
     class="at-button-host"
     @click="emit('press')"
