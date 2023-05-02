@@ -26,8 +26,8 @@ const liquidFundsStore = useLiquidFundsStore()
 const loading = ref(true)
 
 onBeforeMount(async () => {
-  ATLiquidFundsDataService.myLiquidFunds = await getJson('json/liquidFunds.json')
-  ATExpendituresDataService.myExpenditures = await getJson('json/expenditures.json')
+  ATLiquidFundsDataService.myLiquidFunds = await getJson('/ausgaben-tracker/json/liquidFunds.json')
+  ATExpendituresDataService.myExpenditures = await getJson('/ausgaben-tracker/json/expenditures.json')
   expendituresStore.initExpenditures()
   liquidFundsStore.initLiquidFunds()
   loading.value = false

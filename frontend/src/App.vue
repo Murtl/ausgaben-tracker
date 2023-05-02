@@ -16,7 +16,7 @@ const { loggedIn } = storeToRefs(loggedInStore)
 const loading = ref(true)
 
 onBeforeMount(async () => {
-  ATAuthService.myAccounts = await getJson('json/accounts.json')
+  ATAuthService.myAccounts = await getJson('/ausgaben-tracker/json/accounts.json')
   await i18n.getI18n()
   loading.value = false
 })
