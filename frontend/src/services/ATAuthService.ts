@@ -1,5 +1,3 @@
-import accounts from '@/database/accounts.json'
-
 /**
  * @description The interface for the accounts.json file
  */
@@ -12,10 +10,10 @@ interface ATJsonAccounts {
 }
 
 /**
- * @description Service for authentication and interacting with the accounts.json file
+ * @description Service for authentication and interacting with the accounts
  */
 export class ATAuthService {
-  static myAccounts: ATJsonAccounts = accounts
+  static myAccounts: ATJsonAccounts = {}
 
   /**
    * @description Logs in a user
@@ -39,7 +37,7 @@ export class ATAuthService {
   }
 
   /**
-   * @description Registers a new user in the accounts.json file
+   * @description Registers a new user in the accounts
    * @param name name of the new user
    * @param password password of the new user
    * @returns if the registration was successful and the userUID of the new user
@@ -60,7 +58,7 @@ export class ATAuthService {
   }
 
   /**
-   * @description Changes the name in the accounts.json file
+   * @description Changes the name in the accounts
    * @param userUID userUID of the user
    * @param newName new name of the user
    * @returns if the change was successful
@@ -81,7 +79,7 @@ export class ATAuthService {
   }
 
   /**
-   * @description Changes the password in the accounts.json file
+   * @description Changes the password in the accounts
    * @param userUID userUID of the user
    * @param newPassword new password of the user
    */

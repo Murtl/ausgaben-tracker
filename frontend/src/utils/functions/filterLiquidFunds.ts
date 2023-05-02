@@ -10,12 +10,12 @@ import { monthsConstant } from '../constants'
 export const filterLiquidFunds = (liquidFundsList: ATLiquidFund[], filterArray: string[]) => {
   return liquidFundsList.filter((liquidFund) => {
     if (
-      monthsConstant[liquidFund.month - 1].toLowerCase().includes(filterArray[0]) ||
+      monthsConstant()[liquidFund.month - 1].toLowerCase().includes(filterArray[0]) ||
       liquidFund.year.toString().includes(filterArray[0])
     ) {
       if (filterArray.length === 2) {
         if (
-          monthsConstant[liquidFund.month - 1].toLowerCase().includes(filterArray[0]) &&
+          monthsConstant()[liquidFund.month - 1].toLowerCase().includes(filterArray[0]) &&
           liquidFund.year.toString().includes(filterArray[1])
         ) {
           return true

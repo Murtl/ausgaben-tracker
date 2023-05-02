@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import ATButton from '@/base-components/button/ATButton.vue'
-import dynamicText from '@/text/dynamicText.json'
+import { useI18nStore } from '@/stores/i18nStore'
 import ATModal from '@/base-components/modal/ATModal.vue'
 
 interface Props {
@@ -16,13 +16,15 @@ interface Props {
 }
 
 defineProps<Props>()
+
+const i18n = useI18nStore().i18n
 </script>
 
 <template>
   <div class="at-success-modal-host">
     <ATModal :title="title">
       <template #buttons>
-        <ATButton :title="dynamicText.ok" width="50px" primary @press="handleCloseModalOnOk" />
+        <ATButton :title="i18n.ok" width="50px" primary @press="handleCloseModalOnOk" />
       </template>
     </ATModal>
   </div>

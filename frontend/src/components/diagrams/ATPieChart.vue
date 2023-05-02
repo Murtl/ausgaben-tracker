@@ -2,8 +2,7 @@
 import { Pie } from 'vue-chartjs'
 import type { Ref } from 'vue'
 import { Chart as ChartJS, Tooltip, ArcElement, Legend } from 'chart.js'
-import dynamicText from '@/text/dynamicText.json'
-import staticText from '@/text/staticText.json'
+import { useI18nStore } from '@/stores/i18nStore'
 import ATSortBanner from '@/base-components/sort-banner/ATSortBanner.vue'
 import ATDropDown from '@/base-components/drop-down/ATDropDown.vue'
 import { storeToRefs } from 'pinia'
@@ -16,6 +15,8 @@ import { sortExpenditures } from '@/utils/functions/sortExpenditures'
 import { getAvailableYearsOfExpenditures } from '@/utils/functions/getAvailableYearsOfExpenditures'
 
 ChartJS.register(ArcElement, Tooltip, Legend)
+
+const i18n = useI18nStore().i18n
 
 const expendituresStore = useExpendituresStore()
 const { allExpenditures } = storeToRefs(expendituresStore)
@@ -34,7 +35,20 @@ const chartData = computed(() => {
     labels: labelOptions.value,
     datasets: [
       {
-        backgroundColor: staticText.pie_chart_colors,
+        backgroundColor: [
+          '#1676F3',
+          '#E46651',
+          '#00D8FF',
+          '#DD1B16',
+          '#FF9F40',
+          '#FFCD56',
+          '#FF6384',
+          '#4BC0C0',
+          '#9966FF',
+          '#C9CB40',
+          '#FFCE56',
+          '#36A2EB'
+        ],
         data: data.value
       }
     ]
@@ -51,7 +65,7 @@ onBeforeMount(() => {
   sortedExpenditures.value = sortExpenditures(presortedExpenditures.value, true)
   yearOptions.value = getAvailableYearsOfExpenditures(presortedExpenditures.value)
   selectedYear.value = yearOptions.value[0]
-  selectedMonth.value = monthsConstant[0]
+  selectedMonth.value = monthsConstant()[0]
   sortExpendituresInData()
 })
 
@@ -87,7 +101,7 @@ const sortExpendituresInData = () => {
       }
       data.value = data.value.slice(0, 12)
       labelOptions.value = labelOptions.value.slice(0, 12)
-      labelOptions.value[11] = dynamicText.other
+      labelOptions.value[11] = i18n.other
     }
   } else {
     labelOptions.value = []
@@ -95,7 +109,7 @@ const sortExpendituresInData = () => {
     sortedExpenditures.value.forEach((expenditure) => {
       if (
         expenditure.year === selectedYear.value &&
-        monthsConstant[expenditure.month - 1] === selectedMonth.value
+        monthsConstant()[expenditure.month - 1] === selectedMonth.value
       ) {
         data.value.push(expenditure.height)
         labelOptions.value.push(expenditure.sourceOfExpenditure)
@@ -103,13 +117,13 @@ const sortExpendituresInData = () => {
     })
   }
   if (!labelOptions.value[0]) {
-    labelOptions.value = [dynamicText.no_expenditures]
+    labelOptions.value = [i18n.no_expenditures]
     data.value = [1]
   }
 }
 
 const updateSort = (value: string) => {
-  if (value === dynamicText.months) {
+  if (value === i18n.months) {
     showMonthDropDown.value = true
   } else {
     showMonthDropDown.value = false
@@ -131,11 +145,11 @@ const updateSelectedYear = (value: string) => {
 <template>
   <div class="pie-chart-host">
     <section class="pie-chart-options">
-      <ATSortBanner :title="dynamicText.sorted_by" />
-      <ATDropDown :options="sortByMonthOrYearOptions" @change="updateSort" />
+      <ATSortBanner :title="i18n.sorted_by" />
+      <ATDropDown :options="sortByMonthOrYearOptions()" @change="updateSort" />
       <ATDropDown
         v-if="showMonthDropDown"
-        :options="monthsConstant"
+        :options="monthsConstant()"
         @change="updateSelectedMonth"
       />
       <ATDropDown :options="yearOptions" @change="updateSelectedYear" />

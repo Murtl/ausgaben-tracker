@@ -3,12 +3,17 @@ import { createPinia } from 'pinia'
 
 import App from './App.vue'
 import router from './router'
+import { getJson } from './utils/functions/getJson'
 
-window.addEventListener('load', () => {
-  const app = createApp(App)
+const app = createApp(App)
+const pinia = createPinia()
 
-  app.use(createPinia())
-  app.use(router)
+const init = async () => {
+  app
+    .use(pinia)
+    .use(router)
+    .provide('config', await getJson('/json/config.json'))
+    .mount('#app')
+}
 
-  app.mount('#app')
-})
+window.addEventListener('load', init)

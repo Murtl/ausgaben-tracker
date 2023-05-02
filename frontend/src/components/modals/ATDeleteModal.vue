@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import dynamicText from '@/text/dynamicText.json'
+import { useI18nStore } from '@/stores/i18nStore'
 import ATButton from '@/base-components/button/ATButton.vue'
 import ATModal from '@/base-components/modal/ATModal.vue'
 
@@ -21,6 +21,8 @@ interface Props {
 }
 
 defineProps<Props>()
+
+const i18n = useI18nStore().i18n
 </script>
 
 <template>
@@ -28,13 +30,13 @@ defineProps<Props>()
     <ATModal :title="title">
       <template #buttons>
         <ATButton
-          :title="dynamicText.cancel"
+          :title="i18n.cancel"
           secondary
           @press="handleCloseModalDeleteOnCancel"
           width="200px"
         />
         <ATButton
-          :title="dynamicText.delete"
+          :title="i18n.delete"
           primary
           @press="handleCloseModalDeleteOnConfirm"
           width="200px"

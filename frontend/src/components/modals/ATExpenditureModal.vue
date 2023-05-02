@@ -3,7 +3,7 @@ import ATTrashBinIcon from '@/base-components/icons/ATTrashBinIcon.vue'
 import ATModal from '@/base-components/modal/ATModal.vue'
 import ATInput from '@/base-components/input/ATInput.vue'
 import ATButton from '@/base-components/button/ATButton.vue'
-import dynamicText from '@/text/dynamicText.json'
+import { useI18nStore } from '@/stores/i18nStore'
 import { computed, onBeforeMount, ref } from 'vue'
 import type { Ref } from 'vue'
 import { checkIfExpenditureIsComplete } from '@/utils/functions/checkIfExpenditureIsComplete'
@@ -40,6 +40,8 @@ const props = withDefaults(defineProps<Props>(), {
   expenditure: undefined,
   handleCloseModalOnDelete: undefined
 })
+
+const i18n = useI18nStore().i18n
 
 onBeforeMount(() => {
   if (props.expenditure) {
@@ -81,28 +83,25 @@ const validateAmount = (value: number) => {
     <ATModal :title="title">
       <template #inputs>
         <ATInput
-          :title="dynamicText.source_of_expenditure"
+          :title="i18n.source_of_expenditure"
           v-model:value="expenditure.sourceOfExpenditure"
           :validate="validateString"
-          :invalid-message="dynamicText.incorrect_input_at_expenditure_source"
+          :invalid-message="i18n.incorrect_input_at_expenditure_source"
         />
+        <ATInput :title="i18n.additional_information" v-model:value="expenditure.additionalInfo" />
         <ATInput
-          :title="dynamicText.additional_information"
-          v-model:value="expenditure.additionalInfo"
-        />
-        <ATInput
-          :title="dynamicText.amount"
+          :title="i18n.amount"
           v-model:value="expenditure.amount"
-          :placeholder="dynamicText.placeholder_amount"
+          :placeholder="i18n.placeholder_amount"
           :validate="validateAmount"
-          :invalid-message="dynamicText.incorrect_input_at_amount"
+          :invalid-message="i18n.incorrect_input_at_amount"
         />
         <ATInput
-          :title="dynamicText.date"
+          :title="i18n.date"
           v-model:value="expenditure.date"
           type-date
           :validate="validateString"
-          :invalid-message="dynamicText.incorrect_input_at_date"
+          :invalid-message="i18n.incorrect_input_at_date"
         />
       </template>
       <template #buttons>
@@ -116,9 +115,9 @@ const validateAmount = (value: number) => {
             <ATTrashBinIcon />
           </template>
         </ATButton>
-        <ATButton :title="dynamicText.cancel" secondary @press="handleCloseModalOnCancel" />
+        <ATButton :title="i18n.cancel" secondary @press="handleCloseModalOnCancel" />
         <ATButton
-          :title="dynamicText.save"
+          :title="i18n.save"
           primary
           @press="handleCloseModalOnSave(expenditure)"
           :disabled="computedDisabledSaveButtonState"

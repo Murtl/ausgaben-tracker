@@ -4,12 +4,14 @@ import ATInput from '@/base-components/input/ATInput.vue'
 import ATWelcomeForm from '@/base-components/welcome-form/ATWelcomeForm.vue'
 import { computed, ref } from 'vue'
 import ATRegister from './ATRegister.vue'
-import dynamicText from '@/text/dynamicText.json'
+import { useI18nStore } from '@/stores/i18nStore'
 import { storeToRefs } from 'pinia'
 import { useUserDataStore } from '@/stores/userDataStore'
 import { useLoggedInStore } from '@/stores/loggedInStore'
 import { ATAuthService } from '@/services/ATAuthService'
 import ATErrorModal from '@/components/modals/ATErrorModal.vue'
+
+const i18n = useI18nStore().i18n
 
 const loggedInStore = useLoggedInStore()
 const { loggedIn } = storeToRefs(loggedInStore)
@@ -47,25 +49,20 @@ const handleLogin = () => {
 
 <template>
   <div class="at-login-host" v-if="!showRegister">
-    <ATWelcomeForm :title="dynamicText.login" height="520px">
+    <ATWelcomeForm :title="i18n.login" height="520px">
       <template #inputs>
-        <ATInput :title="dynamicText.name" v-model:value="name" />
-        <ATInput :title="dynamicText.password" v-model:value="password" password />
+        <ATInput :title="i18n.name" v-model:value="name" />
+        <ATInput :title="i18n.password" v-model:value="password" password />
       </template>
       <template #buttons>
         <ATButton
-          :title="dynamicText.login"
+          :title="i18n.login"
           width="400px"
           primary
           @press="handleLogin"
           :disabled="computedDisabledButtonState"
         />
-        <ATButton
-          :title="dynamicText.new_here"
-          width="400px"
-          secondary
-          @press="handleShowRegister"
-        />
+        <ATButton :title="i18n.new_here" width="400px" secondary @press="handleShowRegister" />
       </template>
     </ATWelcomeForm>
   </div>
@@ -73,7 +70,7 @@ const handleLogin = () => {
 
   <ATErrorModal
     v-if="showModalErrorAtLogin"
-    :title="dynamicText.wrong_login_data"
+    :title="i18n.wrong_login_data"
     :handle-close-modal-on-try-again="handleShowModalErrorAtLogin"
   />
 </template>

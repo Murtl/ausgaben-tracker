@@ -6,7 +6,7 @@ import ATArrowRightIcon from '@/base-components/icons/ATArrowRightIcon.vue'
 import ATHandsUpIcon from '@/base-components/icons/ATHandsUpIcon.vue'
 import ATButton from '@/base-components/button/ATButton.vue'
 import ATCornerUpperLeftIcon from '@/base-components/icons/ATCornerUpperLeftIcon.vue'
-import dynamicText from '@/text/dynamicText.json'
+import { useI18nStore } from '@/stores/i18nStore'
 
 interface Emits {
   /**
@@ -19,6 +19,8 @@ const emit = defineEmits<Emits>()
 
 const loggedInStore = useLoggedInStore()
 const { loggedIn } = storeToRefs(loggedInStore)
+
+const i18n = useI18nStore().i18n
 
 const showAccount = () => {
   emit('close')
@@ -37,14 +39,14 @@ const handleLogout = () => {
       <ATCornerUpperLeftIcon />
     </section>
     <section class="first-button">
-      <ATButton :title="dynamicText.account" width="110px" @press="showAccount">
+      <ATButton :title="i18n.account" width="110px" @press="showAccount">
         <template #icon>
           <ATHandsUpIcon />
         </template>
       </ATButton>
     </section>
     <section class="second-button">
-      <ATButton :title="dynamicText.logout" width="110px" @press="handleLogout">
+      <ATButton :title="i18n.logout" width="110px" @press="handleLogout">
         <template #icon>
           <ATArrowRightIcon />
         </template>

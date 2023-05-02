@@ -2,7 +2,7 @@
 import { ref, watch, onBeforeMount } from 'vue'
 import type { ATLiquidFund } from '@/utils/types/atLiquidFund'
 import type { Ref } from 'vue'
-import dynamicText from '@/text/dynamicText.json'
+import { useI18nStore } from '@/stores/i18nStore'
 import { storeToRefs } from 'pinia'
 import { useExpendituresStore } from '@/stores/expendituresStore'
 import ATSegmentItem from '@/base-components/segment-item/ATSegmentItem.vue'
@@ -48,6 +48,8 @@ interface Emits {
 }
 
 const emit = defineEmits<Emits>()
+
+const i18n = useI18nStore().i18n
 
 const expendituresStore = useExpendituresStore()
 const { allExpenditures } = storeToRefs(expendituresStore)
@@ -132,8 +134,8 @@ const handleCloseModalEditLiquidFundOnDelete = () => {
       :key="liquidFund.id"
       class="liquid-funds-list"
     >
-      <ATSegment :title="monthsConstant[liquidFund.month - 1]" :year="liquidFund.year">
-        <ATSegmentItem :title="dynamicText.liquid_funds" :value="`${liquidFund.height} €`" editable>
+      <ATSegment :title="monthsConstant()[liquidFund.month - 1]" :year="liquidFund.year">
+        <ATSegmentItem :title="i18n.liquid_funds" :value="`${liquidFund.height} €`" editable>
           <template #button>
             <ATButton @press="handleShowModalEditLiquidFund(liquidFund)" width="40px" secondary>
               <template #icon>
@@ -143,11 +145,11 @@ const handleCloseModalEditLiquidFundOnDelete = () => {
           </template>
         </ATSegmentItem>
         <ATSegmentItem
-          :title="dynamicText.minus_expenditures"
+          :title="i18n.minus_expenditures"
           :value="`${getExpenditureHeightOfMonthAndYear(sortedExpenditures, liquidFund)} €`"
         />
         <ATSegmentItem
-          :title="dynamicText.balance"
+          :title="i18n.balance"
           :value="`${
             liquidFund.height - getExpenditureHeightOfMonthAndYear(sortedExpenditures, liquidFund)
           } €`"
@@ -158,7 +160,7 @@ const handleCloseModalEditLiquidFundOnDelete = () => {
 
   <ATLiquidFundModal
     v-if="showModalEditLiquidFund"
-    :title="dynamicText.edit_liquid_fund"
+    :title="i18n.edit_liquid_fund"
     :handle-close-modal-on-cancel="handleCloseModalEditLiquidFundOnCancel"
     :handle-close-modal-on-save="handleCloseModalEditLiquidFundOnSave"
     :liquid-fund="currentLiquidFund"
@@ -167,7 +169,7 @@ const handleCloseModalEditLiquidFundOnDelete = () => {
 
   <ATDeleteModal
     v-if="showModalDelete"
-    :title="dynamicText.really_delete_liquid_fund"
+    :title="i18n.really_delete_liquid_fund"
     :handle-close-modal-delete-on-cancel="handleCloseModalDeleteOnCancel"
     :handle-close-modal-delete-on-confirm="handleCloseModalDeleteOnConfirm"
   />

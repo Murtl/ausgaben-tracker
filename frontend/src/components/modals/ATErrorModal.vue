@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import ATButton from '@/base-components/button/ATButton.vue'
-import dynamicText from '@/text/dynamicText.json'
+import { useI18nStore } from '@/stores/i18nStore'
 import ATModal from '@/base-components/modal/ATModal.vue'
 
 interface Props {
@@ -16,6 +16,8 @@ interface Props {
 }
 
 defineProps<Props>()
+
+const i18n = useI18nStore().i18n
 </script>
 
 <template>
@@ -23,7 +25,7 @@ defineProps<Props>()
     <ATModal :title="title">
       <template #buttons>
         <ATButton
-          :title="dynamicText.try_again"
+          :title="i18n.try_again"
           width="200px"
           primary
           @press="handleCloseModalOnTryAgain"

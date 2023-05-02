@@ -1,4 +1,3 @@
-import expenditures from '@/database/expenditures.json'
 import type { ATExpenditure } from '@/utils/types/atExpenditure'
 
 /**
@@ -15,10 +14,10 @@ interface ATJsonExpenditures {
 }
 
 /**
- * @description Service for interacting with the expenditures.json file
+ * @description Service for interacting with the expenditures
  */
 export class ATExpendituresDataService {
-  static myExpenditures: ATJsonExpenditures = expenditures
+  static myExpenditures: ATJsonExpenditures = {}
 
   /**
    * @description Gets all expenditures of a user
@@ -35,7 +34,7 @@ export class ATExpendituresDataService {
   }
 
   /**
-   * @description Adds an expenditure to the expenditures.json file
+   * @description Adds an expenditure to the expenditures
    * @param expenditure The expenditure to add
    * @param userUID userUID of the user
    */
@@ -44,7 +43,7 @@ export class ATExpendituresDataService {
   }
 
   /**
-   * @description Deletes an expenditure from the expenditures.json file
+   * @description Deletes an expenditure from the expenditures
    * @param id id of the expenditure
    * @param userUID userUID of the user
    */
@@ -55,7 +54,7 @@ export class ATExpendituresDataService {
   }
 
   /**
-   * @description Updates an expenditure in the expenditures.json file
+   * @description Updates an expenditure in the expenditures
    * @param expenditure expenditure to update
    * @param userUID userUID of the user
    */

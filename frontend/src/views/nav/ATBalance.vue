@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import ATButton from '@/base-components/button/ATButton.vue'
 import { ref } from 'vue'
-import dynamicText from '@/text/dynamicText.json'
+import { useI18nStore } from '@/stores/i18nStore'
 import ATSearchbar from '@/base-components/searchbar/ATSearchbar.vue'
 import ATPlusIcon from '@/base-components/icons/ATPlusIcon.vue'
 import { useLiquidFundsStore } from '@/stores/liquidFundsStore'
@@ -10,6 +10,8 @@ import type { ATLiquidFund } from '@/utils/types/atLiquidFund'
 import ATLiquidFundsList from '@/components/liquid-funds-list/ATLiquidFundsList.vue'
 import { getHighestIdOfLiquidFunds } from '@/utils/functions/getHighestIdOfLiquidFunds'
 import ATLiquidFundModal from '@/components/modals/ATLiquidFundModal.vue'
+
+const i18n = useI18nStore().i18n
 
 const liquidFundsStore = useLiquidFundsStore()
 const { allLiquidFunds } = storeToRefs(liquidFundsStore)
@@ -61,9 +63,9 @@ const searchChanged = (newFilter: string) => {
 <template>
   <div class="at-balance-host">
     <header>
-      <ATSearchbar :placeholder="dynamicText.search_month_year" @search-changed="searchChanged" />
+      <ATSearchbar :placeholder="i18n.search_month_year" @search-changed="searchChanged" />
       <ATButton
-        :title="dynamicText.add_liquid_fund"
+        :title="i18n.add_liquid_fund"
         width="261px"
         primary
         @press="handleShowModalNewLiquidFund"
@@ -85,7 +87,7 @@ const searchChanged = (newFilter: string) => {
 
   <ATLiquidFundModal
     v-if="showModalNewLiquidFund"
-    :title="dynamicText.add_liquid_fund"
+    :title="i18n.add_liquid_fund"
     :handle-close-modal-on-cancel="handleCloseModalNewLiquidFundOnCancel"
     :handle-close-modal-on-save="handleCloseModalNewLiquidFundOnCreation"
   />

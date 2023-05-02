@@ -6,11 +6,16 @@ import ATHandshakeIcon from '@/base-components/icons/ATHandshakeIcon.vue'
 import { RouterLink, RouterView } from 'vue-router'
 import { onBeforeMount, ref } from 'vue'
 import ATAccountFlyout from '@/components/account-flyout/ATAccountFlyout.vue'
-import dynamicText from '@/text/dynamicText.json'
+import { useI18nStore } from '@/stores/i18nStore'
 import { useUserDataStore } from '@/stores/userDataStore'
 import { storeToRefs } from 'pinia'
 import { useExpendituresStore } from '@/stores/expendituresStore'
 import { useLiquidFundsStore } from '@/stores/liquidFundsStore'
+import { getJson } from '@/utils/functions/getJson'
+import { ATLiquidFundsDataService } from '@/services/ATLiquidFundsDataService'
+import { ATExpendituresDataService } from '@/services/ATExpendituresDataService'
+
+const i18n = useI18nStore().i18n
 
 const userDataStore = useUserDataStore()
 const { userName } = storeToRefs(userDataStore)
@@ -18,9 +23,14 @@ const { userName } = storeToRefs(userDataStore)
 const expendituresStore = useExpendituresStore()
 const liquidFundsStore = useLiquidFundsStore()
 
-onBeforeMount(() => {
+const loading = ref(true)
+
+onBeforeMount(async () => {
+  ATLiquidFundsDataService.myLiquidFunds = await getJson('json/liquidFunds.json')
+  ATExpendituresDataService.myExpenditures = await getJson('json/expenditures.json')
   expendituresStore.initExpenditures()
   liquidFundsStore.initLiquidFunds()
+  loading.value = false
 })
 
 const showFlyout = ref(false)
@@ -32,20 +42,20 @@ const handleShowFlyout = () => {
 
 <template>
   <header>
-    <section class="title">{{ dynamicText.expenditures_tracker }}</section>
+    <section class="title">{{ i18n.expenditures_tracker }}</section>
     <section class="nav">
       <nav>
         <RouterLink to="/">
           <ATGridBigIcon />
-          {{ dynamicText.Dashboard }}
+          {{ i18n.Dashboard }}
         </RouterLink>
         <RouterLink to="/tracker">
           <ATEditIcon />
-          {{ dynamicText.Tracker }}
+          {{ i18n.Tracker }}
         </RouterLink>
         <RouterLink to="/balance">
           <ATHandshakeIcon />
-          {{ dynamicText.Balance }}
+          {{ i18n.Balance }}
         </RouterLink>
       </nav>
     </section>
@@ -60,8 +70,12 @@ const handleShowFlyout = () => {
     </section>
   </header>
 
-  <main>
+  <main v-if="!loading">
     <RouterView />
+  </main>
+
+  <main v-else>
+    <div class="loader"></div>
   </main>
 </template>
 

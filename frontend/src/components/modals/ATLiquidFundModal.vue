@@ -3,7 +3,7 @@ import ATTrashBinIcon from '@/base-components/icons/ATTrashBinIcon.vue'
 import ATModal from '@/base-components/modal/ATModal.vue'
 import ATInput from '@/base-components/input/ATInput.vue'
 import ATButton from '@/base-components/button/ATButton.vue'
-import dynamicText from '@/text/dynamicText.json'
+import { useI18nStore } from '@/stores/i18nStore'
 import { computed, onBeforeMount, ref } from 'vue'
 import type { Ref } from 'vue'
 import type { ATLiquidFund } from '@/utils/types/atLiquidFund'
@@ -40,6 +40,8 @@ const props = withDefaults(defineProps<Props>(), {
   liquidFund: undefined,
   handleCloseModalOnDelete: undefined
 })
+
+const i18n = useI18nStore().i18n
 
 onBeforeMount(() => {
   if (props.liquidFund) {
@@ -83,27 +85,27 @@ const validateYear = (year: number) => {
     <ATModal :title="title">
       <template #inputs>
         <ATInput
-          :title="dynamicText.height"
-          :placeholder="dynamicText.placeholder_amount"
+          :title="i18n.height"
+          :placeholder="i18n.placeholder_amount"
           v-model:value="liquidFund.height"
           :validate="validateHeight"
-          :invalid-message="dynamicText.incorrect_input_at_height"
+          :invalid-message="i18n.incorrect_input_at_height"
         />
         <ATInput
-          :title="dynamicText.month"
-          :placeholder="dynamicText.placeholder_month"
+          :title="i18n.month"
+          :placeholder="i18n.placeholder_month"
           v-model:value="liquidFund.month"
           type-month
           :validate="validateMonth"
-          :invalid-message="dynamicText.incorrect_input_at_month"
+          :invalid-message="i18n.incorrect_input_at_month"
         />
         <ATInput
-          :title="dynamicText.year"
-          :placeholder="dynamicText.placeholder_year"
+          :title="i18n.year"
+          :placeholder="i18n.placeholder_year"
           v-model:value="liquidFund.year"
           type-year
           :validate="validateYear"
-          :invalid-message="dynamicText.incorrect_input_at_year"
+          :invalid-message="i18n.incorrect_input_at_year"
         />
       </template>
       <template #buttons>
@@ -117,9 +119,9 @@ const validateYear = (year: number) => {
             <ATTrashBinIcon />
           </template>
         </ATButton>
-        <ATButton :title="dynamicText.cancel" secondary @press="handleCloseModalOnCancel" />
+        <ATButton :title="i18n.cancel" secondary @press="handleCloseModalOnCancel" />
         <ATButton
-          :title="dynamicText.save"
+          :title="i18n.save"
           primary
           @press="handleCloseModalOnSave(liquidFund)"
           :disabled="computedDisabledSaveButtonState"

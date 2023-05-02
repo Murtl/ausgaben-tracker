@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { Bar } from 'vue-chartjs'
-import dynamicText from '@/text/dynamicText.json'
-import staticText from '@/text/staticText.json'
+import { useI18nStore } from '@/stores/i18nStore'
 import ATSortBanner from '@/base-components/sort-banner/ATSortBanner.vue'
 import ATDropDown from '@/base-components/drop-down/ATDropDown.vue'
 import { onBeforeMount, ref, computed } from 'vue'
@@ -25,6 +24,8 @@ import { getAvailableYearsOfExpenditures } from '@/utils/functions/getAvailableY
 
 ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale)
 
+const i18n = useI18nStore().i18n
+
 const expendituresStore = useExpendituresStore()
 const { allExpenditures } = storeToRefs(expendituresStore)
 const presortedExpenditures: Ref<ATExpenditureSorted[]> = ref([])
@@ -42,8 +43,8 @@ const chartData = computed(() => {
     datasets: [
       {
         data: data.value,
-        backgroundColor: staticText.chart_color,
-        label: dynamicText.expenditures_in_euro
+        backgroundColor: '#1676F3',
+        label: i18n.expenditures_in_euro
       }
     ]
   }
@@ -55,12 +56,12 @@ const chartOptions = {
     y: {
       title: {
         display: true,
-        text: dynamicText.total_expenditures
+        text: i18n.total_expenditures
       }
     },
     x: {
       grid: {
-        color: staticText.line_color
+        color: '#FFFFFF'
       }
     }
   }
@@ -71,7 +72,7 @@ onBeforeMount(() => {
   sortedExpenditures.value = sortExpenditures(presortedExpenditures.value)
   yearOptions.value = getAvailableYearsOfExpenditures(presortedExpenditures.value)
   selectedYear.value = yearOptions.value[0]
-  labelOptions.value = monthsConstant
+  labelOptions.value = monthsConstant()
   sortExpendituresInData()
 })
 
@@ -92,7 +93,7 @@ const sortExpendituresInData = () => {
       data.value.push(sum)
     })
   } else {
-    labelOptions.value = monthsConstant
+    labelOptions.value = monthsConstant()
     data.value = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
     sortedExpenditures.value.forEach((expenditure) => {
       if (expenditure.year === selectedYear.value) {
@@ -103,7 +104,7 @@ const sortExpendituresInData = () => {
 }
 
 const updateSort = (value: string) => {
-  if (value === dynamicText.months) {
+  if (value === i18n.months) {
     showYearDropDown.value = true
   } else {
     showYearDropDown.value = false
@@ -120,8 +121,8 @@ const updateSelectedYear = (value: string) => {
 <template>
   <div class="bar-chart-host">
     <section class="bar-chart-options">
-      <ATSortBanner :title="dynamicText.sorted_by" />
-      <ATDropDown :options="sortByMonthOrYearOptions" @change="updateSort" />
+      <ATSortBanner :title="i18n.sorted_by" />
+      <ATDropDown :options="sortByMonthOrYearOptions()" @change="updateSort" />
       <ATDropDown v-if="showYearDropDown" :options="yearOptions" @change="updateSelectedYear" />
     </section>
     <section class="bar-chart">

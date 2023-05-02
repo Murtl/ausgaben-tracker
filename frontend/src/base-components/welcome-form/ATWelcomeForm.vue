@@ -1,6 +1,6 @@
 <script setup lang="ts">
+import { useI18nStore } from '@/stores/i18nStore'
 import { computed } from 'vue'
-import dynamicText from '@/text/dynamicText.json'
 
 export interface Props {
   /**
@@ -16,14 +16,16 @@ export interface Props {
 
 const props = withDefaults(defineProps<Props>(), {})
 
+const i18n = useI18nStore().i18n
+
 const computedMainHeight = computed(() => (props.height === '520px' ? '365px' : '455px'))
 </script>
 
 <template>
   <div class="at-welcome-form-host">
     <header>
-      <p class="caption">{{ dynamicText.expenditures_tracker }}</p>
-      <p class="lower-caption">{{ dynamicText.created_by_Mertl }}</p>
+      <p class="caption">{{ i18n.expenditures_tracker }}</p>
+      <p class="lower-caption">{{ i18n.created_by_Mertl }}</p>
     </header>
 
     <main>

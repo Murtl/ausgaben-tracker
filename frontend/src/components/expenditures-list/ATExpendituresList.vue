@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import ATButton from '@/base-components/button/ATButton.vue'
-import dynamicText from '@/text/dynamicText.json'
+import { useI18nStore } from '@/stores/i18nStore'
 import { ref, watch } from 'vue'
 import type { Ref } from 'vue'
 import ATEditItemIcon from '@/base-components/icons/ATEditItemIcon.vue'
@@ -38,6 +38,8 @@ interface Emits {
 }
 
 const emit = defineEmits<Emits>()
+
+const i18n = useI18nStore().i18n
 
 const expendituresList: Ref<ATExpenditure[]> = ref(props.data)
 const currentExpenditure: Ref<ATExpenditure> = ref({
@@ -104,10 +106,10 @@ const handleCloseModalEditExpenditureOnCancel = () => {
 <template>
   <div class="at-expenditure-list-host">
     <section class="table-header">
-      <span class="first-column">{{ dynamicText.source_of_expenditure }}</span>
-      <span class="second-column">{{ dynamicText.additional_information }}</span>
-      <span class="third-column">{{ dynamicText.amount }}</span>
-      <span class="fourth-column">{{ dynamicText.date }}</span>
+      <span class="first-column">{{ i18n.source_of_expenditure }}</span>
+      <span class="second-column">{{ i18n.additional_information }}</span>
+      <span class="third-column">{{ i18n.amount }}</span>
+      <span class="fourth-column">{{ i18n.date }}</span>
       <span class="fifth-column"></span>
     </section>
 
@@ -132,7 +134,7 @@ const handleCloseModalEditExpenditureOnCancel = () => {
 
   <ATExpenditureModal
     v-if="showModalEditExpenditure"
-    :title="dynamicText.edit_expenditure"
+    :title="i18n.edit_expenditure"
     :handle-close-modal-on-cancel="handleCloseModalEditExpenditureOnCancel"
     :handle-close-modal-on-save="handleCloseModalEditExpenditureOnSave"
     :handle-close-modal-on-delete="handleCloseModalEditExpenditureOnDelete"
@@ -141,7 +143,7 @@ const handleCloseModalEditExpenditureOnCancel = () => {
 
   <ATDeleteModal
     v-if="showModalDelete"
-    :title="dynamicText.really_delete_Expenditure"
+    :title="i18n.really_delete_Expenditure"
     :handle-close-modal-delete-on-cancel="handleCloseModalDeleteOnCancel"
     :handle-close-modal-delete-on-confirm="handleCloseModalDeleteOnConfirm"
   />

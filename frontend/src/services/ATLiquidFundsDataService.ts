@@ -1,4 +1,3 @@
-import liquidFunds from '@/database/liquidFunds.json'
 import type { ATLiquidFund } from '@/utils/types/atLiquidFund'
 
 /**
@@ -14,10 +13,10 @@ interface ATJsonLiquidFunds {
 }
 
 /**
- * @description Service for interacting with the liquidFunds.json file
+ * @description Service for interacting with the liquidFunds
  */
 export class ATLiquidFundsDataService {
-  static myLiquidFunds: ATJsonLiquidFunds = liquidFunds
+  static myLiquidFunds: ATJsonLiquidFunds = {}
 
   /**
    * @description Gets all liquid funds of a user
@@ -34,7 +33,7 @@ export class ATLiquidFundsDataService {
   }
 
   /**
-   * @description Adds a liquid fund to the liquidFunds.json file
+   * @description Adds a liquid fund to the liquidFunds
    * @param liquidFund liquid fund to add
    * @param userUID userUID of the user
    */
@@ -43,7 +42,7 @@ export class ATLiquidFundsDataService {
   }
 
   /**
-   * @description Deletes a liquid fund from the liquidFunds.json file
+   * @description Deletes a liquid fund from the liquidFunds
    * @param id id of the liquid fund
    * @param userUID userUID of the user
    */
@@ -54,7 +53,7 @@ export class ATLiquidFundsDataService {
   }
 
   /**
-   * @description Updates a liquid fund in the liquidFunds.json file
+   * @description Updates a liquid fund in the liquidFunds
    * @param liquidFund liquid fund to update
    * @param userUID userUID of the user
    */

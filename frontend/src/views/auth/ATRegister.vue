@@ -4,12 +4,14 @@ import ATInput from '@/base-components/input/ATInput.vue'
 import ATWelcomeForm from '@/base-components/welcome-form/ATWelcomeForm.vue'
 import { ref, computed } from 'vue'
 import ATLogin from './ATLogin.vue'
-import dynamicText from '@/text/dynamicText.json'
+import { useI18nStore } from '@/stores/i18nStore'
 import { useUserDataStore } from '@/stores/userDataStore'
 import { storeToRefs } from 'pinia'
 import { useLoggedInStore } from '@/stores/loggedInStore'
 import { ATAuthService } from '@/services/ATAuthService'
 import ATErrorModal from '@/components/modals/ATErrorModal.vue'
+
+const i18n = useI18nStore().i18n
 
 const loggedInStore = useLoggedInStore()
 const { loggedIn } = storeToRefs(loggedInStore)
@@ -38,7 +40,7 @@ const handleShowModalErrorAtRegister = () => {
 
 const handleRegister = () => {
   if (password.value !== passwordConfirm.value) {
-    modalTitleErrorAtRegister.value = dynamicText.passwords_do_not_match
+    modalTitleErrorAtRegister.value = i18n.passwords_do_not_match
     handleShowModalErrorAtRegister()
   } else {
     const { state, newUserUid } = ATAuthService.register(name.value, password.value)
@@ -47,7 +49,7 @@ const handleRegister = () => {
       userName.value = name.value
       loggedIn.value = true
     } else {
-      modalTitleErrorAtRegister.value = dynamicText.name_already_in_use
+      modalTitleErrorAtRegister.value = i18n.name_already_in_use
       handleShowModalErrorAtRegister()
     }
   }
@@ -56,22 +58,22 @@ const handleRegister = () => {
 
 <template>
   <div class="at-login-host" v-if="!showLogin">
-    <ATWelcomeForm :title="dynamicText.register" height="600px">
+    <ATWelcomeForm :title="i18n.register" height="600px">
       <template #inputs>
-        <ATInput :title="dynamicText.name" v-model:value="name" />
-        <ATInput :title="dynamicText.password" v-model:value="password" password />
-        <ATInput :title="dynamicText.confirm_password" v-model:value="passwordConfirm" password />
+        <ATInput :title="i18n.name" v-model:value="name" />
+        <ATInput :title="i18n.password" v-model:value="password" password />
+        <ATInput :title="i18n.confirm_password" v-model:value="passwordConfirm" password />
       </template>
       <template #buttons>
         <ATButton
-          :title="dynamicText.register"
+          :title="i18n.register"
           width="400px"
           primary
           @press="handleRegister"
           :disabled="computedDisabledButtonState"
         />
         <ATButton
-          :title="dynamicText.already_have_an_account"
+          :title="i18n.already_have_an_account"
           width="400px"
           secondary
           @press="handleShowLogin"
