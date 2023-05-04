@@ -8,8 +8,8 @@ import { useI18nStore } from '@/stores/i18nStore'
 import { storeToRefs } from 'pinia'
 import { useUserDataStore } from '@/stores/userDataStore'
 import { useLoggedInStore } from '@/stores/loggedInStore'
-import { ATAuthService } from '@/services/ATAuthService'
 import ATErrorModal from '@/components/modals/ATErrorModal.vue'
+import { useAccountsStore } from '@/stores/accountsStore'
 
 const i18n = useI18nStore().i18n
 
@@ -18,6 +18,8 @@ const { loggedIn } = storeToRefs(loggedInStore)
 
 const userDataStore = useUserDataStore()
 const { userUID, userName } = storeToRefs(userDataStore)
+
+const accountStore = useAccountsStore()
 
 const name = ref('')
 const password = ref('')
@@ -36,7 +38,7 @@ const handleShowModalErrorAtLogin = () => {
 }
 
 const handleLogin = () => {
-  const { state, currentUserUid } = ATAuthService.login(name.value, password.value)
+  const { state, currentUserUid } = accountStore.login(name.value, password.value)
   if (state && currentUserUid) {
     userUID.value = currentUserUid
     userName.value = name.value

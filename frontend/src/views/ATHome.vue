@@ -12,24 +12,28 @@ import { storeToRefs } from 'pinia'
 import { useExpendituresStore } from '@/stores/expendituresStore'
 import { useLiquidFundsStore } from '@/stores/liquidFundsStore'
 import { getJson } from '@/utils/functions/getJson'
-import { ATLiquidFundsDataService } from '@/services/ATLiquidFundsDataService'
-import { ATExpendituresDataService } from '@/services/ATExpendituresDataService'
+import type { ATExpenditure } from '@/utils/types/atExpenditure'
+import type { ATLiquidFund } from '@/utils/types/atLiquidFund'
 
 const i18n = useI18nStore().i18n
 
 const userDataStore = useUserDataStore()
-const { userName } = storeToRefs(userDataStore)
+const { userName, userUID } = storeToRefs(userDataStore)
 
 const expendituresStore = useExpendituresStore()
+const { allExpenditures } = storeToRefs(expendituresStore)
 const liquidFundsStore = useLiquidFundsStore()
+const { allLiquidFunds } = storeToRefs(liquidFundsStore)
 
 const loading = ref(true)
 
 onBeforeMount(async () => {
-  ATLiquidFundsDataService.myLiquidFunds = await getJson('/ausgaben-tracker/json/liquidFunds.json')
-  ATExpendituresDataService.myExpenditures = await getJson('/ausgaben-tracker/json/expenditures.json')
-  expendituresStore.initExpenditures()
-  liquidFundsStore.initLiquidFunds()
+  const expendituresJson: Record<string, ATExpenditure[]> = await getJson('json/expenditures.json')
+  allExpenditures.value = expendituresJson[userUID.value] ?? []
+
+  const liquidFundsJson: Record<string, ATLiquidFund[]> = await getJson('json/liquidFunds.json')
+  allLiquidFunds.value = liquidFundsJson[userUID.value] ?? []
+
   loading.value = false
 })
 

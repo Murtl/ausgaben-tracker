@@ -6,14 +6,16 @@ import ATCheckIcon from '@/base-components/icons/ATCheckIcon.vue'
 import { useI18nStore } from '@/stores/i18nStore'
 import { useUserDataStore } from '@/stores/userDataStore'
 import { storeToRefs } from 'pinia'
-import { ATAuthService } from '@/services/ATAuthService'
 import ATErrorModal from '@/components/modals/ATErrorModal.vue'
 import ATSuccessModal from '@/components/modals/ATSuccessModal.vue'
+import { useAccountsStore } from '@/stores/accountsStore'
 
 const i18n = useI18nStore().i18n
 
 const userDataStore = useUserDataStore()
 const { userUID, userName } = storeToRefs(userDataStore)
+
+const accountStore = useAccountsStore()
 
 const newName = ref('')
 const oldPassword = ref('')
@@ -40,7 +42,7 @@ const handleShowModalErrorAtChange = () => {
   showModalErrorAtChange.value = !showModalErrorAtChange.value
 }
 const handleSaveName = () => {
-  if (ATAuthService.changeName(userUID.value, newName.value) === false) {
+  if (accountStore.changeName(userUID.value, newName.value) === false) {
     modalTitleChangeError.value = i18n.name_already_in_use
     handleShowModalErrorAtChange()
   } else {
@@ -53,12 +55,12 @@ const handleSaveName = () => {
 
 const handleSavePassword = () => {
   if (newPassword.value === newPasswordConfirm.value) {
-    if (ATAuthService.checkPassword(userUID.value, oldPassword.value) === false) {
+    if (accountStore.checkPassword(userUID.value, oldPassword.value) === false) {
       modalTitleChangeError.value = i18n.wrong_old_password
       handleShowModalErrorAtChange()
       return
     }
-    ATAuthService.changePassword(userUID.value, newPassword.value)
+    accountStore.changePassword(userUID.value, newPassword.value)
     newPassword.value = ''
     newPasswordConfirm.value = ''
     oldPassword.value = ''

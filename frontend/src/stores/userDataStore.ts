@@ -1,12 +1,13 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
+import type { Ref } from 'vue'
 
 /**
  * @description Store for user data
  */
 export const useUserDataStore = defineStore('userDataStore', () => {
-  const userUID = ref('')
-  const userName = ref('')
+  const userUID: Ref<string> = ref('')
+  const userName: Ref<string> = ref('')
 
   return { userUID, userName }
 })

@@ -8,8 +8,8 @@ import { useI18nStore } from '@/stores/i18nStore'
 import { useUserDataStore } from '@/stores/userDataStore'
 import { storeToRefs } from 'pinia'
 import { useLoggedInStore } from '@/stores/loggedInStore'
-import { ATAuthService } from '@/services/ATAuthService'
 import ATErrorModal from '@/components/modals/ATErrorModal.vue'
+import { useAccountsStore } from '@/stores/accountsStore'
 
 const i18n = useI18nStore().i18n
 
@@ -18,6 +18,8 @@ const { loggedIn } = storeToRefs(loggedInStore)
 
 const userDataStore = useUserDataStore()
 const { userUID, userName } = storeToRefs(userDataStore)
+
+const accountStore = useAccountsStore()
 
 const name = ref('')
 const password = ref('')
@@ -43,7 +45,7 @@ const handleRegister = () => {
     modalTitleErrorAtRegister.value = i18n.passwords_do_not_match
     handleShowModalErrorAtRegister()
   } else {
-    const { state, newUserUid } = ATAuthService.register(name.value, password.value)
+    const { state, newUserUid } = accountStore.register(name.value, password.value)
     if (state && newUserUid) {
       userUID.value = newUserUid
       userName.value = name.value

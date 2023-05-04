@@ -12,7 +12,7 @@ const init = async () => {
   app
     .use(pinia)
     .use(router)
-    .provide('config', await getJson('/ausgaben-tracker/json/config.json'))
+    .provide('config', await getJson('/json/config.json'))
     .mount('#app')
 }
 

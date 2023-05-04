@@ -1,6 +1,4 @@
-import { ATLiquidFundsDataService } from '@/services/ATLiquidFundsDataService'
 import type { ATLiquidFund } from '@/utils/types/atLiquidFund'
-import { useUserDataStore } from '@/stores/userDataStore'
 import { defineStore } from 'pinia'
 import { ref, type Ref } from 'vue'
 
@@ -8,49 +6,36 @@ import { ref, type Ref } from 'vue'
  * @description Store for all liquid funds
  */
 export const useLiquidFundsStore = defineStore('liquidFundsStore', () => {
-  const userDataStore = useUserDataStore()
   const allLiquidFunds: Ref<ATLiquidFund[]> = ref([])
 
   /**
-   * @description Initializes allLiquidFunds
-   */
-  const initLiquidFunds = () => {
-    allLiquidFunds.value = ATLiquidFundsDataService.getLiquidFunds(userDataStore.userUID)
-  }
-
-  /**
-   * @description calls the ATLiquidFundsDataService to add a liquid fund and updates allLiquidFunds
+   * @description adds a liquid fund
    * @param liquidFund The liquid fund to add
    */
   const addLiquidFund = (liquidFund: ATLiquidFund) => {
-    ATLiquidFundsDataService.addLiquidFund(liquidFund, userDataStore.userUID)
-    liquidFundsJsonChanged()
+    allLiquidFunds.value.push(liquidFund)
   }
 
   /**
-   * @description calls the ATLiquidFundsDataService to delete a liquid fund and updates allLiquidFunds
+   * @description deletes a liquid fund
    * @param id id of the liquid fund
    */
   const deleteLiquidFund = (id: number) => {
-    ATLiquidFundsDataService.deleteLiquidFund(id, userDataStore.userUID)
-    liquidFundsJsonChanged()
+    allLiquidFunds.value = allLiquidFunds.value.filter((liquidFund) => liquidFund.id !== id)
   }
 
   /**
-   * @description calls the ATLiquidFundsDataService to update a liquid fund and updates allLiquidFunds
+   * @description updates a liquid fund
    * @param liquidFund liquid fund to update
    */
   const updateLiquidFund = (liquidFund: ATLiquidFund) => {
-    ATLiquidFundsDataService.updateLiquidFund(liquidFund, userDataStore.userUID)
-    liquidFundsJsonChanged()
+    allLiquidFunds.value = allLiquidFunds.value.map((liquidFundInAllLiquidFunds) => {
+      if (liquidFundInAllLiquidFunds.id === liquidFund.id) {
+        return liquidFund
+      }
+      return liquidFundInAllLiquidFunds
+    })
   }
 
-  /**
-   * @description Updates allLiquidFunds
-   */
-  const liquidFundsJsonChanged = () => {
-    allLiquidFunds.value = ATLiquidFundsDataService.getLiquidFunds(userDataStore.userUID)
-  }
-
-  return { allLiquidFunds, initLiquidFunds, addLiquidFund, deleteLiquidFund, updateLiquidFund }
+  return { allLiquidFunds, addLiquidFund, deleteLiquidFund, updateLiquidFund }
 })
