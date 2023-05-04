@@ -28,10 +28,10 @@ const { allLiquidFunds } = storeToRefs(liquidFundsStore)
 const loading = ref(true)
 
 onBeforeMount(async () => {
-  const expendituresJson: Record<string, ATExpenditure[]> = await getJson('json/expenditures.json')
+  const expendituresJson: Record<string, ATExpenditure[]> = await getJson('/ausgaben-tracker/json/expenditures.json')
   allExpenditures.value = expendituresJson[userUID.value] ?? []
 
-  const liquidFundsJson: Record<string, ATLiquidFund[]> = await getJson('json/liquidFunds.json')
+  const liquidFundsJson: Record<string, ATLiquidFund[]> = await getJson('/ausgaben-tracker/json/liquidFunds.json')
   allLiquidFunds.value = liquidFundsJson[userUID.value] ?? []
 
   loading.value = false

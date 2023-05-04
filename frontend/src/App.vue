@@ -20,7 +20,7 @@ const { allAccounts } = storeToRefs(accountStore)
 const loading = ref(true)
 
 onBeforeMount(async () => {
-  const accounts: ATJsonAccounts = await getJson('json/accounts.json')
+  const accounts: ATJsonAccounts = await getJson('/ausgaben-tracker/json/accounts.json')
   allAccounts.value = accounts.users ?? []
   await i18n.getI18n()
   loading.value = false
