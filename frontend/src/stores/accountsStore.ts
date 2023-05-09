@@ -14,7 +14,7 @@ export const useAccountsStore = defineStore('accountsStore', () => {
    * @description fetches all accounts from the json file
    */
   const fetchAccounts = async () => {
-    const accounts: ATJsonAccounts = await getJson('json/accounts.json')
+    const accounts: ATJsonAccounts = await getJson('/ausgaben-tracker/json/accounts.json')
     allAccounts.value = accounts.users ?? []
   }
 

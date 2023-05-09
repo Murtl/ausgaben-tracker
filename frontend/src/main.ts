@@ -10,10 +10,10 @@ const app = createApp(App)
 const pinia = createPinia()
 
 const init = async () => {
-  const config = await getJson('/json/config.json')
+  const config = await getJson('/ausgaben-tracker/json/config.json')
   const languageCode = await getLanguageCode(config.languages, window.navigator.language)
 
-  config.i18n = await getJson(`/json/i18n_${languageCode}.json`)
+  config.i18n = await getJson(`/ausgaben-tracker/json/i18n_${languageCode}.json`)
 
   app.provide('config', config).use(pinia).use(router).mount('#app')
 }

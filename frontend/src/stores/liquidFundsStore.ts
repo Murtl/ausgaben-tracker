@@ -14,7 +14,7 @@ export const useLiquidFundsStore = defineStore('liquidFundsStore', () => {
    * @param userUID userUID of the user
    */
   const fetchLiquidFunds = async (userUID: string) => {
-    const liquidFundsJson: Record<string, ATLiquidFund[]> = await getJson('json/liquidFunds.json')
+    const liquidFundsJson: Record<string, ATLiquidFund[]> = await getJson('/ausgaben-tracker/json/liquidFunds.json')
     allLiquidFunds.value = liquidFundsJson[userUID] ?? []
   }
 

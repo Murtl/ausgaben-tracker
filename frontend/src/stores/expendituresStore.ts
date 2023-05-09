@@ -16,7 +16,7 @@ export const useExpendituresStore = defineStore('expendituresStore', () => {
    */
   const fetchExpenditures = async (userUID: string) => {
     const expendituresJson: Record<string, ATExpenditure[]> = await getJson(
-      'json/expenditures.json'
+      '/ausgaben-tracker/json/expenditures.json'
     )
     allExpenditures.value = expendituresJson[userUID] ?? []
   }
