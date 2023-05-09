@@ -11,9 +11,6 @@ import { useUserDataStore } from '@/stores/userDataStore'
 import { storeToRefs } from 'pinia'
 import { useExpendituresStore } from '@/stores/expendituresStore'
 import { useLiquidFundsStore } from '@/stores/liquidFundsStore'
-import { getJson } from '@/utils/functions/getJson'
-import type { ATExpenditure } from '@/utils/types/atExpenditure'
-import type { ATLiquidFund } from '@/utils/types/atLiquidFund'
 
 const i18n = useI18nStore().i18n
 
@@ -21,19 +18,13 @@ const userDataStore = useUserDataStore()
 const { userName, userUID } = storeToRefs(userDataStore)
 
 const expendituresStore = useExpendituresStore()
-const { allExpenditures } = storeToRefs(expendituresStore)
 const liquidFundsStore = useLiquidFundsStore()
-const { allLiquidFunds } = storeToRefs(liquidFundsStore)
 
 const loading = ref(true)
 
 onBeforeMount(async () => {
-  const expendituresJson: Record<string, ATExpenditure[]> = await getJson('/ausgaben-tracker/json/expenditures.json')
-  allExpenditures.value = expendituresJson[userUID.value] ?? []
-
-  const liquidFundsJson: Record<string, ATLiquidFund[]> = await getJson('/ausgaben-tracker/json/liquidFunds.json')
-  allLiquidFunds.value = liquidFundsJson[userUID.value] ?? []
-
+  await expendituresStore.fetchExpenditures(userUID.value)
+  await liquidFundsStore.fetchLiquidFunds(userUID.value)
   loading.value = false
 })
 

@@ -3,17 +3,19 @@ import { createPinia } from 'pinia'
 
 import App from './App.vue'
 import router from './router'
-import { getJson } from './utils/functions/getJson'
+import { getJson } from '@/utils/functions/getJson'
+import { getLanguageCode } from '@/utils/functions/getLanguageCode'
 
 const app = createApp(App)
 const pinia = createPinia()
 
 const init = async () => {
-  app
-    .use(pinia)
-    .use(router)
-    .provide('config', await getJson('/ausgaben-tracker/json/config.json'))
-    .mount('#app')
+  const config = await getJson('/json/config.json')
+  const languageCode = await getLanguageCode(config.languages, window.navigator.language)
+
+  config.i18n = await getJson(`/json/i18n_${languageCode}.json`)
+
+  app.provide('config', config).use(pinia).use(router).mount('#app')
 }
 
 window.addEventListener('load', init)

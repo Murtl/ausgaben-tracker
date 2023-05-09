@@ -1,12 +1,22 @@
 import type { ATLiquidFund } from '@/utils/types/atLiquidFund'
 import { defineStore } from 'pinia'
 import { ref, type Ref } from 'vue'
+import { getJson } from '@/utils/functions/getJson'
 
 /**
  * @description Store for all liquid funds
  */
 export const useLiquidFundsStore = defineStore('liquidFundsStore', () => {
   const allLiquidFunds: Ref<ATLiquidFund[]> = ref([])
+
+  /**
+   * @description fetches all liquid funds from the json file
+   * @param userUID userUID of the user
+   */
+  const fetchLiquidFunds = async (userUID: string) => {
+    const liquidFundsJson: Record<string, ATLiquidFund[]> = await getJson('json/liquidFunds.json')
+    allLiquidFunds.value = liquidFundsJson[userUID] ?? []
+  }
 
   /**
    * @description adds a liquid fund
@@ -37,5 +47,5 @@ export const useLiquidFundsStore = defineStore('liquidFundsStore', () => {
     })
   }
 
-  return { allLiquidFunds, addLiquidFund, deleteLiquidFund, updateLiquidFund }
+  return { allLiquidFunds, fetchLiquidFunds, addLiquidFund, deleteLiquidFund, updateLiquidFund }
 })

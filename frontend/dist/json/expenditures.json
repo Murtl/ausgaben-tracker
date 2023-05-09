@@ -1,0 +1,195 @@
+{
+  "1": [
+    {
+      "id": 1,
+      "sourceOfExpenditure": "Edeka",
+      "additionalInfo": "Einkauf",
+      "amount": 100,
+      "date": "01.04.2023"
+    },
+    {
+      "id": 2,
+      "sourceOfExpenditure": "Kaufland",
+      "additionalInfo": "Bier",
+      "amount": 200,
+      "date": "05.04.2023"
+    },
+    {
+      "id": 3,
+      "sourceOfExpenditure": "Olakala",
+      "additionalInfo": "Der neue Hoodie",
+      "amount": 50,
+      "date": "05.02.2022"
+    },
+    {
+      "id": 4,
+      "sourceOfExpenditure": "CleverFit",
+      "additionalInfo": "GymAbo",
+      "amount": 50,
+      "date": "29.03.2023"
+    },
+    {
+      "id": 5,
+      "sourceOfExpenditure": "Amazon",
+      "additionalInfo": "neue Scheibenwischer",
+      "amount": 100,
+      "date": "15.02.2023"
+    },
+    {
+      "id": 6,
+      "sourceOfExpenditure": "Kaufland",
+      "additionalInfo": "Bier",
+      "amount": 200,
+      "date": "05.04.2023"
+    },
+    {
+      "id": 7,
+      "sourceOfExpenditure": "Zalando",
+      "additionalInfo": "Schuhe",
+      "amount": 2000,
+      "date": "05.01.2023"
+    },
+    {
+      "id": 8,
+      "sourceOfExpenditure": "Otto",
+      "additionalInfo": "Schuhe",
+      "amount": 200,
+      "date": "05.08.2022"
+    },
+    {
+      "id": 9,
+      "sourceOfExpenditure": "Tankstelle",
+      "additionalInfo": "tanken",
+      "amount": 60,
+      "date": "05.01.2022"
+    },
+    {
+      "id": 10,
+      "sourceOfExpenditure": "Expert",
+      "additionalInfo": "neuer Bildschirm",
+      "amount": 200,
+      "date": "05.05.2023"
+    },
+    {
+      "id": 11,
+      "sourceOfExpenditure": "Lotto24",
+      "additionalInfo": "lottoscheine",
+      "amount": 20,
+      "date": "05.02.2023"
+    },
+    {
+      "id": 12,
+      "sourceOfExpenditure": "Kaufland",
+      "additionalInfo": "Lebensmittel",
+      "amount": 200,
+      "date": "05.10.2023"
+    },
+    {
+      "id": 13,
+      "sourceOfExpenditure": "Müller",
+      "additionalInfo": "Haarspray",
+      "amount": 20,
+      "date": "05.11.2023"
+    },
+    {
+      "id": 14,
+      "sourceOfExpenditure": "Friseur",
+      "additionalInfo": "Haare schneiden",
+      "amount": 35,
+      "date": "05.12.2023"
+    },
+    {
+      "id": 15,
+      "sourceOfExpenditure": "Segmüller",
+      "additionalInfo": "Matratze",
+      "amount": 2000,
+      "date": "05.09.2023"
+    },
+    {
+      "id": 16,
+      "sourceOfExpenditure": "Auto",
+      "additionalInfo": "Kundendienst",
+      "amount": 350,
+      "date": "05.07.2023"
+    },
+    {
+      "id": 17,
+      "sourceOfExpenditure": "Netflix",
+      "additionalInfo": "abo",
+      "amount": 15,
+      "date": "05.05.2023"
+    },
+    {
+      "id": 18,
+      "sourceOfExpenditure": "Sobi",
+      "additionalInfo": "Alkohol",
+      "amount": 200,
+      "date": "05.07.2023"
+    },
+    {
+      "id": 19,
+      "sourceOfExpenditure": "Steam",
+      "additionalInfo": "Destiny 2",
+      "amount": 150,
+      "date": "05.03.2023"
+    },
+    {
+      "id": 20,
+      "sourceOfExpenditure": "CSGO",
+      "additionalInfo": "Skins -> Knife",
+      "amount": 800,
+      "date": "05.08.2023"
+    },
+    {
+      "id": 21,
+      "sourceOfExpenditure": "Edeka",
+      "additionalInfo": "Lebensmittel",
+      "amount": 100,
+      "date": "05.09.2023"
+    },
+    {
+      "id": 22,
+      "sourceOfExpenditure": "MyMuesli",
+      "additionalInfo": "geiles Müsli",
+      "amount": 50,
+      "date": "05.10.2023"
+    },
+    {
+      "id": 23,
+      "sourceOfExpenditure": "Netto",
+      "additionalInfo": "Feuerwerk",
+      "amount": 200,
+      "date": "28.12.2023"
+    },
+    {
+      "id": 24,
+      "sourceOfExpenditure": "Kaufland",
+      "additionalInfo": "Lebensmittel",
+      "amount": 200,
+      "date": "25.01.2023"
+    },
+    {
+      "id": 25,
+      "sourceOfExpenditure": "Mci",
+      "additionalInfo": "Essen",
+      "amount": 40,
+      "date": "28.01.2023"
+    }
+  ],
+  "2": [
+    {
+      "id": 1,
+      "sourceOfExpenditure": "Lotto24",
+      "additionalInfo": "Scheine",
+      "amount": 50,
+      "date": "01.05.2022"
+    },
+    {
+      "id": 2,
+      "sourceOfExpenditure": "Kaufland",
+      "additionalInfo": "Bier",
+      "amount": 202,
+      "date": "05.04.2023"
+    }
+  ]
+}

@@ -1,5 +1,4 @@
 import { fileURLToPath, URL } from 'node:url'
-import cssInjectedByJsPlugin from 'vite-plugin-css-injected-by-js'
 import { createHtmlPlugin } from 'vite-plugin-html'
 
 import { defineConfig } from 'vite'
@@ -13,7 +12,7 @@ export default defineConfig({
     minify: 'terser',
     terserOptions: { output: { comments: false } }
   },
-  plugins: [vue(), vueJsx(), cssInjectedByJsPlugin(), createHtmlPlugin({ minify: true })],
+  plugins: [vue(), vueJsx(), createHtmlPlugin({ minify: true })],
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))

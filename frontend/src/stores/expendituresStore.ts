@@ -2,12 +2,24 @@ import { defineStore } from 'pinia'
 import { ref } from 'vue'
 import type { Ref } from 'vue'
 import type { ATExpenditure } from '@/utils/types/atExpenditure'
+import { getJson } from '@/utils/functions/getJson'
 
 /**
  * @description Store for all expenditures
  */
 export const useExpendituresStore = defineStore('expendituresStore', () => {
   const allExpenditures: Ref<ATExpenditure[]> = ref([])
+
+  /**
+   * @description fetches all expenditures from the json file
+   * @param userUID userUID of the user
+   */
+  const fetchExpenditures = async (userUID: string) => {
+    const expendituresJson: Record<string, ATExpenditure[]> = await getJson(
+      'json/expenditures.json'
+    )
+    allExpenditures.value = expendituresJson[userUID] ?? []
+  }
 
   /**
    * @description adds an expenditure
@@ -38,5 +50,11 @@ export const useExpendituresStore = defineStore('expendituresStore', () => {
     })
   }
 
-  return { allExpenditures, addExpenditure, deleteExpenditure, updateExpenditure }
+  return {
+    allExpenditures,
+    fetchExpenditures,
+    addExpenditure,
+    deleteExpenditure,
+    updateExpenditure
+  }
 })

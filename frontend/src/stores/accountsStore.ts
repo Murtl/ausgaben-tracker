@@ -1,12 +1,22 @@
 import type { ATAccount } from '@/utils/types/atAccount'
+import type { ATJsonAccounts } from '@/utils/types/atJsonAccounts'
 import { defineStore } from 'pinia'
 import { ref, type Ref } from 'vue'
+import { getJson } from '@/utils/functions/getJson'
 
 /**
  * @description Store for all accounts
  */
 export const useAccountsStore = defineStore('accountsStore', () => {
   const allAccounts: Ref<ATAccount[]> = ref([])
+
+  /**
+   * @description fetches all accounts from the json file
+   */
+  const fetchAccounts = async () => {
+    const accounts: ATJsonAccounts = await getJson('json/accounts.json')
+    allAccounts.value = accounts.users ?? []
+  }
 
   /**
    * @description logs in a user
@@ -95,5 +105,5 @@ export const useAccountsStore = defineStore('accountsStore', () => {
     return false
   }
 
-  return { allAccounts, login, register, changeName, changePassword, checkPassword }
+  return { fetchAccounts, login, register, changeName, changePassword, checkPassword }
 })

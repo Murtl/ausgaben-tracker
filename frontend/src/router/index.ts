@@ -1,8 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import ATDashboard from '@/views/nav/ATDashboard.vue'
-import ATTracker from '@/views/nav/ATTracker.vue'
-import ATBalance from '@/views/nav/ATBalance.vue'
-import ATAccount from '@/views/auth/ATAccount.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -15,17 +12,17 @@ const router = createRouter({
     {
       path: '/tracker',
       name: 'tracker',
-      component: ATTracker
+      component: () => import('@/views/nav/ATTracker.vue')
     },
     {
       path: '/balance',
       name: 'balance',
-      component: ATBalance
+      component: () => import('@/views/nav/ATBalance.vue')
     },
     {
       path: '/account',
       name: 'account',
-      component: ATAccount
+      component: () => import('@/views/auth/ATAccount.vue')
     }
   ]
 })

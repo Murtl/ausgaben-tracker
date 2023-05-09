@@ -73,12 +73,12 @@ onBeforeMount(() => {
  * Sorts the expenditures in the data and labelOptions array based on the selected sort option
  */
 const sortExpendituresInData = () => {
+  data.value = []
+  labelOptions.value = []
+  sortedExpenditures.value = sortedExpenditures.value.sort((a, b) => {
+    return b.height - a.height
+  })
   if (!showMonthDropDown.value) {
-    data.value = []
-    labelOptions.value = []
-    sortedExpenditures.value = sortedExpenditures.value.sort((a, b) => {
-      return b.height - a.height
-    })
     sortedExpenditures.value.forEach((expenditure) => {
       if (expenditure.year === selectedYear.value) {
         let wasThere = false
@@ -95,17 +95,7 @@ const sortExpendituresInData = () => {
         }
       }
     })
-    if (data.value.length > 12) {
-      for (let i = 12; i < data.value.length; i++) {
-        data.value[11] += data.value[i]
-      }
-      data.value = data.value.slice(0, 12)
-      labelOptions.value = labelOptions.value.slice(0, 12)
-      labelOptions.value[11] = i18n.other
-    }
   } else {
-    labelOptions.value = []
-    data.value = []
     sortedExpenditures.value.forEach((expenditure) => {
       if (
         expenditure.year === selectedYear.value &&
@@ -116,14 +106,27 @@ const sortExpendituresInData = () => {
       }
     })
   }
+  sliceDataIfToBig()
   if (!labelOptions.value[0]) {
     labelOptions.value = [i18n.no_expenditures]
     data.value = [1]
   }
 }
 
+const sliceDataIfToBig = () => {
+  if (data.value.length > 12) {
+    for (let i = 12; i < data.value.length; i++) {
+      data.value[11] += data.value[i]
+    }
+    data.value = data.value.slice(0, 12)
+    labelOptions.value = labelOptions.value.slice(0, 12)
+    labelOptions.value[11] = i18n.other
+  }
+}
+
 const updateSort = (value: string) => {
   if (value === i18n.months) {
+    selectedMonth.value = monthsConstant()[0]
     showMonthDropDown.value = true
   } else {
     showMonthDropDown.value = false
