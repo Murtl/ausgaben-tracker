@@ -49,7 +49,8 @@ const chartData = computed(() => {
           '#FFCE56',
           '#36A2EB'
         ],
-        data: data.value
+        data: data.value,
+        label: i18n.expenditures_in_euro
       }
     ]
   }
