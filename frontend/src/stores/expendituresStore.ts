@@ -17,7 +17,9 @@ export const useExpendituresStore = defineStore('expendituresStore', () => {
    */
   const fetchExpenditures = async (userUID: string) => {
     const url = config.apiDbRoot.replace('$1', 'expenditures')
-    const expendituresJson: Record<string, ATExpenditure[]> = await getJson(url)
+    const expendituresJson: Record<string, ATExpenditure[]> = await getJson(
+      `/ausgaben-tracker/${url}`
+    )
     allExpenditures.value = expendituresJson[userUID] ?? []
   }
 

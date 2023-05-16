@@ -16,7 +16,7 @@ export const useAccountsStore = defineStore('accountsStore', () => {
    */
   const fetchAccounts = async () => {
     const url = config.apiDbRoot.replace('$1', 'accounts')
-    const accounts: ATJsonAccounts = await getJson(url)
+    const accounts: ATJsonAccounts = await getJson(`/ausgaben-tracker/${url}`)
     allAccounts.value = accounts.users ?? []
   }
 

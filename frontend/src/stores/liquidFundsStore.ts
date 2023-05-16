@@ -16,7 +16,9 @@ export const useLiquidFundsStore = defineStore('liquidFundsStore', () => {
    */
   const fetchLiquidFunds = async (userUID: string) => {
     const url = config.apiDbRoot.replace('$1', 'liquidFunds')
-    const liquidFundsJson: Record<string, ATLiquidFund[]> = await getJson(url)
+    const liquidFundsJson: Record<string, ATLiquidFund[]> = await getJson(
+      `/ausgaben-tracker/${url}`
+    )
     allLiquidFunds.value = liquidFundsJson[userUID] ?? []
   }
 

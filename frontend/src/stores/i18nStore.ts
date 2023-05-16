@@ -16,7 +16,7 @@ export const useI18nStore = defineStore('i18nStore', () => {
   const getI18n = async () => {
     const languageCode = await getLanguageCode(config.languages, window.navigator.language)
     const url = config.apiLangRoot.replace('$1', languageCode)
-    const newI18n = await getJson(url)
+    const newI18n = await getJson(`/ausgaben-tracker/${url}`)
     Object.assign(i18n, newI18n)
   }
 
