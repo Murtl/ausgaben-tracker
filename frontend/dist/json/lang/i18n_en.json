@@ -82,5 +82,8 @@
     "september": "September",
     "october": "October",
     "november": "November",
-    "december": "December"
+    "december": "December",
+
+    "error_404": "Error 404",
+    "page_not_found": "Page not found: "
 }

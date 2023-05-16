@@ -23,7 +23,8 @@ const router = createRouter({
       path: '/account',
       name: 'account',
       component: () => import('@/views/auth/ATAccount.vue')
-    }
+    },
+    { path: '/:pathMatch(.*)', component: () => import('@/views/nav/ATError404.vue') }
   ]
 })
 
