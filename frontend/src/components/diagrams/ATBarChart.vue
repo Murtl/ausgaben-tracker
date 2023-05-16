@@ -49,23 +49,25 @@ const chartData = computed(() => {
     ]
   }
 })
-const chartOptions = {
-  responsive: true,
-  maintainAspectRatio: false,
-  scales: {
-    y: {
-      title: {
-        display: true,
-        text: i18n.total_expenditures
-      }
-    },
-    x: {
-      grid: {
-        color: '#FFFFFF'
+const chartOptions = computed(() => {
+  return {
+    responsive: true,
+    maintainAspectRatio: false,
+    scales: {
+      y: {
+        title: {
+          display: true,
+          text: i18n.total_expenditures
+        }
+      },
+      x: {
+        grid: {
+          color: '#FFFFFF'
+        }
       }
     }
   }
-}
+})
 
 onBeforeMount(() => {
   presortedExpenditures.value = presortExpenditures(allExpenditures.value)

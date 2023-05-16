@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { ref } from 'vue'
+import { ref, inject } from 'vue'
 import type { Ref } from 'vue'
 import type { ATExpenditure } from '@/utils/types/atExpenditure'
 import { getJson } from '@/utils/functions/getJson'
@@ -9,15 +9,15 @@ import { getJson } from '@/utils/functions/getJson'
  */
 export const useExpendituresStore = defineStore('expendituresStore', () => {
   const allExpenditures: Ref<ATExpenditure[]> = ref([])
+  const config: Record<string, any> = inject('config') as any
 
   /**
    * @description fetches all expenditures from the json file
    * @param userUID userUID of the user
    */
   const fetchExpenditures = async (userUID: string) => {
-    const expendituresJson: Record<string, ATExpenditure[]> = await getJson(
-      '/ausgaben-tracker/json/expenditures.json'
-    )
+    const url = config.apiDbRoot.replace('$1', 'expenditures')
+    const expendituresJson: Record<string, ATExpenditure[]> = await getJson(url)
     allExpenditures.value = expendituresJson[userUID] ?? []
   }
 

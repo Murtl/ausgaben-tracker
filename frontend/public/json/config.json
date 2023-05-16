@@ -1,3 +1,5 @@
 {
+  "apiLangRoot": "/json/lang/i18n_$1.json",
+  "apiDbRoot": "/json/db/$1.json",
   "languages": ["en", "de"]
 }
