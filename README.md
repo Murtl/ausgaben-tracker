@@ -7,7 +7,7 @@ Beschreibung: Mit dem Ausgaben Tracker haben Haushalte die Möglichkeiten sehr l
 Technologien:
 
 - Frontend: Vue 3.2 mit Pinia und vue-chart.js
-- Datenbank: .json Dateien im Frontend (auf dem File Server)
+- Datenbank: .json Dateien im Frontend (File-System)
 
 Namenskonventionen:
 

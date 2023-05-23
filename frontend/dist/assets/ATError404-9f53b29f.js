@@ -1,1 +1,0 @@
-import{d as a,u as s,a as r,l as t,t as e,g as o,e as n,J as u,_ as d}from"./index-c11c63a0.js";const l={class:"at-error-404-host"},_=d(a({__name:"ATError404",setup(a){const d=s().i18n;return(a,s)=>(n(),r("div",l,[t("h1",null,e(o(d).error_404),1),t("p",null,e(o(d).page_not_found)+" "+e(o(u).currentRoute.value.path),1)]))}}),[["__scopeId","data-v-89dbd309"]]);export{_ as default};

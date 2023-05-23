@@ -1,19 +1,19 @@
 /**
- * @description Returns the language code of the browser language code or the first available language code if the browser language code is not available
+ * @description gets the language code for the app
  * @param availableLanguages languages available in the app
- * @param browserLanguageCode language code of the browser
- * @returns language code
+ * @param browserLanguages languages available in the browser
+ * @returns language code for the app
+
  */
 export const getLanguageCode = async (
   availableLanguages: string[],
-  browserLanguageCode: string
+  browserLanguages: string[]
 ): Promise<string> => {
-  const browserLanguageCodeShort = browserLanguageCode.split('-')[0].toLowerCase()
-  if (availableLanguages.includes(browserLanguageCode)) {
-    return Promise.resolve(browserLanguageCode)
-  } else if (availableLanguages.includes(browserLanguageCodeShort)) {
-    return Promise.resolve(browserLanguageCodeShort)
-  } else {
-    return Promise.resolve(availableLanguages[0])
+  const browserLanguagesCodes = browserLanguages.map((language) => language.substring(0, 2))
+  for (const languageCode of browserLanguagesCodes) {
+    if (availableLanguages.includes(languageCode)) {
+      return Promise.resolve(languageCode)
+    }
   }
+  return Promise.resolve(availableLanguages[0])
 }
