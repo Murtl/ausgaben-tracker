@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import ATButton from '@/base-components/button/ATButton.vue'
 import { useI18nStore } from '@/stores/i18nStore'
-import { ref, watch } from 'vue'
+import { ref, computed } from 'vue'
 import type { Ref } from 'vue'
 import ATEditItemIcon from '@/base-components/icons/ATEditItemIcon.vue'
 import type { ATExpenditure } from '@/utils/types/atExpenditure'
@@ -41,7 +41,9 @@ const emit = defineEmits<Emits>()
 
 const i18n = useI18nStore().i18n
 
-const expendituresList: Ref<ATExpenditure[]> = ref(props.data)
+const expendituresList = computed(() => {
+  return filterExpenditures(Object.create(props.data), props.filter)
+})
 const currentExpenditure: Ref<ATExpenditure> = ref({
   id: 0,
   sourceOfExpenditure: '',
@@ -52,23 +54,6 @@ const currentExpenditure: Ref<ATExpenditure> = ref({
 
 const showModalDelete = ref(false)
 const showModalEditExpenditure = ref(false)
-
-watch(
-  () => props.filter,
-  (newFilter) => {
-    expendituresList.value = props.data
-    expendituresList.value = filterExpenditures(expendituresList.value, newFilter)
-  }
-)
-
-watch(
-  () => props.data,
-  (newData) => {
-    expendituresList.value = newData
-    expendituresList.value = filterExpenditures(expendituresList.value, props.filter)
-  },
-  { deep: true }
-)
 
 const handleShowModalDelete = () => {
   showModalDelete.value = true

@@ -3,20 +3,21 @@ import type { ATJsonAccounts } from '@/utils/types/atJsonAccounts'
 import { defineStore } from 'pinia'
 import { ref, type Ref, inject } from 'vue'
 import { getJson } from '@/utils/functions/getJson'
+import type { ATJsonConfig } from '@/utils/types/atJsonConfig'
 
 /**
  * @description Store for all accounts
  */
 export const useAccountsStore = defineStore('accountsStore', () => {
   const allAccounts: Ref<ATAccount[]> = ref([])
-  const config: Record<string, any> = inject('config') as any
+  const config: ATJsonConfig = inject('config') as ATJsonConfig
 
   /**
    * @description fetches all accounts from the json file
    */
   const fetchAccounts = async () => {
     const url = config.apiDbRoot.replace('$1', 'accounts')
-    const accounts: ATJsonAccounts = await getJson(`/ausgaben-tracker/${url}`)
+    const accounts: ATJsonAccounts = await getJson(url)
     allAccounts.value = accounts.users ?? []
   }
 

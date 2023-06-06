@@ -1,5 +1,6 @@
 import type { ATLiquidFund } from '../types/atLiquidFund'
 import { monthsConstant } from '../constants'
+import { sortLiquidFundsByMonthAndYear } from './sortLiquidFundsByMonthAndYear'
 
 /**
  * @description Filters a list of liquid funds
@@ -8,6 +9,7 @@ import { monthsConstant } from '../constants'
  * @returns The filtered list of liquid funds
  */
 export const filterLiquidFunds = (liquidFundsList: ATLiquidFund[], filterArray: string[]) => {
+  sortLiquidFundsByMonthAndYear(liquidFundsList)
   return liquidFundsList.filter((liquidFund) => {
     if (
       monthsConstant()[liquidFund.month - 1].toLowerCase().includes(filterArray[0]) ||

@@ -1,3 +1,3 @@
 import { defineConfig } from '@vue/cli-service'
 
-export default defineConfig({ publicPath: '/ausgaben-tracker/' })
+export default defineConfig ({ publicPath: '/ausgaben-tracker/' })

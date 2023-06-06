@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, watch, onBeforeMount } from 'vue'
+import { ref, computed } from 'vue'
 import type { ATLiquidFund } from '@/utils/types/atLiquidFund'
 import type { Ref } from 'vue'
 import { useI18nStore } from '@/stores/i18nStore'
@@ -11,10 +11,8 @@ import ATEditItemIconVue from '@/base-components/icons/ATEditItemIcon.vue'
 import ATButton from '@/base-components/button/ATButton.vue'
 import { monthsConstant } from '@/utils/constants'
 import { presortExpenditures } from '@/utils/functions/presortExpenditures'
-import type { ATExpenditureSorted } from '@/utils/types/atExpenditureSorted'
 import { sortExpenditures } from '@/utils/functions/sortExpenditures'
 import { getExpenditureHeightOfMonthAndYear } from '@/utils/functions/getExpenditureHeightOfMonthAndYear'
-import { sortLiquidFundsByMonthAndYear } from '@/utils/functions/sortLiquidFundsByMonthAndYear'
 import { filterLiquidFunds } from '@/utils/functions/filterLiquidFunds'
 import ATDeleteModal from '../modals/ATDeleteModal.vue'
 import ATLiquidFundModal from '@/components/modals/ATLiquidFundModal.vue'
@@ -53,10 +51,16 @@ const i18n = useI18nStore().i18n
 
 const expendituresStore = useExpendituresStore()
 const { allExpenditures } = storeToRefs(expendituresStore)
-const presortedExpenditures: Ref<ATExpenditureSorted[]> = ref([])
-const sortedExpenditures: Ref<ATExpenditureSorted[]> = ref([])
 
-const liquidFundsList: Ref<ATLiquidFund[]> = ref(props.data)
+const presortedExpenditures = computed(() => {
+  return presortExpenditures(allExpenditures.value)
+})
+const sortedExpenditures = computed(() => {
+  return sortExpenditures(presortedExpenditures.value)
+})
+const liquidFundsList = computed(() => {
+  return filterLiquidFunds(Object.create(props.data), props.filter.toLowerCase().split(' '))
+})
 const currentLiquidFund: Ref<ATLiquidFund> = ref({
   id: 0,
   height: 0,
@@ -66,33 +70,6 @@ const currentLiquidFund: Ref<ATLiquidFund> = ref({
 
 const showModalDelete = ref(false)
 const showModalEditLiquidFund = ref(false)
-
-onBeforeMount(() => {
-  sortLiquidFundsByMonthAndYear(liquidFundsList.value)
-  presortedExpenditures.value = presortExpenditures(allExpenditures.value)
-  sortedExpenditures.value = sortExpenditures(presortedExpenditures.value)
-})
-
-watch(
-  () => props.filter,
-  (newFilter) => {
-    liquidFundsList.value = props.data
-    sortLiquidFundsByMonthAndYear(liquidFundsList.value)
-    const filterArray = newFilter.toLowerCase().split(' ')
-    liquidFundsList.value = filterLiquidFunds(liquidFundsList.value, filterArray)
-  }
-)
-
-watch(
-  () => props.data,
-  (newData) => {
-    liquidFundsList.value = newData
-    const filterArray = props.filter.toLowerCase().split(' ')
-    liquidFundsList.value = filterLiquidFunds(liquidFundsList.value, filterArray)
-    sortLiquidFundsByMonthAndYear(liquidFundsList.value)
-  },
-  { deep: true }
-)
 
 const handleShowModalDelete = () => {
   showModalDelete.value = true

@@ -3,13 +3,14 @@ import { ref, inject } from 'vue'
 import type { Ref } from 'vue'
 import type { ATExpenditure } from '@/utils/types/atExpenditure'
 import { getJson } from '@/utils/functions/getJson'
+import type { ATJsonConfig } from '@/utils/types/atJsonConfig'
 
 /**
  * @description Store for all expenditures
  */
 export const useExpendituresStore = defineStore('expendituresStore', () => {
   const allExpenditures: Ref<ATExpenditure[]> = ref([])
-  const config: Record<string, any> = inject('config') as any
+  const config: ATJsonConfig = inject('config') as ATJsonConfig
 
   /**
    * @description fetches all expenditures from the json file
@@ -17,9 +18,7 @@ export const useExpendituresStore = defineStore('expendituresStore', () => {
    */
   const fetchExpenditures = async (userUID: string) => {
     const url = config.apiDbRoot.replace('$1', 'expenditures')
-    const expendituresJson: Record<string, ATExpenditure[]> = await getJson(
-      `/ausgaben-tracker/${url}`
-    )
+    const expendituresJson: Record<string, ATExpenditure[]> = await getJson(url)
     allExpenditures.value = expendituresJson[userUID] ?? []
   }
 

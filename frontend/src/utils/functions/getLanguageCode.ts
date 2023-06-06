@@ -3,7 +3,6 @@
  * @param availableLanguages languages available in the app
  * @param browserLanguages languages available in the browser
  * @returns language code for the app
-
  */
 export const getLanguageCode = async (
   availableLanguages: string[],

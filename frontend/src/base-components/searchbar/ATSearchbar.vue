@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { ref, watch } from 'vue'
 import ATSearchbarIcon from '../icons/ATSearchbarIcon.vue'
+import { computed } from 'vue'
 
 export interface Props {
   /**
@@ -20,10 +20,13 @@ interface Emits {
 
 const emit = defineEmits<Emits>()
 
-const inputValue = ref('')
-
-watch(inputValue, (newValue) => {
-  emit('search-changed', newValue)
+const inputValue = computed({
+  get() {
+    return ''
+  },
+  set(newValue) {
+    emit('search-changed', newValue)
+  }
 })
 </script>
 

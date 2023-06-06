@@ -2,8 +2,7 @@
 import ATButton from '../button/ATButton.vue'
 import ATOpenEyeIcon from '../icons/ATOpenEyeIcon.vue'
 import ATClosedEyeIcon from '../icons/ATClosedEyeIcon.vue'
-import { computed, onBeforeMount, ref, watch } from 'vue'
-import type { Ref } from 'vue'
+import { computed, onBeforeMount, ref } from 'vue'
 
 export interface Props {
   /**
@@ -73,13 +72,36 @@ interface Emits {
   /**
    * Emitted when the input value changes
    */
-  (e: 'update:value', value: string | number | object): void
+  (e: 'update:value', value: string | number | object | undefined): void
 }
 
 const emit = defineEmits<Emits>()
 
-const inputValue: Ref<string | number | object | undefined> = ref(props.value)
 const showInvalidMessage = ref(false)
+
+const inputValue: string | number | object | undefined = computed({
+  get() {
+    if (props.value === 0) {
+      return undefined
+    }
+    if (props.typeDate && props.value && typeof props.value === 'string') {
+      return props.value.split('.').reverse().join('-')
+    }
+    return props.value
+  },
+  set(newValue) {
+    if (props.validate && !props.validate(newValue)) {
+      showInvalidMessage.value = true
+    } else {
+      showInvalidMessage.value = false
+    }
+    if (props.typeDate && newValue) {
+      emit('update:value', newValue.toString().split('-').reverse().join('.'))
+    } else {
+      emit('update:value', newValue)
+    }
+  }
+})
 const computedType = ref(
   props.typeDate
     ? 'date'
@@ -110,41 +132,10 @@ const computedMax = computed(() => {
 })
 
 onBeforeMount(() => {
-  if (props.value === 0) {
-    inputValue.value = undefined
-  }
-  if (props.typeDate && props.value && typeof props.value === 'string') {
-    inputValue.value = props.value.split('.').reverse().join('-')
+  if (props.validate && !props.validate(props.value)) {
+    showInvalidMessage.value = true
   }
 })
-
-watch(
-  () => props.value,
-  (newValue) => {
-    if (props.typeDate && newValue && typeof newValue === 'string') {
-      inputValue.value = newValue.split('.').reverse().join('-')
-    } else {
-      inputValue.value = newValue
-    }
-  }
-)
-
-watch(
-  inputValue,
-  (newValue: string | number | object) => {
-    if (props.validate && !props.validate(newValue)) {
-      showInvalidMessage.value = true
-    } else {
-      showInvalidMessage.value = false
-    }
-    if (props.typeDate) {
-      emit('update:value', newValue.toString().split('-').reverse().join('.'))
-    } else {
-      emit('update:value', newValue)
-    }
-  },
-  { immediate: true }
-)
 
 const showPassword = () => {
   computedType.value = 'text'
