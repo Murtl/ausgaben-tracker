@@ -1,5 +1,5 @@
 import { fileURLToPath, URL } from 'node:url'
-import { createHtmlPlugin } from 'vite-plugin-html'
+import { ViteMinifyPlugin } from 'vite-plugin-minify'
 
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
@@ -11,8 +11,8 @@ export default defineConfig({
     minify: 'terser',
     terserOptions: { output: { comments: false } }
   },
-  plugins: [vue(), 
-    createHtmlPlugin({ minify: true })],
+  plugins: [vue(),
+    ViteMinifyPlugin({})],
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))

@@ -123,7 +123,7 @@ const handleCloseModalEditExpenditureOnCancel = () => {
     :handle-close-modal-on-cancel="handleCloseModalEditExpenditureOnCancel"
     :handle-close-modal-on-save="handleCloseModalEditExpenditureOnSave"
     :handle-close-modal-on-delete="handleCloseModalEditExpenditureOnDelete"
-    :expenditure="currentExpenditure"
+    :prop-expenditure="currentExpenditure"
   />
 
   <ATDeleteModal

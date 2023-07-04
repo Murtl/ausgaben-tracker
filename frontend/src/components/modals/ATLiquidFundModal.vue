@@ -28,7 +28,7 @@ interface Props {
   /**
    * The passed liquid fund
    */
-  liquidFund?: ATLiquidFund
+  propLiquidFund?: ATLiquidFund
 
   /**
    * The function to call when the user presses the delete button
@@ -44,8 +44,8 @@ const props = withDefaults(defineProps<Props>(), {
 const i18n = useI18nStore().i18n
 
 onBeforeMount(() => {
-  if (props.liquidFund) {
-    liquidFund.value = props.liquidFund
+  if (props.propLiquidFund) {
+    liquidFund.value = props.propLiquidFund
   } else {
     liquidFund.value = {
       id: 0,

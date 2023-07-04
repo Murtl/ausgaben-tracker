@@ -140,7 +140,7 @@ const handleCloseModalEditLiquidFundOnDelete = () => {
     :title="i18n.edit_liquid_fund"
     :handle-close-modal-on-cancel="handleCloseModalEditLiquidFundOnCancel"
     :handle-close-modal-on-save="handleCloseModalEditLiquidFundOnSave"
-    :liquid-fund="currentLiquidFund"
+    :prop-liquid-fund="currentLiquidFund"
     :handle-close-modal-on-delete="handleCloseModalEditLiquidFundOnDelete"
   />
 

@@ -28,7 +28,7 @@ interface Props {
   /**
    * The passed expenditure
    */
-  expenditure?: ATExpenditure
+  propExpenditure?: ATExpenditure
 
   /**
    * The function to call when the user presses the delete button
@@ -44,8 +44,8 @@ const props = withDefaults(defineProps<Props>(), {
 const i18n = useI18nStore().i18n
 
 onBeforeMount(() => {
-  if (props.expenditure) {
-    expenditure.value = props.expenditure
+  if (props.propExpenditure) {
+    expenditure.value = props.propExpenditure
   } else {
     expenditure.value = {
       id: 0,
