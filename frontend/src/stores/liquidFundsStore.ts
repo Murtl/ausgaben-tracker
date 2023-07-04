@@ -42,12 +42,26 @@ export const useLiquidFundsStore = defineStore('liquidFundsStore', () => {
    * @param liquidFund liquid fund to update
    */
   const updateLiquidFund = (liquidFund: ATLiquidFund) => {
+    let duplicateThere = false
     allLiquidFunds.value = allLiquidFunds.value.map((liquidFundInAllLiquidFunds) => {
+      if (
+        liquidFund.month === liquidFundInAllLiquidFunds.month &&
+        liquidFund.year === liquidFundInAllLiquidFunds.year &&
+        liquidFundInAllLiquidFunds.id !== liquidFund.id
+      ) {
+        liquidFundInAllLiquidFunds.height += liquidFund.height
+        duplicateThere = true
+      }
       if (liquidFundInAllLiquidFunds.id === liquidFund.id) {
         return liquidFund
       }
       return liquidFundInAllLiquidFunds
     })
+    if (duplicateThere) {
+      allLiquidFunds.value = allLiquidFunds.value.filter(
+        (liquidFundToFilter) => liquidFundToFilter.id !== liquidFund.id
+      )
+    }
   }
 
   return { allLiquidFunds, fetchLiquidFunds, addLiquidFund, deleteLiquidFund, updateLiquidFund }
